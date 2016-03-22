@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anemone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+      <div class="container-fluid">
+          <div class="row content">
+            <div class="col-sm-2 sidenav">
+                <nav role="navigation">
+                  <ul class="nav nav-pills nav-stacked" id="stacked-menu">
+                    <li><h1 class="project-title">Anemone <small>project</small></h1></li>
+                    <li>
+                        {% if not session.logged_in %}
+                            <a href="{{ url_for('login') }}">Sign in</a>
+                        {% else %}
+                            <a href="{{ url_for('logout') }}">Sign out</a>
+                        {% endif %}
+                    </li>
+                    <li class="active">
+                      <a href="/">Dashboard</a>
+                    </li>
+                    <li>
+                      <a data-toggle="collapse" data-parent="#stacked-menu" href="#p2">Process Two<span class="caret arrow"></span></a>
+                      <ul class="nav nav-pills nav-stacked collapse" id="p2">
+                        <li><a href="#">View One</a></li>
+                        <li><a href="#">View Two</a></li>
+                        <li><a href="#">View Three</a></li>
+                        <li class="nav-divider"></li>
+                        <li><a href="#">Trash</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#">Process Three<span class="caret arrow"></span></a></li>
+                    <li><a href="#">Process Four<span class="caret arrow"></span></a></li>
+                  </ul>
+              </nav>
+          </div>
+                <div class="col-sm-10">
+                    {% for message in get_flashed_messages() %}
+                      <div class=flash>{{ message }}</div>
+                    {% endfor %}
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+          </div>
+      </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+  </body>
+</html>

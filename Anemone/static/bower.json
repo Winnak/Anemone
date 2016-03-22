@@ -1,0 +1,22 @@
+{
+  "name": "anemone",
+  "authors": [
+    "Erik Hoyjor <ErikHoyJor@gmail.com>"
+  ],
+  "description": "bower components of anemone",
+  "main": "",
+  "moduleType": [],
+  "license": "not yet determained",
+  "homepage": "localhost:5000",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
