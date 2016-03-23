@@ -53,8 +53,8 @@
               <tr>
                   <td class="smallrow"><i class="{{ get_status_icon(row.STATUS) }}"></i></td>
                   <td><a href="#">{{ row.NAME }}</a></td>
-                  <td>{{ row.START|safe }}</td>
-                  <td>{{ row.END|safe }}</td>
+                  <td>{{ row.START }}</td>
+                  <td><a href="#" data-toggle="tooltip" title="{{ row.END }}">{{ row.SPAN }}</a></td>
               </tr>
               {% endfor %}
           </tbody>

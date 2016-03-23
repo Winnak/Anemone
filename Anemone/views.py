@@ -1,5 +1,6 @@
 """ represnets all the views of the projects """
 
+from datetime import datetime
 from flask import request, session, g, redirect, url_for, abort, \
     render_template, flash
 from Anemone import app
@@ -12,7 +13,14 @@ def home():
     cur = g.database.execute(query)
     entries = []
     for row in cur.fetchall():
-        entries.append(dict(STATUS=row[0], NAME=row[1], START=row[2], END=row[3]))
+        end = row[3]
+        if row[2] is not None:
+            if row[3] is not None:
+                buildfrom = datetime.strptime(row[2], '%Y-%m-%d %H:%M:%S')
+                buildto = datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S')
+                end = str(buildto - buildfrom)
+
+        entries.append(dict(STATUS=row[0], NAME=row[1], START=row[2], END=row[3], SPAN=end))
 
     return render_template('dashboard.html', entries=entries)
 
