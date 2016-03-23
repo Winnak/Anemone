@@ -7,10 +7,14 @@ from Anemone import app
 @app.route("/")
 def home():
     """ Index of the homepage """
-    # cur = g.database.execute('select title, text from entries order by id desc')
-    # entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    # return render_template('show_entries.html', entries=entries)
-    return render_template('dashboard.html')
+    query = 'SELECT status, name, started, ended FROM jobs \
+             ORDER BY id DESC LIMIT 30'
+    cur = g.database.execute(query)
+    entries = []
+    for row in cur.fetchall():
+        entries.append(dict(STATUS=row[0], NAME=row[1], START=row[2], END=row[3]))
+
+    return render_template('dashboard.html', entries=entries)
 
 
 @app.route('/add', methods=['POST'])
@@ -23,6 +27,7 @@ def add_entry():
     g.database.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('home'))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

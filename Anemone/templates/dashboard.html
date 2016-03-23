@@ -36,7 +36,7 @@
 </div>
 <div class="panel panel-default jobs-table">
   <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-table"></i> Jobs</h3>
+    <h3 class="panel-title"><a href="/jobs.html"> <i class="fa fa-table"></i> Jobs</a></h3>
   </div>
   <div class="panel-body">
       <table class="table" style="">
@@ -49,37 +49,14 @@
               </tr>
           </thead>
           <tbody>
-          <tr>
-              <td class="smallrow"><i class="fa fa-clock-o fa-2x"></i></td>
-              <td><a href="#">WhatBlackback-120202107</a></td>
-              <td>2016-12-01 00:00:00</td>
-              <td>NaN</td>
-          </tr>
-          <tr>
-              <td class="smallrow"><i class="fa fa-check-circle fa-2x"></i></td>
-              <td><a href="#">UnhappyFalcon-110202112</a></td>
-              <td>2009-12-01 00:00:00</td>
-              <td>46 min</td>
-          </tr>
-          <tr>
-              <td class="smallrow"><i class="fa fa-cog fa-spin fa-2x"></i></td>
-              <td><a href="#">CarefulSea-110202107</a></td>
-              <td>2009-12-01 00:00:00</td>
-              <td>15 min</td>
-          </tr>
-          <tr>
-              <td class="smallrow"><i class="fa fa-times-circle fa-2x"></i></td>
-              <td><a href="#">ForwardSloth-105202102</a></td>
-              <td>2009-11-01 15:24:24</td>
-              <td>15 min</td>
-          </tr>
-              <!--
-              ClearChimpanzee
-              MissionHorse
-              MiddlePorcupine
-              OpeningBadger
-              ClassicVixen
-              VariousMoose -->
+              {% for row in entries %}
+              <tr>
+                  <td class="smallrow"><i class="{{ get_status_icon(row.STATUS) }}"></i></td>
+                  <td><a href="#">{{ row.NAME }}</a></td>
+                  <td>{{ row.START|safe }}</td>
+                  <td>{{ row.END|safe }}</td>
+              </tr>
+              {% endfor %}
           </tbody>
       </table>
   </div>

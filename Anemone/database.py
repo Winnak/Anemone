@@ -16,12 +16,10 @@ def init_db():
             database.cursor().executescript(schemafile.read())
         database.commit()
 
-
 @app.before_request
 def before_request():
     """ called before a request """
     g.database = connect_db()
-
 
 @app.teardown_request
 @app.teardown_appcontext
