@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Anemone - Dashboard{% endblock %}
 
 {% block head %}
 <script src="{{ url_for('static', filename='bower_components/d3/d3.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-<script src="../static/bower_components/d3/d3.js"></script>
 <h2>Dashboard</h2>
 <div class="panel panel-default panel-info">
   <div class="panel-heading">
@@ -35,7 +34,7 @@
 
   </div>
 </div>
-<div class="panel panel-default dashboard-jobs">
+<div class="panel panel-default jobs-table">
   <div class="panel-heading">
     <h3 class="panel-title"><i class="fa fa-table"></i> Jobs</h3>
   </div>
@@ -44,21 +43,19 @@
           <thead>
               <tr>
                   <th style="width:10px; ">Status</th>
-                  <th style="width:10px">Result</th>
                   <th>Name</th>
                   <th>Job Started</th>
                   <th>Build time</th>
               </tr>
           </thead>
+          <tbody>
           <tr>
               <td class="smallrow"><i class="fa fa-clock-o fa-2x"></i></td>
-              <td class="smallrow"><i class="fa fa-circle fa-2x"></i></td>
               <td><a href="#">WhatBlackback-120202107</a></td>
               <td>2016-12-01 00:00:00</td>
               <td>NaN</td>
           </tr>
           <tr>
-              <td class="smallrow"><i class="fa fa-check fa-2x"></i></td>
               <td class="smallrow"><i class="fa fa-check-circle fa-2x"></i></td>
               <td><a href="#">UnhappyFalcon-110202112</a></td>
               <td>2009-12-01 00:00:00</td>
@@ -66,18 +63,27 @@
           </tr>
           <tr>
               <td class="smallrow"><i class="fa fa-cog fa-spin fa-2x"></i></td>
-              <td class="smallrow"><i class="fa fa-times-circle fa-2x"></i></td>
               <td><a href="#">CarefulSea-110202107</a></td>
               <td>2009-12-01 00:00:00</td>
               <td>15 min</td>
           </tr>
-          <tbody>
-
+          <tr>
+              <td class="smallrow"><i class="fa fa-times-circle fa-2x"></i></td>
+              <td><a href="#">ForwardSloth-105202102</a></td>
+              <td>2009-11-01 15:24:24</td>
+              <td>15 min</td>
+          </tr>
+              <!--
+              ForwardSloth
+              ClearChimpanzee
+              MissionHorse
+              MiddlePorcupine
+              OpeningBadger
+              ClassicVixen
+              VariousMoose -->
           </tbody>
       </table>
   </div>
-  <div class="panel-footer">
-
-  </div>
+  <div class="panel-footer"></div>
 </div>
 {% endblock %}

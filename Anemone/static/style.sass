@@ -1,3 +1,10 @@
+$info: #5bc0de
+$succesful: #5cb85c
+$error: #d9534f
+$warning: #f0ad4e
+$primary: #337ab7
+$none: #fff
+
 html,
 body,
 .fullsite
@@ -26,9 +33,21 @@ h2
     background-color: #fff
     padding-top: 10px
 
-.dashboard-jobs
+.jobs-table
     td
         vertical-align: middle
 
     .smallrow
         text-align: center
+
+    .fa-cog
+        color: $info
+
+    .fa-clock-o
+        color: $warning
+
+    .fa-check-circle
+        color: $succesful
+
+    .fa-times-circle
+        color: $error
