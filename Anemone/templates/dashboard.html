@@ -30,9 +30,7 @@
           bla
       </div>
   </div>
-  <div class="panel-footer">
-
-  </div>
+  <div class="panel-footer"></div>
 </div>
 <div class="panel panel-default jobs-table">
   <div class="panel-heading">
@@ -46,6 +44,9 @@
                   <th>Name</th>
                   <th>Job Started</th>
                   <th>Build time</th>
+                  {% if session.logged_in %}
+                  <th>Actions</th>
+                  {% endif %}
               </tr>
           </thead>
           <tbody>
@@ -55,6 +56,15 @@
                   <td><a href="#">{{ row.NAME }}</a></td>
                   <td>{{ row.START }}</td>
                   <td><a href="#" data-toggle="tooltip" title="{{ row.END }}">{{ row.SPAN }}</a></td>
+                  {% if session.logged_in %}
+                  <td>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                      <button type="button" class="btn btn-default btn-danger"><i class="glyphicon glyphicon-remove-circle"></i> Delete</button>
+                      <button type="button" class="btn btn-default btn-info"><i class="glyphicon glyphicon-play-circle"></i> Start</button>
+                      <button type="button" class="btn btn-default btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> Abort</button>
+                    </div>
+                  </td>
+                  {% endif %}
               </tr>
               {% endfor %}
           </tbody>
