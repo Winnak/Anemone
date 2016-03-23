@@ -5,7 +5,7 @@ import os
 from Anemone import app
 
 configuration = dict(
-    DATABASE=os.path.join(app.root_path, 'flaskr.db'),
+    DATABASE=os.path.join(app.root_path, "tmp", 'anemone.db'),
     DEBUG=True,
     SECRET_KEY='development key',
     USERNAME='admin',

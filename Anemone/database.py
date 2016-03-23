@@ -2,7 +2,6 @@
 
 import sqlite3
 from contextlib import closing
-import click
 from flask import g
 from Anemone import app
 
@@ -16,12 +15,6 @@ def init_db():
         with app.open_resource('schema.sql', mode='r') as schemafile:
             database.cursor().executescript(schemafile.read())
         database.commit()
-
-@click.command("initdb")
-def initdb_command():
-    """Creates the database tables."""
-    init_db()
-    print('Initialized the database.')
 
 
 @app.before_request
