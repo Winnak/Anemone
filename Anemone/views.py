@@ -5,11 +5,12 @@ from flask import request, session, g, redirect, url_for, abort, \
 from Anemone import app
 
 @app.route("/")
-def show_entries():
+def home():
     """ Index of the homepage """
-    cur = g.database.execute('select title, text from entries order by id desc')
-    entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    return render_template('show_entries.html', entries=entries)
+    # cur = g.database.execute('select title, text from entries order by id desc')
+    # entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+    # return render_template('show_entries.html', entries=entries)
+    return render_template('dashboard.html')
 
 
 @app.route('/add', methods=['POST'])

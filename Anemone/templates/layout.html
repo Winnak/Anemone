@@ -4,18 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Anemone</title>
+    <title>Anemone - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.min.css') }}">
+    {% block head %}{% endblock %}
   </head>
   <body>
-      <div class="container-fluid">
-          <div class="row content">
+      <div class="container-fluid fullsite">
+          <div class="row fullsite">
             <div class="col-sm-2 sidenav">
+              <div class="project-title"><h1>Anemone <small>project</small></h1></div>
                 <nav role="navigation">
                   <ul class="nav nav-pills nav-stacked" id="stacked-menu">
-                    <li><h1 class="project-title">Anemone <small>project</small></h1></li>
                     <li>
                         {% if not session.logged_in %}
                             <a href="{{ url_for('login') }}">Sign in</a>
@@ -25,6 +26,9 @@
                     </li>
                     <li class="active">
                       <a href="/">Dashboard</a>
+                    </li>
+                    <li>
+                      <a href="/jobs.html">New Job</a>
                     </li>
                     <li>
                       <a data-toggle="collapse" data-parent="#stacked-menu" href="#p2">Process Two<span class="caret arrow"></span></a>
@@ -41,7 +45,7 @@
                   </ul>
               </nav>
           </div>
-                <div class="col-sm-10">
+                <div class="col-sm-10 content">
                     {% for message in get_flashed_messages() %}
                       <div class=flash>{{ message }}</div>
                     {% endfor %}
@@ -50,9 +54,7 @@
             </div>
           </div>
       </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
   </body>
 </html>
