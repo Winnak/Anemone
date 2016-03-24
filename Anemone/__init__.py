@@ -1,6 +1,7 @@
 """ The main import stuff script """
 # pylint: disable=C0103, method-hidden
 # pylint: disable=C0413, method-hidden
+# pylint: disable=W0401, method-hidden
 
 import os
 from flask import Flask
@@ -15,12 +16,12 @@ def utility_processor():
         def status_switch(x):
             """ switch case for status codes """
             return {
-                0 : "fa fa-circle fa-2x",
-                1 : "fa fa-check-circle fa-2x",
-                2 : "fa fa-exclamation-circle fa-2x",
-                3 : "fa fa-times-circle fa-2x",
-                4 : "fa fa-cog fa-spin fa-2x",
-                5 : "fa fa-clock-o fa-2x"
+                0 : "fa fa-circle",
+                1 : "fa fa-check-circle",
+                2 : "fa fa-exclamation-circle",
+                3 : "fa fa-times-circle",
+                4 : "fa fa-cog fa-spin",
+                5 : "fa fa-clock-o"
             }.get(x, 0)
 
         return status_switch(statuscode)
@@ -29,7 +30,9 @@ def utility_processor():
 
 # important: has to be importet before app is created
 from Anemone.config import configuration
-import Anemone.views
+import Anemone.views.dashboard
+import Anemone.views.jobs
+import Anemone.views.login
 
 # Load default config and override config from an environment variable
 app.config.update(configuration)

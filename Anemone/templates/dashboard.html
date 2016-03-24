@@ -34,7 +34,7 @@
 </div>
 <div class="panel panel-default jobs-table">
   <div class="panel-heading">
-    <h3 class="panel-title"><a href="/"> <i class="fa fa-table"></i> Jobs</a></h3>
+    <h3 class="panel-title"><a href="/jobs.html"> <i class="fa fa-table"></i> Jobs</a></h3>
   </div>
   <div class="panel-body">
       <table class="table" style="">
@@ -52,8 +52,8 @@
           <tbody>
               {% for row in entries %}
               <tr>
-                  <td class="smallrow"><i class="{{ get_status_icon(row.STATUS) }}"></i></td>
-                  <td><a href="{{ row.ID }}">{{ row.NAME }}</a></td>
+                  <td class="smallrow"><i class="{{ get_status_icon(row.STATUS) }} fa-2x"></i></td>
+                  <td><a href="jobs/id/{{ row.ID }}">{{ row.NAME }}</a></td>
                   <td>{{ row.START }}</td>
                   <td><a href="#" data-toggle="tooltip" title="{{ row.END }}">{{ row.SPAN }}</a></td>
                   {% if session.logged_in %}
