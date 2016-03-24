@@ -7,14 +7,14 @@ from Anemone import app
 @app.route('/jobs/')
 def jobs_index():
     """ shows the index if no jobs given """
-    return render_template("/jobs.html")
+    return jobs(0)
 
 @app.route('/jobs/<int:page>')
 def jobs(page):
     """ for when no job id was given """
     if page < 0:
         flash("invalid page number")
-        return jobs_index()
+        page = 0
 
     query = 'SELECT id, status, name, started, ended FROM jobs \
              ORDER BY (CASE WHEN started IS NULL THEN 1 ELSE 0 END) DESC, \
@@ -33,7 +33,7 @@ def jobs(page):
         entries.append(dict(ID=row[0], STATUS=row[1], NAME=row[2], START=row[3],
                             END=row[4], SPAN=end))
     cur.close()
-    return render_template("/jobs.html")
+    return render_template("/jobs.html", entries=entries)
 
 @app.route('/jobs/id/<int:job_id>')
 def job(job_id):

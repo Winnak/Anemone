@@ -4,47 +4,16 @@
 
 {% block body %}
 <h2> </h2>
-<div class="panel panel-default">
+<div class="panel panel-default jobs-table">
   <div class="panel-heading">
     <h3 class="panel-title">Jobs</h3>
   </div>
   <div class="panel-body">
-      <table class="table" style="">
-          <thead>
-              <tr>
-                  <th style="width:10px; ">Status</th>
-                  <th>Name</th>
-                  <th>Job Started</th>
-                  <th>Build time</th>
-                  {% if session.logged_in %}
-                  <th>Actions</th>
-                  {% endif %}
-              </tr>
-          </thead>
-          <tbody>
-              {% for row in entries %}
-              <tr>
-                  <td class="smallrow"><i class="{{ get_status_icon(row.STATUS) }}"></i></td>
-                  <td><a href="{{ row.ID }}">{{ row.NAME }}</a></td>
-                  <td>{{ row.START }}</td>
-                  <td><a href="#" data-toggle="tooltip" title="{{ row.END }}">{{ row.SPAN }}</a></td>
-                  {% if session.logged_in %}
-                  <td>
-                    <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                      <button type="button" class="btn btn-default btn-danger"><i class="glyphicon glyphicon-remove-circle"></i> Delete</button>
-                      <button type="button" class="btn btn-default btn-info"><i class="glyphicon glyphicon-play-circle"></i> Start</button>
-                      <button type="button" class="btn btn-default btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> Abort</button>
-                    </div>
-                  </td>
-                  {% endif %}
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
+      {% include "partials/jobstable.html" %}
       <nav>
         <ul class="pager">
-          <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-          <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+          <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Newer</a></li>
+          <li class="next"><a href="#">Older <span aria-hidden="true">&rarr;</span></a></li>
         </ul>
       </nav>
   </div>
