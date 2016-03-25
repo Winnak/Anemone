@@ -1,4 +1,5 @@
-""" jobs view """
+""" Jobs and job view """
+
 from datetime import datetime
 from flask import g, render_template, flash
 from Anemone import app

@@ -1,5 +1,5 @@
 """ Configuration file for Anemone """
-# pylint: disable=C0103, method-hidden
+# pylint: disable=C0103
 
 import os
 from Anemone import app

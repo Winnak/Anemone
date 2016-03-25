@@ -1,4 +1,4 @@
-""" represnets all the views of the projects """
+""" Represnets all the views of the projects """
 
 from flask import request, session, redirect, url_for, render_template, flash
 from Anemone import app

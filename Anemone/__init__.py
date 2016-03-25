@@ -1,7 +1,7 @@
 """ The main import stuff script """
-# pylint: disable=C0103, method-hidden
-# pylint: disable=C0413, method-hidden
-# pylint: disable=W0401, method-hidden
+# pylint: disable=C0103
+# pylint: disable=C0413
+# pylint: disable=W0401
 
 import os
 from flask import Flask
