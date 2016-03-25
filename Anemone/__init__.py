@@ -33,6 +33,7 @@ from Anemone.config import configuration
 import Anemone.views.dashboard
 import Anemone.views.jobs
 import Anemone.views.login
+import Anemone.views.configuration
 
 # Load default config and override config from an environment variable
 app.config.update(configuration)
