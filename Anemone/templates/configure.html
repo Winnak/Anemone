@@ -7,11 +7,35 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">
-        title
+      Configuration
     </h3>
   </div>
   <div class="panel-body">
-      body content
+      <div class="input-group">
+        <span class="input-group-addon">Project name: </span>
+        <input type="text" class="form-control" placeholder="">
+      </div>
+      <br>
+      <div class="input-group">
+        <span class="input-group-addon">Project path: </span>
+        <input type="text" class="form-control" placeholder="">
+      </div>
+      <br>
+      <div class="input-group">
+        <span class="input-group-addon">Unity path: </span>
+        <input type="text" class="form-control" placeholder="">
+      </div>
+      <br>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+        <li><a href="#">Manual</a></li>
+        <li class="disabled"><a href="#">Hourly (if changes are found)</a></li>
+      </ul>
+      <div class="input-group">
+        <span class="input-group-addon">Git: </span>
+        <input type="text" class="form-control" placeholder="git@github.com:[Username]/[Project].git">
+          SSH key:
+        <textarea name="ssh-cert" class="form-control"></textarea>
+      </div>
   </div>
   <div class="panel-footer">
 
