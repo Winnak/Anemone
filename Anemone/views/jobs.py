@@ -1,8 +1,10 @@
 """ Jobs and job view """
 
 from datetime import datetime
-from flask import g, render_template, flash
+from flask import g, render_template, flash, redirect
 from Anemone import app
+
+JOBSPERPAGE = 30
 
 @app.route('/jobs')
 @app.route('/jobs/')
@@ -10,17 +12,19 @@ def jobs_index():
     """ shows the index if no jobs given """
     return jobs(0)
 
-@app.route('/jobs/<int:page>')
+@app.route('/jobs/<page>')
 def jobs(page):
     """ for when no job id was given """
     g.selected_tab = "jobs"
 
+    page = int(page) # would have set the app.route to do this, but it expects a uint
+
     if page < 0:
         flash("invalid page number")
-        page = 0
+        redirect("/jobs/0")
 
-    queryprojects = 'SELECT id, name FROM projects'
-    projects = g.database.execute(queryprojects).fetchall()
+    count = g.database.execute("SELECT Count(*) FROM jobs").fetchone()[0]
+    projects = g.database.execute("SELECT id, name FROM projects").fetchall()
 
     def whereis(item):
         """ find item in collection that matches an item """
@@ -30,7 +34,7 @@ def jobs(page):
 
     query = 'SELECT id, project, status, name, started, ended FROM jobs \
              ORDER BY (CASE WHEN started IS NULL THEN 1 ELSE 0 END) DESC, \
-             started DESC LIMIT 10'
+             started DESC LIMIT {0}, {1}'.format(page * JOBSPERPAGE, JOBSPERPAGE)
 
     cur = g.database.execute(query)
     entries = []
@@ -45,8 +49,13 @@ def jobs(page):
         project = whereis(row[1])[1]
         entries.append(dict(ID=row[0], PROJECT=project, STATUS=row[2],
                             NAME=row[3], START=row[4], END=row[5], SPAN=end))
+
+    more = count > (page + 1) * JOBSPERPAGE
+    less = page > 0
+    pagedata = dict(ID=page, MORE=more, LESS=less)
+
     cur.close()
-    return render_template("/jobs.html", entries=entries)
+    return render_template("/jobs.html", entries=entries, page=pagedata)
 
 @app.route('/jobs/id/<int:job_id>')
 def job(job_id):

@@ -12,8 +12,8 @@
       {% include "partials/jobstable.html" %}
       <nav>
         <ul class="pager">
-          <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Newer</a></li>
-          <li class="next"><a href="#">Older <span aria-hidden="true">&rarr;</span></a></li>
+          <li class="previous{% if not page.LESS %} disabled{% endif %}"><a href="{% if page.LESS %}/jobs/{{page.ID - 1}}{% else %}#{% endif %}"><span aria-hidden="true">&larr;</span> Newer</a></li>
+          <li class="next{% if not page.MORE %} disabled{% endif %}"><a href="{% if page.MORE %}/jobs/{{page.ID + 1}}{% else %}#{% endif %}">Older <span aria-hidden="true">&rarr;</span></a></li>
         </ul>
       </nav>
   </div>
