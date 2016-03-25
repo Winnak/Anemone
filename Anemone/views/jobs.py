@@ -13,6 +13,8 @@ def jobs_index():
 @app.route('/jobs/<int:page>')
 def jobs(page):
     """ for when no job id was given """
+    g.selected_tab = "jobs"
+
     if page < 0:
         flash("invalid page number")
         page = 0
@@ -39,6 +41,9 @@ def jobs(page):
 @app.route('/jobs/id/<int:job_id>')
 def job(job_id):
     """ Shows information about a specific job """
+
+    g.selected_tab = "jobs"
+
     query = 'SELECT id,status,name,started,ended FROM jobs \
              WHERE id=' + str(job_id)
     entries = g.database.execute(query).fetchall()
@@ -60,4 +65,5 @@ def job(job_id):
 @app.route('/jobs/new')
 def new_job():
     """ view for creating a new job """
-    pass
+
+    g.selected_tab = "jobs"

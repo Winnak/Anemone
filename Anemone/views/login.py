@@ -1,11 +1,13 @@
 """ Represnets all the views of the projects """
 
-from flask import request, session, redirect, url_for, render_template, flash
+from flask import request, session, redirect, url_for, render_template, flash, g
 from Anemone import app
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """ login page """
+    g.selected_tab = "login"
+
     error = None
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:

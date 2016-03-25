@@ -7,6 +7,8 @@ from Anemone import app
 @app.route("/")
 def home():
     """ Index of the homepage """
+    g.selected_tab = "dashboard"
+
     query = 'SELECT id, status, name, started, ended FROM jobs \
              ORDER BY (CASE WHEN started IS NULL THEN 1 ELSE 0 END) DESC, \
              started DESC LIMIT 10'
