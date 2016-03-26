@@ -6,9 +6,7 @@
           <th>Project</th>
           <th>Job Started</th>
           <th>Build time</th>
-          {% if session.logged_in %}
           <th>Actions</th>
-          {% endif %}
       </tr>
   </thead>
   <tbody>
@@ -19,15 +17,20 @@
           <td>{{ row.PROJECT }}</td>
           <td>{{ row.START }}</td>
           <td><a href="#" data-toggle="tooltip" title="{{ row.END }}">{{ row.SPAN }}</a></td>
-          {% if session.logged_in %}
           <td>
             <div class="btn-group btn-group-sm" role="group" aria-label="...">
-              <button type="button" class="btn btn-default btn-danger"><i class="glyphicon glyphicon-remove-circle"></i> Delete</button>
-              <button type="button" class="btn btn-default btn-info"><i class="glyphicon glyphicon-play-circle"></i> Start</button>
-              <button type="button" class="btn btn-default btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> Abort</button>
+              <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-list"></i> Show log</button>
+              {% if session.logged_in %}
+              <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove-circle"></i> Delete</button>
+              {% if row.STATUS == 0 or row.STATUS == 5 %}
+              <button type="button" class="btn btn-info"><i class="glyphicon glyphicon-play-circle"></i> Start</button>
+              {% endif %}
+              {% if row.STATUS == 4 or row.STATUS == 5 %}
+              <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> Abort</button>
+              {% endif %}
+              {% endif %}
             </div>
           </td>
-          {% endif %}
       </tr>
       {% endfor %}
   </tbody>

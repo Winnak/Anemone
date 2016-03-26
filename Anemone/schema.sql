@@ -1,5 +1,15 @@
+DROP TABLE IF EXISTS configuration;
+CREATE TABLE configuration (
+    projectname TEXT,
+    projectpath TEXT,
+    unitypath TEXT,
+    gitpath TEXT,
+    privatessh TEXT,
+    publicssh TEXT
+);
+
 DROP TABLE IF EXISTS projects;
-CREATE TABLE projects(
+CREATE TABLE projects (
     id INTEGER PRIMARY KEY autoincrement,
     name TEXT NOT NULL,
     description TEXT
