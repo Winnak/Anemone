@@ -1,6 +1,8 @@
 # Anemone
 License: [MIT](LICENSE)
 
+![alt text](https://github.com/winnak/Anemone/screenshots/Screenshot_1.png "WIP")
+
 > copy Anemone_Build.cs to your Unity project's asset folder
 
 ## configure
