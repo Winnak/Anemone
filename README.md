@@ -1,7 +1,7 @@
 # Anemone
 License: [MIT](LICENSE)
 
-![alt text](https://github.com/winnak/Anemone/screenshots/Screenshot_1.png "WIP")
+![alt text](https://raw.githubusercontent.com/Winnak/Anemone/master/screenshots/Screenshot_1.png "WIP")
 
 
 ## Dependencies
