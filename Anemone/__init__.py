@@ -30,6 +30,7 @@ def utility_processor():
 
 # important: has to be importet before app is created
 from Anemone.config import configuration
+import Anemone.views.projects
 import Anemone.views.dashboard
 import Anemone.views.jobs
 import Anemone.views.login

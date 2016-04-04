@@ -10,14 +10,14 @@ CREATE TABLE configuration (
 
 DROP TABLE IF EXISTS projects;
 CREATE TABLE projects (
-    id INTEGER PRIMARY KEY autoincrement,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT
 );
 
 DROP TABLE IF EXISTS jobs;
 CREATE TABLE jobs (
-  id INTEGER PRIMARY KEY autoincrement,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   project INTEGER NOT NULL, -- foreign key
   status INTEGER NOT NULL,
   name TEXT NOT NULL,

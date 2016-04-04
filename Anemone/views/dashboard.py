@@ -4,8 +4,8 @@ from datetime import datetime
 from flask import render_template, g
 from Anemone import app
 
-@app.route("/")
-def home():
+@app.route("/dashboard-temp")
+def dashboard():
     """ Index of the homepage """
     g.selected_tab = "dashboard"
 
