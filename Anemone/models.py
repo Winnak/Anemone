@@ -25,5 +25,6 @@ class Job(BaseModel):
     status = peewee.IntegerField()
     name = peewee.CharField()
     description = peewee.TextField(null=True)
+    log = peewee.TextField(null=True)
     started = peewee.DateTimeField(null=True)
     ended = peewee.DateTimeField(null=True)

@@ -44,18 +44,18 @@ def main():
         Job.create(project=project, status=1,
                    name="ClearChimpanzee-001", description="",
                    started=datetime(2016, 1, 8, 8, 23, 19),
-                   ended=datetime(2016, 1, 8, 9, 24, 34)).save()
+                   ended=datetime(2016, 1, 8, 9, 24, 34), log="success").save()
         Job.create(project=project, status=2,
                    name="MissionHorse-002", description="",
                    started=datetime(2016, 1, 8, 9, 45, 34),
-                   ended=datetime(2016, 1, 8, 10, 0, 0)).save()
+                   ended=datetime(2016, 1, 8, 10, 0, 0), log="warnings").save()
         Job.create(project=project, status=3,
                    name="MiddlePorcupine-003", description="",
                    started=datetime(2016, 1, 8, 10, 0, 0),
-                   ended=datetime(2016, 1, 8, 10, 10, 0)).save()
+                   ended=datetime(2016, 1, 8, 10, 10, 0), log="error").save()
         Job.create(project=project, status=4,
                    name="OpeningBadger-004", description="",
-                   started=datetime.now()).save()
+                   started=datetime.now(), log="building ...").save()
         Job.create(project=project, status=5,
                    name="ClassicVixen-005", description="",
                    started=datetime.now() + timedelta(days=2)).save()
