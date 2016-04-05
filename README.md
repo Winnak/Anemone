@@ -47,5 +47,6 @@ License: [MIT](LICENSE)
     * automatically createdatabase.py if database is not there
     * create admin user on first run
 9. Figure out solution for cloud building
-10. Perforce handling
-11. SVN handling?
+10. Parse unity log file and make it more informative.
+11. Perforce handling
+12. SVN handling?

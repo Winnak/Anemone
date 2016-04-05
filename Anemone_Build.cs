@@ -51,7 +51,7 @@ namespace Anemone
         /// <summary>
         /// Builds a debug build for windows to the <see cref="kDefaultBuildPath"/>
         /// </summary>
-        [MenuItem("Anemone/Build/Windows x86 (Debug)")]
+        [MenuItem("File/Anemone Build/Windows x86 (Debug)")]
         private static void WindowsDebug()
         {
             StringBuilder path = new StringBuilder();
@@ -86,7 +86,7 @@ namespace Anemone
         /// <summary>
         /// Builds a windows build to the <see cref="kDefaultBuildPath"/>
         /// </summary>
-        [MenuItem("Anemone/Build/Windows x86")]
+        [MenuItem("File/Anemone Build/Windows x86")]
         private static void Windows()
         {
             StringBuilder path = new StringBuilder();
