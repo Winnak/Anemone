@@ -1,5 +1,6 @@
 """ Data models for the database """
 # pylint: disable=R0903
+# pylint: disable=C0103
 
 import peewee
 import Anemone.database
@@ -19,6 +20,7 @@ class Project(BaseModel):
 
 class Job(BaseModel):
     """ Data model for Jobs table """
+    id = peewee.PrimaryKeyField()
     project = peewee.ForeignKeyField(Project)
     status = peewee.IntegerField()
     name = peewee.CharField()

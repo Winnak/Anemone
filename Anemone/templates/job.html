@@ -1,32 +1,31 @@
 {% extends "layout.html" %}
 
-{% block title %}Anemone - {{ data.NAME }}{% endblock %}
+{% block title %}Anemone - {{ data.name }}{% endblock %}
 
 {% block body %}
-<h2>Job ({{ data.ID }})</h2>
+<h2 style="display:inline;">Job </h2><span class="label label-default" style="vertical-align:super;padding-top:1em"><i class="{{get_status_icon(data.status)}} fa-2x"></i> <b style="vertical-align:inherit;">TODO STATUS {{ data.status }}</b></span>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">
-        <span class="label label-default" style="padding-top:.7em"><i class="{{get_status_icon(data.STATUS)}}"></i> TODO STATUS {{ data.STATUS }}</span>
-        {{ data.NAME }}
+        {{ data.name }}
         {% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %}
     </h3>
   </div>
   <div class="panel-body">
       {% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %} Name:<br>
-      {{ data.NAME }}
+      {{ data.name }}
       <br>
       <br>
       {% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %} Description:<br>
-      {{ data.DESC }}
+      {{ data.desc }}
       <br>
       <br>
       Build started: (Todo: timeago.js)<br>
-      {{ data.START }}
+      {{ data.start }}
       <br>
       <br>
       Build ended: (Todo: timeago.js)<br>
-      {{ data.END }}
+      {{ data.end }}
       <br>
       <br>
 

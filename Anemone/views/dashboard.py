@@ -4,6 +4,7 @@ from flask import render_template, g
 from Anemone import app
 from Anemone.models import Job
 
+@app.route("/dashboard-temp/") #todo filter by project
 @app.route("/dashboard-temp") #todo filter by project
 def dashboard():
     """ Index of the homepage """

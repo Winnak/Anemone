@@ -11,7 +11,7 @@ JOBSPERPAGE = 30
 @app.route('/jobs/')
 def jobs_index():
     """ shows the index if no jobs given """
-    return jobs(0)
+    return jobs(1)
 
 @app.route('/jobs/<page>')
 def jobs(page):
@@ -50,24 +50,15 @@ def jobs(page):
 @app.route('/jobs/id/<int:job_id>')
 def job_view(job_id):
     """ Shows information about a specific job """
-
     g.selected_tab = "jobs"
 
-    query = 'SELECT id,status,name,started,ended FROM jobs \
-             WHERE id=' + str(job_id)
-    entries = g.database.execute(query).fetchall()
-
-    if len(entries) != 1:
+    job = Job.get(Job.id == job_id)
+    if job is None:
         flash("Invalid job id", category='error')
         return jobs_index()
 
-    row = entries[0]
-
-    if row is None:
-        flash("Invalid job id", category='error')
-        return jobs_index()
-
-    data = dict(ID=row[0], STATUS=row[1], NAME=row[2], START=row[3], END=row[4])
+    data = dict(id=job.id, status=job.status, name=job.name,
+                start=job.started, end=job.ended)
 
     return render_template('job.html', data=data)
 
