@@ -1,39 +1,25 @@
 """ dashboard view """
 
-from datetime import datetime
 from flask import render_template, g
 from Anemone import app
+from Anemone.models import Job
 
-@app.route("/dashboard-temp")
+@app.route("/dashboard-temp") #todo filter by project
 def dashboard():
     """ Index of the homepage """
     g.selected_tab = "dashboard"
 
-    queryprojects = 'SELECT id, name FROM projects'
-    projects = g.database.execute(queryprojects).fetchall()
-
-    def whereis(item):
-        """ find item in collection that matches an item """
-        for row in projects:
-            if row[0] == item:
-                return row
-
-    query = 'SELECT id, project, status, name, started, ended FROM jobs \
-             ORDER BY (CASE WHEN started IS NULL THEN 1 ELSE 0 END) DESC, \
-             started DESC LIMIT 10'
-
-    cur = g.database.execute(query)
+    # query = 'SELECT id, project, status, name, started, ended FROM jobs \
+    #          ORDER BY (CASE WHEN started IS NULL THEN 1 ELSE 0 END) DESC, \
+    #          started DESC LIMIT 10'
     entries = []
-    for row in cur.fetchall():
-        end = row[5]
-        if row[4] is not None:
-            if row[5] is not None:
-                buildfrom = datetime.strptime(row[4], '%Y-%m-%d %H:%M:%S')
-                buildto = datetime.strptime(row[5], '%Y-%m-%d %H:%M:%S')
-                end = str(buildto - buildfrom)
+    for job in Job.select().order_by(-Job.started.is_null(), -Job.started).limit(10):
+        span = job.ended
+        if job.started is not None:
+            if job.ended is not None:
+                span = job.ended - job.started
 
-        project = whereis(row[1])[1] # get project name from project ID
-        entries.append(dict(ID=row[0], PROJECT=project, STATUS=row[2], NAME=row[3], START=row[4],
-                            END=row[5], SPAN=end))
-    cur.close()
+        entries.append(dict(id=job.id, status=job.status, name=job.name,
+                            start=job.started, end=job.ended, span=span))
+
     return render_template('dashboard.html', entries=entries)
