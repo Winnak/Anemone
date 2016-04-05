@@ -9,9 +9,6 @@ def dashboard():
     """ Index of the homepage """
     g.selected_tab = "dashboard"
 
-    # query = 'SELECT id, project, status, name, started, ended FROM jobs \
-    #          ORDER BY (CASE WHEN started IS NULL THEN 1 ELSE 0 END) DESC, \
-    #          started DESC LIMIT 10'
     entries = []
     for job in Job.select().order_by(-Job.started.is_null(), -Job.started).limit(10):
         span = job.ended
