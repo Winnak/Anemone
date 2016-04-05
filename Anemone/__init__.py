@@ -1,13 +1,14 @@
 """ The main import stuff script """
+# invalid constant name app
 # pylint: disable=C0103
-# pylint: disable=C0413
-# pylint: disable=W0401
+
 
 import os
 from flask import Flask
 
 app = Flask(__name__)
 
+# TODO: find a better place for this
 @app.context_processor
 def utility_processor():
     """ custom funcions for jinja """
@@ -28,7 +29,9 @@ def utility_processor():
 
     return dict(get_status_icon=get_status_icon)
 
-# important: has to be importet before app is created
+# Import should be placed at the top of the moduleat
+# pylint: disable=C0413
+# pylint has been disabled here because of how flask recommends maintaining a project
 from Anemone.config import configuration
 import Anemone.views.projects
 import Anemone.views.dashboard
@@ -42,3 +45,4 @@ app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 # important: has to be importet before app is created and configured
 import Anemone.database
+#pylint: enable=C0413

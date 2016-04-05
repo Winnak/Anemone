@@ -1,2 +1,2 @@
 
-#todo @app.errorhandler(404)
+#TODO: create custom error handlers @app.errorhandler(404)

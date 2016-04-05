@@ -4,5 +4,6 @@ from flask import render_template
 from Anemone import app
 
 @app.route("/projects-temp")
-def home():
+def projects():
+    """ view for projects """
     return render_template('projects.html')

@@ -1,17 +1,35 @@
 """ a build slave for the program """
 
-CONFIG = dict(
-    unity_path=r"C:\program files\Unity\Editor\Unity.exe", #default windows paths
-    build_module="Anemone.Build.Windows",
-    arguments="-quit -batchmode -executeMethod")
+import subprocess
+from flask import flash
 
-# Win "C:\Program Files\Unity\Editor\Unity.exe"
-# Mac /Applications/Unity/Unity.app/Contents/MacOS/Unity
+# Anemone needs its own settings. It needs to know the following:
+# Where is the unity executable?
+# Where is the unity build log?
 
-# -projectPath <pathname>
+# The project needs its own settings. It needs to know the following:
+# what platforms are we building to (unittest is now a platform)
+# what is out pre build steps
+# what is our post build steps
+# where do we put the project afterwards
+# what do we rename the project to afterwards
+# what scenes are we building
+# is it a development build
+# unity specific settings etc.
 
-def build(build_config):
+def build():
     """ builds the project """
-    print(build_config.unity_path)
-    print(build_config.build_module)
-    print(build_config.argumentsbuild_module)
+    # Win "C:\Program Files\Unity\Editor\Unity.exe"
+    # Mac /Applications/Unity/Unity.app/Contents/MacOS/Unity
+    cmd = [r"C:\Program Files\Unity\Editor\Unity.exe", "-quit", "-batchmode",
+           "-executeMethod", "Anemone.Build.Windows",
+           "-projectPath", r"C:\Projects\Unity\BuildServerTest"]
+
+    process = subprocess.Popen(cmd)
+
+    #pylint: disable=E1101
+    # this var does in fact exists
+    flash(process.args)
+    #pylint: enable=E1101
+
+    flash(process.returncode)

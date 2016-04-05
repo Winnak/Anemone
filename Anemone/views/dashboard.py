@@ -1,13 +1,14 @@
 """ dashboard view """
 
-from flask import render_template, g
+from flask import render_template, g, request, redirect, url_for
 from Anemone import app
 from Anemone.models import Job
+import Anemone.buildslave
 
 @app.route("/")
 # @app.route("<project>/dashboard")
 # @app.route("<project>/dashboard/")
-def dashboard():
+def home():
     """ Index of the homepage """
     g.selected_tab = "dashboard"
 
@@ -22,3 +23,10 @@ def dashboard():
                             start=job.started, end=job.ended, span=span))
 
     return render_template('dashboard.html', entries=entries)
+
+@app.route("/test-build", methods=["POST"])
+def build(): #TODO: create better build started stuff
+    """ temp: builds test project """
+    if request.method == "POST":
+        Anemone.buildslave.build()
+    return redirect(url_for("home"))

@@ -46,5 +46,6 @@ License: [MIT](LICENSE)
 8. Create better startup first-time stuff
     * automatically createdatabase.py if database is not there
     * create admin user on first run
-9. Perforce handling
-10. SVN handling?
+9. Figure out solution for cloud building
+10. Perforce handling
+11. SVN handling?

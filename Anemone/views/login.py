@@ -9,7 +9,7 @@ def login():
     g.selected_tab = "login"
 
     error = None
-    if request.method == 'POST':
+    if request.method == "POST":
         if request.form['username'] != app.config['USERNAME']:
             error = 'Invalid login information'
         elif request.form['password'] != app.config['PASSWORD']:
@@ -26,4 +26,4 @@ def logout():
     """ logging out redirect """
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('home'))
+    return redirect(url_for("home"))
