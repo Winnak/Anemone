@@ -30,6 +30,7 @@ License: [MIT](LICENSE)
     * Add configuration view
 3. Layout
     * Fix the full height sidebar
+    * use timeago.js
     * Re-colorize/stylize
     * remove temp code
 4. Git handling

@@ -39,12 +39,12 @@
 							<td><a href="/{{project.slug}}/jobs/{{project.latest.id}}">{{project.latest.started}}</a></td>
 						</tr>
 						{% endfor %}
-						<tr>
+						{% if session.logged_in %}<tr>
 							<td><i class="fa fa-plus fa-2x"></i></td>
 							<td><a href="#">Add new project</a></td>
 							<td></td>
 							<td></td>
-						</tr>
+						</tr>{% endif %}
 					</tbody>
 				</table>
 			</div>
