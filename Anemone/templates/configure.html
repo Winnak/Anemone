@@ -5,45 +5,36 @@
 {% block body %}
 <h2>Configuration</h2>
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">
-      Configuration
-    </h3>
-  </div>
-  <div class="panel-body">
-      <div class="input-group">
-        <span class="input-group-addon">Project name: </span>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <br>
-      <div class="input-group">
-        <span class="input-group-addon">Project path: </span>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <br>
-      <div class="input-group">
-        <span class="input-group-addon">Unity path: </span>
-        <input type="text" class="form-control" placeholder="">
-      </div>
-      <br>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-        <li><a href="#">Manual</a></li>
-        <li class="disabled"><a href="#">Hourly (if changes are found)</a></li>
-      </ul>
-      <div class="input-group">
-        <span class="input-group-addon">Git: </span>
-        <input type="text" class="form-control" placeholder="git@github.com:[Username]/[Project].git">
-          SSH key:
-          <textarea name="ssh-cert" rows=5 class="form-control" readonly>{{ key }}</textarea>
-      </div>
-      <br>
-      <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-primary">Update</button>
-      </div>
-  </div>
-  <div class="panel-footer">
-
-  </div>
+	<div class="panel-heading">
+		<h3 class="panel-title">Configuration</h3>
+	</div>
+	<div class="panel-body">
+		<div class="input-group">
+			<span class="input-group-addon">Project name: </span>
+			<input type="text" class="form-control">
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon">Project path: </span>
+			<input type="text" class="form-control">
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon">Unity path: </span>
+			<input type="text" class="form-control">
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon">Git: </span>
+			<input type="text" class="form-control" placeholder="git@github.com:[Username]/[Project].git">
+			SSH key:
+			<textarea name="ssh-cert" rows=5 class="form-control" readonly>{{ key }}</textarea>
+		</div>
+		<br>
+		<div class="btn-group" role="group" aria-label="...">
+			<button type="button" class="btn btn-primary">Update</button>
+		</div>
+	</div>
+	<div class="panel-footer"></div>
 </div>
-
 {% endblock %}

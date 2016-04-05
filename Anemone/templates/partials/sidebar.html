@@ -1,0 +1,23 @@
+{% macro activetab(tab) %}{% if tab == g.selected_tab %} class="active"{% endif %}{% endmacro %}
+<div class="project-title"><h1>Anemone <small>project</small></h1></div>
+  <nav role="navigation">
+	<ul class="nav nav-pills nav-stacked" id="stacked-menu">
+	  <li{{ activetab("login") }}>{% if not session.logged_in %}<a href="{{ url_for('login') }}">Sign in</a>{% else %}<a href="{{ url_for('logout') }}">Sign out</a>{% endif %}
+	  </li>
+	  <li{{ activetab("dashboard") }}><a href="/">Dashboard</a></li>
+	  <li{{ activetab("jobs") }}><a href="/jobs">Jobs</a></li>
+	  <li{{ activetab("configuration") }}><a href="/configuration">Configuration</a></li>
+	  <li>
+		<a data-toggle="collapse" data-parent="#stacked-menu" href="#p2">Process Two<span class="caret arrow"></span></a>
+		<ul class="nav nav-pills nav-stacked collapse" id="p2">
+			<li><a href="#">View One</a></li>
+			<li><a href="#">View Two</a></li>
+			<li><a href="#">View Three</a></li>
+			<li class="nav-divider"></li>
+			<li><a href="#">Trash</a></li>
+		</ul>
+	  </li>
+	  <li><a href="#">Process Three<span class="caret arrow"></span></a></li>
+	  <li><a href="#">Process Four<span class="caret arrow"></span></a></li>
+	</ul>
+</nav>

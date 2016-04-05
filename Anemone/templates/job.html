@@ -5,35 +5,26 @@
 {% block body %}
 <h2 style="display:inline;">Job </h2><span class="label label-default" style="vertical-align:super;padding-top:1em"><i class="{{get_status_icon(data.status)}} fa-2x"></i> <b style="vertical-align:inherit;">TODO STATUS {{ data.status }}</b></span>
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">
-        {{ data.name }}
-        {% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %}
-    </h3>
-  </div>
-  <div class="panel-body">
-      {% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %} Name:<br>
-      {{ data.name }}
-      <br>
-      <br>
-      {% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %} Description:<br>
-      {{ data.desc }}
-      <br>
-      <br>
-      Build started: (Todo: timeago.js)<br>
-      {{ data.start }}
-      <br>
-      <br>
-      Build ended: (Todo: timeago.js)<br>
-      {{ data.end }}
-      <br>
-      <br>
-
-      <button type="button" name="button">Show build log</button>
-  </div>
-  <div class="panel-footer">
-
-  </div>
+	<div class="panel-heading">
+		<h3 class="panel-title">{{ data.name }}{% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %}</h3>
+	</div>
+	<div class="panel-body">
+		{% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %} Name:<br>
+		{{ data.name }}
+		<br>
+		<br>
+		{% if session.logged_in %} <a href="#"><i class="fa fa-pencil"></i></a>{% endif %} Description:<br>
+		{{ data.desc }}
+		<br><br>
+		Build started: (Todo: timeago.js)<br>
+		{{ data.start }}
+		<br><br>
+		Build ended: (Todo: timeago.js)<br>
+		{{ data.end }}
+		<br><br>
+		<button type="button" name="button">Show build log</button>
+	</div>
+	<div class="panel-footer">
+	</div>
 </div>
-
 {% endblock %}

@@ -2,41 +2,39 @@
 
 {% block title %}Anemone - Dashboard{% endblock %}
 
-{% block head %}
-<script src="{{ url_for('static', filename='bower_components/d3/d3.min.js') }}"></script>
-{% endblock %}
+{% block head %}<script src="{{ url_for('static', filename='bower_components/d3/d3.min.js') }}"></script>{% endblock %}
 
 {% block body %}
 <h2>Dashboard</h2>
 <div class="panel panel-default panel-info">
   <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-pie-chart"></i> Summary</h3>
+	<h3 class="panel-title"><i class="fa fa-pie-chart"></i> Summary</h3>
   </div>
   <div class="panel-body">
-      <div class="row">
-          <graph></graph>
-          <script type="text/javascript">
-            var graph = d3.select("graph")
-                 .append("svg")
-                 .attr("width", 200)
-                 .attr("height", 200);
+	  <div class="row">
+		  <graph></graph>
+		  <script type="text/javascript">
+			var graph = d3.select("graph")
+				 .append("svg")
+				 .attr("width", 200)
+				 .attr("height", 200);
 
-            var circle = graph.append("circle")
-                 .attr("cx", 100)
-                 .attr("cy", 100)
-                 .attr("r", 100)
-                 .style("fill", "#d6e9c6"); //#ebccd1
-          </script>
-          bla
-      </div>
+			var circle = graph.append("circle")
+				 .attr("cx", 100)
+				 .attr("cy", 100)
+				 .attr("r", 100)
+				 .style("fill", "#d6e9c6"); //#ebccd1
+		  </script>
+		  bla
+	  </div>
   </div>
   <div class="panel-footer"></div>
 </div><div class="panel panel-default jobs-table">
   <div class="panel-heading">
-    <h3 class="panel-title"><a href="/jobs"> <i class="fa fa-table"></i> Jobs</a></h3>
+	<h3 class="panel-title"><a href="/jobs"> <i class="fa fa-table"></i> Jobs</a></h3>
   </div>
   <div class="panel-body">
-      {% include "partials/jobstable.html" %}
+	  {% include "partials/jobstable.html" %}
   </div>
   <div class="panel-footer"></div>
 </div>

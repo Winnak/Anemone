@@ -3,6 +3,6 @@
 from flask import render_template
 from Anemone import app
 
-@app.route("/")
+@app.route("/projects-temp")
 def home():
     return render_template('projects.html')
