@@ -3,6 +3,9 @@
 from flask import request, session, redirect, url_for, render_template, flash, g
 from Anemone import app
 
+
+#TODO: make semi-seperate login screen for non-active project
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """ login page """
@@ -17,13 +20,16 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('home'))
+            if session.get("project"):
+                return redirect(url_for('home'))
+            return redirect(url_for('projects'))
+
     return render_template('login.html', error=error)
 
 
-@app.route('/logout')
+@app.route("/logout")
 def logout():
     """ logging out redirect """
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for("home"))
+    session.pop("logged_in", None)
+    flash("You were logged out")
+    return redirect(url_for("projects"))

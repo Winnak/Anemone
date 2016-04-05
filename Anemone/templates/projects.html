@@ -8,6 +8,7 @@
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.min.css') }}">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -19,30 +20,25 @@
 	<body>
 		<div class="container">
 			<div class="jumbotron">
+				{% for message in get_flashed_messages() %}<div class=flash>{{ message }}</div>{% endfor %}
 				<h1>Welcome</h1>
+				{% if not session.logged_in %}<a href="{{ url_for('login') }}">Sign in</a>{% else %}<a href="{{ url_for('logout') }}">Sign out</a>{% endif %}
 				<table class="table">
 					<thead>
 						<th style="width:10px"></th>
+						<th>Name</th>
+						<th>Current status</th>
+						<th>Latest successful build</th>
 					</thead>
 					<tbody>
+						{% for project in entries %}
 						<tr>
-							<td><i class="fa fa-circle-o fa-2x"></i></td>
-							<td><a href="#">Project 1</a></td>
-							<td>status</td>
-							<td>last successful build</td>
+							<td><i class="fa fa-circle-o fa-2x"></i></td> <!-- TODO -->
+							<td><a href="/{{project.slug}}">{{project.name}}</a></td>
+							<td><a href="/{{project.slug}}/jobs/{{project.status.id}}">{{project.status.status}}</a></td>
+							<td><a href="/{{project.slug}}/jobs/{{project.latest.id}}">{{project.latest.started}}</a></td>
 						</tr>
-						<tr><a href="#">
-							<td><i class="fa fa-circle-o fa-2x"></i></td>
-							<td><a href="#">Project 2</a></td>
-							<td>status</td>
-							<td>last successful build</td>
-						</tr>
-						<tr>
-							<td><i class="fa fa-circle-o fa-2x"></i></td>
-							<td><a href="#">Project 3</a></td>
-							<td>status</td>
-							<td>last successful build</td>
-						</tr>
+						{% endfor %}
 						<tr>
 							<td><i class="fa fa-plus fa-2x"></i></td>
 							<td><a href="#">Add new project</a></td>
@@ -51,7 +47,6 @@
 						</tr>
 					</tbody>
 				</table>
-				<a href="/dashboard-temp">temp shortcut while wip</a>
 			</div>
 		</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

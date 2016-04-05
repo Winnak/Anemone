@@ -18,35 +18,34 @@ License: [MIT](LICENSE)
 
 
 ## TODO
-1. Reach basic functionality
-    * Create build slave
-2. Project management
+1. Project management
     * Create project
     * Soft-delete project
     * Show project health
-3. Build file
+2. Build file
     * Create simple file format (simple as in easy to implement (at least in csharp) and easy to read)
     * Create python reader
     * Create CSharp reader
     * Add options
     * Add configuration view
-4. Layout
+3. Layout
     * Fix the full height sidebar
     * Re-colorize/stylize
     * remove temp code
-5. Git handling
+4. Git handling
     * ssh-key handling
     * Configurable polling
-6. Documentation
+5. Documentation
+    * Add copyright header
     * Update project description
     * Create wiki?
-7. User management
+6. User management
     * create user
     * user roles
-8. Create better startup first-time stuff
+7. Create better startup first-time stuff
     * automatically createdatabase.py if database is not there
     * create admin user on first run
-9. Figure out solution for cloud building
-10. Parse unity log file and make it more informative.
-11. Perforce handling
-12. SVN handling?
+8. Figure out solution for cloud building
+9. Parse unity log file and make it more informative.
+10. Perforce handling
+11. SVN handling?

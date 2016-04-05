@@ -44,5 +44,3 @@ def build():
     # this var does in fact exists
     flash(process.args)
     #pylint: enable=E1101
-
-    flash(process.returncode)

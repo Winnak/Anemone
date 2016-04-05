@@ -1,28 +1,40 @@
 """ Jobs and job view """
 
-from flask import g, render_template, flash, redirect
+from flask import g, render_template, flash, redirect, url_for, session
 import peewee
 from Anemone import app
-from Anemone.models import Job
+from Anemone.models import Job, Project
 
 JOBSPERPAGE = 30
 
-@app.route('/jobs')
-@app.route('/jobs/')
-def jobs_index():
-    """ shows the index if no jobs given """
-    return jobs(1)
+@app.route("/jobs")
+@app.route("/jobs/")
+def jobs_index_2():
+    """ shows the index if no jobs or project given """
+    return jobs_index(session["project"])
 
-@app.route('/jobs/<page>')
-def jobs(page):
+@app.route("/<project>/jobs")
+@app.route("/<project>/jobs/")
+def jobs_index(project):
+    """ shows the index if no jobs given """
+    return jobs(project, 1)
+
+@app.route("/<project>/jobs/<page>")
+def jobs(project, page):
     """ for when no job id was given """
     g.selected_tab = "jobs"
 
-    page = int(page) # would have set the app.route to do this, but it expects a uint
+    # Check if project argument is correct
+    project_query = Project.select().where(Project.slug == project).first()
+    if project_query is None:
+        flash("invalid project")
+        return redirect(url_for("projects"))
+    session['project'] = project_query
 
+    page = int(page) # would have set the app.route to do this, but it expects a uint
     if page <= 0:
         flash("invalid page number")
-        return redirect("/jobs/1")
+        return redirect(project + "/jobs/1")
 
     count = peewee.SelectQuery(Job).count()
 
@@ -55,7 +67,7 @@ def job_view(job_id):
     job = Job.get(Job.id == job_id)
     if job is None:
         flash("Invalid job id", category='error')
-        return jobs_index()
+        return jobs_index_2()
 
     data = dict(id=job.id, status=job.status, name=job.name,
                 start=job.started, end=job.ended)

@@ -43,6 +43,9 @@ import Anemone.views.configuration
 app.config.update(configuration)
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
+from Anemone.models import ProjectJSONEncoder
+app.json_encoder = ProjectJSONEncoder
+
 # important: has to be importet before app is created and configured
 import Anemone.database
 #pylint: enable=C0413

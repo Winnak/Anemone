@@ -1,12 +1,12 @@
 {% macro activetab(tab) %}{% if tab == g.selected_tab %} class="active"{% endif %}{% endmacro %}
-<div class="project-title"><h1>Anemone <small>project</small></h1></div>
+<div class="project-title"><h1><a href="{{url_for('projects')}}">{{session.project.name}}</a><br><small>Anemone</small></h1></div>
   <nav role="navigation">
 	<ul class="nav nav-pills nav-stacked" id="stacked-menu">
 	  <li{{ activetab("login") }}>{% if not session.logged_in %}<a href="{{ url_for('login') }}">Sign in</a>{% else %}<a href="{{ url_for('logout') }}">Sign out</a>{% endif %}
 	  </li>
-	  <li{{ activetab("dashboard") }}><a href="/">Dashboard</a></li>
-	  <li{{ activetab("jobs") }}><a href="/jobs">Jobs</a></li>
-	  <li{{ activetab("configuration") }}><a href="/configuration">Configuration</a></li>
+	  <li{{ activetab("dashboard") }}><a href="/{{session.project.slug}}">Dashboard</a></li>
+	  <li{{ activetab("jobs") }}><a href="/{{session.project.slug}}/jobs">Jobs</a></li>
+	  <li{{ activetab("configuration") }}><a href="/{{session.project.slug}}/configuration">Configuration</a></li>
 	  <li>
 		<a data-toggle="collapse" data-parent="#stacked-menu" href="#p2">Process Two<span class="caret arrow"></span></a>
 		<ul class="nav nav-pills nav-stacked collapse" id="p2">

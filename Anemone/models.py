@@ -3,6 +3,7 @@
 # pylint: disable=C0103
 
 import peewee
+from flask.json import JSONEncoder
 import Anemone.database
 
 class BaseModel(peewee.Model):
@@ -15,8 +16,8 @@ class Project(BaseModel):
     """ Data model for Projects table """
     name = peewee.CharField()
     slug = peewee.CharField()
-    description = peewee.TextField()
-    platforms = peewee.IntegerField()
+    filepath = peewee.CharField(null=True)
+    description = peewee.TextField(null=True)
 
 class Job(BaseModel):
     """ Data model for Jobs table """
@@ -28,3 +29,14 @@ class Job(BaseModel):
     log = peewee.TextField(null=True)
     started = peewee.DateTimeField(null=True)
     ended = peewee.DateTimeField(null=True)
+
+class ProjectJSONEncoder(JSONEncoder):
+    """ Custom json encoder for the projects class """
+    #pylint: disable=E0202
+    def default(self, obj): #override
+        if isinstance(obj, Project):
+            return dict(name=obj.name, slug=obj.slug, filepath=obj.filepath,
+                        description=obj.description)
+        else:
+            JSONEncoder.default(self, obj)
+    #pylint: enable=E0202
