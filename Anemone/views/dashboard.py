@@ -33,6 +33,7 @@ def dashboard(project):
              .where(Job.project == project_query)
              .order_by(-Job.started.is_null(), -Job.started)
              .limit(10))
+             
     entries = []
     for job in query:
         span = job.ended

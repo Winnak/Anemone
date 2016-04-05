@@ -6,33 +6,44 @@
 <h2>Configuration</h2>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h3 class="panel-title">Configuration</h3>
+		<h3 class="panel-title">Anemone settings (universal, applies not just to this project)</h3>
 	</div>
 	<div class="panel-body">
-		<div class="input-group">
-			<span class="input-group-addon">Project name: </span>
-			<input type="text" class="form-control">
-		</div>
-		<br>
-		<div class="input-group">
-			<span class="input-group-addon">Project path: </span>
-			<input type="text" class="form-control">
-		</div>
-		<br>
 		<div class="input-group">
 			<span class="input-group-addon">Unity path: </span>
 			<input type="text" class="form-control">
 		</div>
 		<br>
 		<div class="input-group">
-			<span class="input-group-addon">Git: </span>
-			<input type="text" class="form-control" placeholder="git@github.com:[Username]/[Project].git">
-			SSH key:
-			<textarea name="ssh-cert" rows=5 class="form-control" readonly>{{ key }}</textarea>
+			<span class="input-group-addon">SSH key: </span>
+			<textarea name="ssh-cert" rows=5 class="form-control" readonly>		  #TODO: generate</textarea>
+		</div>
+	</div>
+	<div class="panel-footer"></div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{{session.project.name}} settings</h3>
+	</div>
+	<div class="panel-body">
+		<div class="input-group">
+			<span class="input-group-addon">Project name: </span>
+			<input type="text" class="form-control" placeholder="{{session.project.name}}">
+			<input type="text" class="form-control" placeholder="{{session.project.slug}}		  #TODO: generate" readonly>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon">Description: </span>
+			<textarea name="ssh-cert" rows=5 class="form-control">{{ session.project.description }}</textarea>
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon">Project file: </span>
+			<input type="text" class="form-control" placeholder="{{session.project.filepath}}">
 		</div>
 		<br>
 		<div class="btn-group" role="group" aria-label="...">
-			<button type="button" class="btn btn-primary">Update</button>
+			<button type="button" class="btn btn-primary {% if not session.logged_in %}disabled{% endif %}">Update</button> {% if not session.logged_in %} (<a href="{{url_for('login')}}">Sign in</a> to edit and update settings) {% endif %}
 		</div>
 	</div>
 	<div class="panel-footer"></div>

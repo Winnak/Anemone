@@ -39,7 +39,7 @@ def main():
                        " development.")
 
         project = Project.create(name="TestProject", slug="testproject",
-                                 description=description, platforms=7)
+                                 filepath="", description=description)
         project.save()
         Job.create(project=project, status=1,
                    name="ClearChimpanzee-001", description="",

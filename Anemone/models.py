@@ -15,7 +15,7 @@ class BaseModel(peewee.Model):
 class Project(BaseModel):
     """ Data model for Projects table """
     name = peewee.CharField()
-    slug = peewee.CharField()
+    slug = peewee.CharField(unique=True)
     filepath = peewee.CharField(null=True)
     description = peewee.TextField(null=True)
 

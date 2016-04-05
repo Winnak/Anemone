@@ -19,9 +19,7 @@ License: [MIT](LICENSE)
 
 ## TODO
 1. Project management
-    * Create project
     * Soft-delete project
-    * Show project health
 2. Build file
     * Create simple file format (simple as in easy to implement (at least in csharp) and easy to read)
     * Create python reader
@@ -33,6 +31,7 @@ License: [MIT](LICENSE)
     * use timeago.js
     * Re-colorize/stylize
     * remove temp code
+    * Show project health on dashboard (and maybe on project overview as well)
 4. Git handling
     * ssh-key handling
     * Configurable polling

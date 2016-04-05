@@ -5,11 +5,9 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Anemone Projects</title>
-
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
 		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.min.css') }}">
-
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -27,21 +25,21 @@
 					<thead>
 						<th style="width:10px"></th>
 						<th>Name</th>
-						<th>Current status</th>
+						<th>Latest job entry</th>
 						<th>Latest successful build</th>
 					</thead>
 					<tbody>
 						{% for project in entries %}
 						<tr>
-							<td><i class="fa fa-circle-o fa-2x"></i></td> <!-- TODO -->
+							<td><i class="{{ get_status_icon(project.status.status) }} fa-2x"></i></td>
 							<td><a href="/{{project.slug}}">{{project.name}}</a></td>
-							<td><a href="/{{project.slug}}/jobs/{{project.status.id}}">{{project.status.status}}</a></td>
-							<td><a href="/{{project.slug}}/jobs/{{project.latest.id}}">{{project.latest.started}}</a></td>
+							<td><a href="/jobs/id/{{project.status.id}}">{{project.status.name}}</a></td>
+							<td><a href="/jobs/id/{{project.latest.id}}">{{project.latest.started}}</a></td>
 						</tr>
 						{% endfor %}
 						{% if session.logged_in %}<tr>
 							<td><i class="fa fa-plus fa-2x"></i></td>
-							<td><a href="#">Add new project</a></td>
+							<td><a href="{{url_for('projects_add')}}">Add new project</a></td>
 							<td></td>
 							<td></td>
 						</tr>{% endif %}
@@ -49,7 +47,7 @@
 				</table>
 			</div>
 		</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	</body>
 </html>

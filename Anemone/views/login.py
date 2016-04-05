@@ -13,18 +13,18 @@ def login():
 
     error = None
     if request.method == "POST":
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid login information'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid login information'
+        if request.form["username"] != app.config["USERNAME"]:
+            error = "Invalid login information"
+        elif request.form["password"] != app.config["PASSWORD"]:
+            error = "Invalid login information"
         else:
-            session['logged_in'] = True
-            flash('You were logged in')
+            session["logged_in"] = True
+            flash("You were logged in")
             if session.get("project"):
-                return redirect(url_for('home'))
-            return redirect(url_for('projects'))
+                return redirect(url_for("home"))
+            return redirect(url_for("projects"))
 
-    return render_template('login.html', error=error)
+    return render_template("login.html", error=error)
 
 
 @app.route("/logout")

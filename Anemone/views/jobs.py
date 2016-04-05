@@ -40,6 +40,7 @@ def jobs(project, page):
 
     query = (Job
              .select()
+             .where(Job.project == project_query)
              .order_by(-Job.started.is_null(), -Job.started)
              .paginate(page, JOBSPERPAGE))
 
@@ -69,6 +70,7 @@ def job_view(job_id):
         flash("Invalid job id", category='error')
         return jobs_index_2()
 
+    session["project"] = job.project
     data = dict(id=job.id, status=job.status, name=job.name,
                 start=job.started, end=job.ended)
 
