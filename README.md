@@ -17,7 +17,7 @@ License: [MIT](LICENSE)
 [Anemone/config.py](Anemone/config.py) change default login info
 
 
-## TODO
+## TODO/Roadmap
 1. Build file
     * Use build file
     * Add configuration view (should readonly the file and be able to target a new)
@@ -43,6 +43,8 @@ License: [MIT](LICENSE)
     * automatically createdatabase.py if database is not there
     * create admin user on first run
 7. Figure out solution for cloud building
-8. Parse unity log file and make it more informative.
-9. Perforce handling
-10. SVN handling?
+8. ABC format update
+    * Add multiline setting
+9. Parse unity log file and make it more informative.
+10. Perforce handling
+11. SVN handling?
