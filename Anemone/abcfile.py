@@ -9,15 +9,14 @@ def parse(filepath):
         return None
 
     file = open(filepath, "r", -1, "utf-8")
-    raw = file.readline()
+    line = file.readline()
     current_node = root = ABCNode("root")
 
-    while raw is not "": #end of file
-        line = raw
-        if raw.find("#") is not -1:
-            line = raw.split("#", 1)[0]
+    while line is not "": #end of file
+        if line.find("#") is not -1:
+            line = line.split("#", 1)[0]
         if line.strip() == "":
-            raw = file.readline()
+            line = file.readline()
             continue
         if line[0] != '\t':
             current_node = root
@@ -25,21 +24,20 @@ def parse(filepath):
         for char_index in range(len(line)):
             if line[char_index] == '=':
                 if char_index == 0: #no key
-                    return
+                    break
                 key = line[:char_index].strip()
-                raw_value = line[char_index+1:]
-                print(raw_value)
-                value = raw_value[:char_index + 1].strip()
-                print(value)
-                if value is "":
+                if len(key) is 0:
+                    break
+                value = line[char_index+1:].strip()
+                if len(value) is 0:
                     value = None
-                current_node.set(key, value)
+                current_node.set(line[:char_index].strip(), value)
             elif line[char_index] == ':':
                 if char_index == 0: #no key
                     return
                 key = line[:char_index].strip()
                 current_node = ABCNode(key, current_node)
-        raw = file.readline()
+        line = file.readline()
     return root
 #pylint: enable=C0200
 
