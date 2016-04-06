@@ -18,6 +18,7 @@ class Project(BaseModel):
     slug = peewee.CharField(unique=True)
     filepath = peewee.CharField(null=True)
     description = peewee.TextField(null=True)
+    output = peewee.CharField()
     created_at = peewee.DateTimeField()
 
 class Job(BaseModel):
@@ -27,7 +28,7 @@ class Job(BaseModel):
     status = peewee.IntegerField()
     name = peewee.CharField()
     description = peewee.TextField(null=True)
-    log = peewee.TextField(null=True)
+    log_path = peewee.CharField(null=True)
     started = peewee.DateTimeField(null=True)
     ended = peewee.DateTimeField(null=True)
 

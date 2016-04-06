@@ -1,0 +1,22 @@
+# Basic ABC file
+
+# General:
+project-name=CI Test
+project-path=C:\Projects\Unity\BuildServerTest
+arguments=-quit -batchmode -silent-crashes
+out=./tmpbuilds/ # temporary build folder, Anemone moves files afterwards
+
+# Build steps:
+#pre-build=
+#post-build=
+
+windows:
+    out=./buildstmp/win/CI.exe
+    arguments=-quit -batchmode -silent-crashes
+    method=Anemone.Build.Windows #does -executeMethod <method> underneath.
+    #scenes= #Retrieves all active scenes from the build settings unless otherwise specified
+windows-debug:
+    out=./buildstmp/wind/CIx86d.exe
+    arguments=-quit -batchmode -force-d3d9 -silent-crashes
+    method=Anemone.Build.WindowsDebug #does -executeMethod <method> underneath.
+    scenes=testscene #builds only the "testscene"-scene

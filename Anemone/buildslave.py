@@ -9,20 +9,17 @@ LOGS_TEMP_DIR = os.path.join("Anemone", "tmp", "logs")
 
 # Anemone needs its own settings. It needs to know the following:
 # Where is the unity executable?
-# Where is the unity build log?
+# Where is the unity build log? (job log)
+# what do we rename the project to afterwards (job name)
+# where do we put the project afterwards
 
 # The project needs its own settings. It needs to know the following:
 # what platforms are we building to (unittest is now a platform)
 # what is out pre build steps
 # what is our post build steps
-# where do we put the project afterwards
-# what do we rename the project to afterwards
 # what scenes are we building
 # is it a development build
 # unity specific settings etc.
-
-# C:\Users\Erik\AppData\Local\Unity\Editor\Editor.log
-# yyyy-MM-dd_HH\\hmm\\mss\\s
 
 def build():
     """ builds the project """

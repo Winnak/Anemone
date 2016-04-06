@@ -35,7 +35,6 @@ License: [MIT](LICENSE)
     * Add module information
     * Update project description
     * Create wiki?
-    * Move the ABC format to its own repository
 5. User management
     * create user
     * user roles
@@ -44,7 +43,11 @@ License: [MIT](LICENSE)
     * create admin user on first run
 7. Figure out solution for cloud building
 8. ABC format update
+    * Move the ABC format to its own repository
     * Add multiline setting
+    * Internal references
+    * Wildcards for datetime and other fun things?
 9. Parse unity log file and make it more informative.
 10. Perforce handling
-11. SVN handling?
+11. Unreal Engine support?
+12. SVN handling?
