@@ -1,0 +1,61 @@
+# Anemone Build Configuration file ".abc"
+# License: MIT
+# File format Specification, Version 1
+# Author: Erik Høyrup Jørgensen 2016
+
+# The goal of this file format is to create a readable file for settings and such,
+# and to be easy to implement in various languages (aiming for C# and Python).
+# ABC files are therefore *always* stored as plain text
+
+# this file must be parse-able by an Anemone Build Configuration parser in order for it to meet the goals of this specification.
+
+# line breaks and whitespace are not ignored
+
+# comments are noted as: #<comment>
+
+# settings are noted as <setting-key>=<setting-value>
+outputdir=./buildstmp/
+
+anemone-build-methods=WindowsDebug,Windows
+
+#NOTE: settings must be uniquely named
+
+post-build = python post-process.py #Whitespace at the end and beginning of a settings (key and value) is removed
+pre-build= #value can be empty, key cannot.
+#during-build=?
+
+# configurations are marked by <configuration>:<newline><tab prefixed content>
+win: #configurations can be empty
+
+mac:
+	#every consecutive setting tabbed in by one belongs to the last parsed node
+	outputdir=./buildstmp/mac #configurations can override settings (breaking the unique rule)
+	#NOTE: spaces does not work here
+linux: #linux specific
+
+unit-test:
+
+
+# Implementation:
+# Parsing the file format:
+#   the structure of this file would be:
+#			  root (output, post-build, anemone-build-methods)
+#		   /  / \   \
+#		 /   /   \	  \
+#	   win mac  linux  unit-test
+#			|
+#	   (output-dir)
+#
+#
+# Using the file format (not required by this specification, but recommended):
+#   values are accessed by using a .Get function, that returns null if the key is not found
+#   configurations (nodes) can be accessed (in )
+#
+#   accessing this information will look like (fictitious example):
+#   var postBuild = buildfile.Get("post-build")
+#   if (postBuild != null) RunCommand(postBuild);
+#
+#   or to check if windows have overriden its outputdir
+#   var outputdir = buildfile["win"].outputdir
+#
+#   because the "win"-configuration does not override "outputdir", "outputdir" takes roots value instead

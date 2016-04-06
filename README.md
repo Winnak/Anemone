@@ -19,11 +19,9 @@ License: [MIT](LICENSE)
 
 ## TODO
 1. Build file
-    * Create simple file format (simple as in easy to implement (at least in csharp) and easy to read)
-    * Create python reader
     * Create CSharp reader
     * Add options
-    * Add configuration view
+    * Add configuration view (should only read from the file and be able to target a new)
 2. Layout
     * Fix the full height sidebar
     * use timeago.js
@@ -32,9 +30,10 @@ License: [MIT](LICENSE)
     * Show project health on dashboard (and maybe on project overview as well)
 3. Git handling
     * ssh-key handling
-    * Configurable polling
+    * Configurable polling / build scheduling
 4. Documentation
     * Add copyright header
+    * Add module information
     * Update project description
     * Create wiki?
 5. User management
