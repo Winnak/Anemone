@@ -19,9 +19,8 @@ License: [MIT](LICENSE)
 
 ## TODO
 1. Build file
-    * Create CSharp reader
-    * Add options
-    * Add configuration view (should only read from the file and be able to target a new)
+    * Use build file
+    * Add configuration view (should readonly the file and be able to target a new)
 2. Layout
     * Fix the full height sidebar
     * use timeago.js
@@ -36,6 +35,7 @@ License: [MIT](LICENSE)
     * Add module information
     * Update project description
     * Create wiki?
+    * Move the ABC format to its own repository
 5. User management
     * create user
     * user roles

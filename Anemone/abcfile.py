@@ -23,19 +23,17 @@ def parse(filepath):
 
         for char_index in range(len(line)):
             if line[char_index] == '=':
-                if char_index == 0: #no key
-                    break
                 key = line[:char_index].strip()
                 if len(key) is 0:
                     break
                 value = line[char_index+1:].strip()
                 if len(value) is 0:
                     value = None
-                current_node.set(line[:char_index].strip(), value)
+                current_node.set(key, value)
             elif line[char_index] == ':':
-                if char_index == 0: #no key
-                    return
                 key = line[:char_index].strip()
+                if len(key) is 0:
+                    break
                 current_node = ABCNode(key, current_node)
         line = file.readline()
     return root
@@ -57,7 +55,8 @@ class ABCNode(object):
 
     def __setitem__(self, key, value):
         if isinstance(ABCNode, value):
-            self.set_subnode(key, value)
+            self.m_nodes[key] = value
+            value.m_parent = self
 
     def __delitem__(self, key):
         node = self[key]
@@ -79,10 +78,3 @@ class ABCNode(object):
     def set(self, key, value):
         """ Sets setting in internal value dictionary """
         self.m_values[key] = value
-
-    def set_subnode(self, key, node):
-        """ Creates a new node in this nodes internal dict of nodes.
-            Overrides subnode if already defined. """
-        self.m_nodes[key] = node
-        node.m_parent = self
-        return node

@@ -152,5 +152,131 @@ namespace Anemone
 
             return levels;
         }
+
+        /// <summary>
+        /// Anemone Build Configuration-format node. Use <see cref="ParseFile(string)"/> to create.
+        /// </summary>
+        private class ABCFormat
+        {
+            /// <summary>
+            /// Parses an .abc file.
+            /// </summary>
+            /// <param name="path">path to the .abc-file</param>
+            /// <returns>The root node in the ABC-file format structure</returns>
+            internal static ABCFormat ParseFile(string path)
+            {
+                if (!File.Exists(path)) return null;
+
+                var lines = File.ReadAllLines(path);
+                ABCFormat root = new ABCFormat("root");
+                ABCFormat currentNode = root;
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    string line = lines[i];
+                    if (line.IndexOf('#') != -1) line = line.Split('#')[0];
+                    if (line.Trim() == string.Empty) continue;
+                    if (line[0] != '\t') currentNode = root;
+
+                    for (int c = 0; c < line.Length; c++)
+                    {
+                        switch (line[c])
+                        {
+                            case '=':
+                                {
+                                    string key = line.Substring(0, c).Trim();
+                                    if (key.Length == 0) break;
+                                    string value = line.Substring(c + 1, line.Length - c - 2).Trim();
+                                    currentNode.Set(key, value);
+                                }
+                                break;
+                            case ':':
+                                {
+                                    string key = line.Substring(0, c).Trim();
+                                    if (key.Length == 0) break;
+                                    currentNode = new ABCFormat(key, currentNode);
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                return root;
+            }
+
+            private static readonly ABCFormat s_NullNode = new ABCFormat(string.Empty);
+
+            private string m_Key;
+            private ABCFormat m_Parent;
+            private Dictionary<string, string> m_Values = new Dictionary<string, string>();
+            private Dictionary<string, ABCFormat> m_Nodes = new Dictionary<string, ABCFormat>();
+
+            /// <summary>
+            /// Gets or sets the subnodes of this node
+            /// </summary>
+            /// <param name="key">Subnodes key.</param>
+            /// <returns>The subnode.</returns>
+            internal ABCFormat this[string key]
+            {
+                get
+                {
+                    ABCFormat value;
+                    if (!m_Nodes.TryGetValue(key, out value)) value = s_NullNode;
+                    return value;
+                }
+                set
+                {
+                    if (m_Nodes.ContainsKey(key)) m_Nodes[key] = value;
+                    else m_Nodes.Add(key, value);
+                    value.m_Parent = this;
+                }
+            }
+
+            /// <summary>
+            /// Private constructer for an ABC node. Use <see cref="ParseFile(string)"/> instead.
+            /// </summary>
+            /// <param name="key">This nodes key.</param>
+            /// <param name="parent">The parent of this node.</param>
+            private ABCFormat(string key, ABCFormat parent = null)
+            {
+                m_Key = key;
+                m_Parent = parent;
+                if (parent != null) parent[key] = this;
+            }
+
+            /// <summary>
+            /// Gets the value of this configuration setting (or the default)
+            /// </summary>
+            /// <param name="key">Setting key.</param>
+            /// <returns>Returns value of setting.</returns>
+            internal string Get(string key)
+            {
+                string value = null;
+                if (!m_Values.TryGetValue(key, out value))
+                    if (m_Parent != null)
+                        return m_Parent.Get(key);
+                return value;
+            }
+
+            /// <summary>
+            /// Sets a setting of this node
+            /// </summary>
+            /// <param name="key">Setting key.</param>
+            /// <param name="value">Setting value.</param>
+            internal void Set(string key, string value)
+            {
+                if (m_Values.ContainsKey(key)) m_Values[key] = value;
+                else m_Values.Add(key, value);
+            }
+
+            /// <summary>
+            /// Returns a user friendly string representing this object
+            /// </summary>
+            /// <returns>This key, followed by the amount of settings stored in this node, followed by the amount of configurations beneath this node.</returns>
+            public override string ToString()
+            {
+                return string.Format("{0}({1})[{2}]", m_Key, m_Values.Count, m_Nodes.Count);
+            }
+        }
     }
 }
