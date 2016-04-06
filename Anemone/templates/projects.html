@@ -27,6 +27,7 @@
 						<th>Name</th>
 						<th>Latest job entry</th>
 						<th>Latest successful build</th>
+						{% if session.logged_in %}<th>Actions</th>{% endif %}
 					</thead>
 					<tbody>
 						{% for project in entries %}
@@ -35,11 +36,17 @@
 							<td><a href="/{{project.slug}}">{{project.name}}</a></td>
 							<td><a href="/jobs/id/{{project.status.id}}">{{project.status.name}}</a></td>
 							<td><a href="/jobs/id/{{project.latest.id}}">{{project.latest.started}}</a></td>
+							<td>
+								<form class="form-group form-inline" action="{{ url_for('projects_remove', project=project.slug) }}" method="post">
+									{% if session.logged_in %}<button type=submit class="btn btn-danger"><i class='glyphicon glyphicon-remove-circle'></i> Delete</button>{% endif %}
+								</form>
+							</td>
 						</tr>
 						{% endfor %}
 						{% if session.logged_in %}<tr>
 							<td><i class="fa fa-plus fa-2x"></i></td>
 							<td><a href="{{url_for('projects_add')}}">Add new project</a></td>
+							<td></td>
 							<td></td>
 							<td></td>
 						</tr>{% endif %}

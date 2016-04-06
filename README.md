@@ -18,34 +18,32 @@ License: [MIT](LICENSE)
 
 
 ## TODO
-1. Project management
-    * Soft-delete project
-2. Build file
+1. Build file
     * Create simple file format (simple as in easy to implement (at least in csharp) and easy to read)
     * Create python reader
     * Create CSharp reader
     * Add options
     * Add configuration view
-3. Layout
+2. Layout
     * Fix the full height sidebar
     * use timeago.js
     * Re-colorize/stylize
     * remove temp code
     * Show project health on dashboard (and maybe on project overview as well)
-4. Git handling
+3. Git handling
     * ssh-key handling
     * Configurable polling
-5. Documentation
+4. Documentation
     * Add copyright header
     * Update project description
     * Create wiki?
-6. User management
+5. User management
     * create user
     * user roles
-7. Create better startup first-time stuff
+6. Create better startup first-time stuff
     * automatically createdatabase.py if database is not there
     * create admin user on first run
-8. Figure out solution for cloud building
-9. Parse unity log file and make it more informative.
-10. Perforce handling
-11. SVN handling?
+7. Figure out solution for cloud building
+8. Parse unity log file and make it more informative.
+9. Perforce handling
+10. SVN handling?

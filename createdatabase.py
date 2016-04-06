@@ -39,8 +39,10 @@ def main():
                        " development.")
 
         project = Project.create(name="TestProject", slug="testproject",
-                                 filepath="", description=description)
+                                 filepath="", description=description,
+                                 created_at=datetime(2016, 1, 6, 8, 23, 19))
         project.save()
+
         Job.create(project=project, status=1,
                    name="ClearChimpanzee-001", description="",
                    started=datetime(2016, 1, 8, 8, 23, 19),

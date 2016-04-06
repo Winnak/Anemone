@@ -18,6 +18,7 @@ class Project(BaseModel):
     slug = peewee.CharField(unique=True)
     filepath = peewee.CharField(null=True)
     description = peewee.TextField(null=True)
+    created_at = peewee.DateTimeField()
 
 class Job(BaseModel):
     """ Data model for Jobs table """

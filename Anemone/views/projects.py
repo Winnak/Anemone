@@ -1,5 +1,6 @@
 """ view for overview of projects """
 
+import datetime
 from flask import render_template, session, request, url_for, redirect, flash
 from Anemone import app
 from Anemone.models import Project, Job
@@ -29,6 +30,19 @@ def projects():
 
     return render_template("projects.html", entries=entries)
 
+@app.route("/projects/remove/<project>", methods=["POST"])
+def projects_remove(project):
+    """ soft delete a project from Anemone """
+    if session["logged_in"]:
+        proj = Project.get(Project.slug == project)
+        if proj is None:
+            flash("no such project {}".format(project))
+        else:
+            removed = proj.delete_instance()
+            flash("Succesfully removed {} project ({})".format(removed, proj.name))
+    else:
+        flash("This acition requires you to be logged in")
+    return redirect(url_for("projects"))
 
 # pylint: disable=W0703
 #"Catching too general exception", because so much can go wrong here
@@ -38,7 +52,7 @@ def projects_add(): #TODO: Validate filepath
     """ view for projects """
     error = None
     if request.method == "POST":
-        if not session['logged_in']:
+        if not session["logged_in"]:
             return redirect(url_for("projects"))
 
         name = request.form["name"]
@@ -50,7 +64,8 @@ def projects_add(): #TODO: Validate filepath
             try:
                 Project.create(name=name, slug=slug,
                                description=request.form["description"],
-                               filepath=request.form["filepath"]).save()
+                               filepath=request.form["filepath"],
+                               created_at=datetime.datetime.now()).save()
                 flash("Succesfully created {}".format(name))
                 return redirect(url_for("projects"))
             except Exception as exception:
