@@ -29,7 +29,7 @@
 		<div class="input-group">
 			<span class="input-group-addon">Project name: </span>
 			<input type="text" class="form-control" placeholder="{{session.project.name}}">
-			<input type="text" class="form-control" placeholder="{{session.project.slug}}		  #TODO: generate" readonly>
+			<input type="text" class="form-control" placeholder="{{session.project.slug}}" readonly>
 		</div>
 		<br>
 		<div class="input-group">
@@ -39,6 +39,11 @@
 		<br>
 		<div class="input-group">
 			<span class="input-group-addon">Project file: </span>
+			<input type="text" class="form-control" placeholder="{{session.project.filepath}}">
+		</div>
+		<br>
+		<div class="input-group">
+			<span class="input-group-addon">Project output folder: </span>
 			<input type="text" class="form-control" placeholder="{{session.project.filepath}}">
 		</div>
 		<br>

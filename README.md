@@ -42,6 +42,7 @@ License: [MIT](LICENSE)
     * automatically createdatabase.py if database is not there
     * create admin user on first run
 7. Figure out solution for cloud building
+    * Test using raspberry pis
 8. ABC format update
     * Move the ABC format to its own repository
     * Add multiline setting
