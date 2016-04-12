@@ -18,7 +18,7 @@ def configuration_view(project):
 
     g.selected_tab = "configuration"
 
-    settings = dict()
+    settings = None
     if request.method == "GET":
         settings = Anemone.abcfile.parse(project_query.filepath)
     elif request.method == "POST":
