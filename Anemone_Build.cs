@@ -180,21 +180,20 @@ namespace Anemone
 
                     for (int c = 0; c < line.Length; c++)
                     {
-                        switch (line[c])
+                        if (line[c] == '=')
                         {
-                            case '=':
-                            {
-                                string key = line.Substring(0, c).Trim();
-                                if (key.Length == 0) break;
-                                string value = line.Substring(c + 1, line.Length - c - 2).Trim();
-                                currentNode.Set(key, value);
-                            } break;
-                            case ':':
-                            {
-                                string key = line.Substring(0, c).Trim();
-                                if (key.Length == 0) break;
-                                currentNode = new ABCFormat(key, currentNode);
-                            } break;
+                            string key = line.Substring(0, c).Trim();
+                            if (key.Length == 0) break;
+                            string value = line.Substring(c + 1, line.Length - c - 2).Trim();
+                            currentNode.Set(key, value);
+                            break;
+                        }
+                        else if (line[c] == ':')
+                        {
+                            string key = line.Substring(0, c).Trim();
+                            if (key.Length == 0) break;
+                            currentNode = new ABCFormat(key, currentNode);
+                            break;
                         }
                     }
                 }

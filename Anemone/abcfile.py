@@ -30,11 +30,13 @@ def parse(filepath):
                 if len(value) is 0:
                     value = None
                 current_node.set(key, value)
+                break
             elif line[char_index] == ':':
                 key = line[:char_index].strip()
                 if len(key) is 0:
                     break
                 current_node = ABCNode(key, current_node)
+                break
         line = file.readline()
     return root
 #pylint: enable=C0200
@@ -48,13 +50,13 @@ class ABCNode(object):
         self.m_key = key
         self.m_parent = parent
         if parent is not None:
-            parent.set_subnode(key, self)
+            parent[key] = self
 
     def __getitem__(self, key):
         return self.m_nodes[key]
 
     def __setitem__(self, key, value):
-        if isinstance(ABCNode, value):
+        if isinstance(value, ABCNode):
             self.m_nodes[key] = value
             value.m_parent = self
 
@@ -64,7 +66,10 @@ class ABCNode(object):
             del node.m_key, node.m_values, node.m_nodes
 
     def __repr__(self):
-        return "{}({})[{}]".format(self.m_key, len(self.m_values), len(self.m_nodes))
+        return self.m_key
+
+    def __len__(self):
+        return len(self.m_nodes)
 
     def get(self, key):
         """ gets a value out of the nodes internal dictionary,

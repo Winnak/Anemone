@@ -5,6 +5,8 @@ project-name=CI Test
 project-path=C:\Projects\Unity\BuildServerTest
 arguments=-quit -batchmode -silent-crashes
 out=./tmpbuilds/ # temporary build folder, Anemone moves files afterwards
+branch=master # can be overriden in the individual configurations
+git=https://bitbucket.com/bla/blablabla
 
 # Build steps:
 #pre-build=
