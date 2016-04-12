@@ -26,29 +26,59 @@
 		<h3 class="panel-title">{{session.project.name}} settings</h3>
 	</div>
 	<div class="panel-body">
-		<div class="input-group">
-			<span class="input-group-addon">Project name: </span>
-			<input type="text" class="form-control" placeholder="{{session.project.name}}">
-			<input type="text" class="form-control" placeholder="{{session.project.slug}}" readonly>
-		</div>
-		<br>
-		<div class="input-group">
-			<span class="input-group-addon">Description: </span>
-			<textarea name="ssh-cert" rows=5 class="form-control">{{ session.project.description }}</textarea>
-		</div>
-		<br>
-		<div class="input-group">
-			<span class="input-group-addon">Project file: </span>
-			<input type="text" class="form-control" placeholder="{{session.project.filepath}}">
-		</div>
-		<br>
-		<div class="input-group">
-			<span class="input-group-addon">Project output folder: </span>
-			<input type="text" class="form-control" placeholder="{{session.project.filepath}}">
-		</div>
-		<br>
-		<div class="btn-group" role="group" aria-label="...">
-			<button type="button" class="btn btn-primary {% if not session.logged_in %}disabled{% endif %}">Update</button> {% if not session.logged_in %} (<a href="{{url_for('login')}}">Sign in</a> to edit and update settings) {% endif %}
+		<form action="{{ url_for('configuration_view', project=session.project.slug) }}" method=post class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon">Project name: </span>
+				<input name=name type=text class="form-control" value="{{session.project.name}}">
+				<input name=slug type=text class="form-control" value="{{session.project.slug}}" readonly>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon">Description: </span>
+				<textarea name=description rows=5 class="form-control">{{ session.project.description }}</textarea>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon">Project output folder: </span>
+				<input name=output type=text class="form-control" value="{{session.project.output}}">
+			</div>
+			<br>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="input-group">
+						<span class="input-group-addon">Project file: </span>
+						<input name=filepath type=text class="form-control" value="{{session.project.filepath}}">
+					</div>
+				</div>
+				<div class="panel-body form-group">
+					Use the buildfile to configure any of the following settings: <br>
+					Global settings:
+					{% for key, value in build.m_values.items() %}
+					<div class="input-group">
+						<span class="input-group-addon">{{key}}</span>
+						<input type=text class="form-control" value="{{value}}" readonly>
+					</div>
+					{% endfor %}
+					<br>
+					{% for key, configuration in build %}
+					{{key}}:
+					{% for key, value in configuration.m_values.items() %}
+					<div class="input-group">
+						<span class="input-group-addon">{{key}}</span>
+						<input type=text class="form-control" value="{{value}}" readonly>
+					</div>
+					{% endfor %}
+					<br>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="btn-group" role="group" aria-label="...">
+				{% if not session.logged_in %}
+				<a href="{{url_for('login')}}">Sign in</a> to edit and update settings)
+				{% else %}
+				<input type=submit value="Update" class="btn btn-primary">
+				{% endif %}
+			</div>
 		</div>
 	</div>
 	<div class="panel-footer"></div>

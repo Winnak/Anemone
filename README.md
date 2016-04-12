@@ -20,7 +20,6 @@ License: [MIT](LICENSE)
 ## TODO/Roadmap
 1. Build file
     * Use build file
-    * Add configuration view (should readonly the file and be able to target a new)
 2. Layout
     * Fix the full height sidebar
     * use timeago.js

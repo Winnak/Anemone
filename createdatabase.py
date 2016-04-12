@@ -40,7 +40,7 @@ def main():
 
         project = Project.create(name="TestProject", slug="testproject",
                                  filepath="", description=description,
-                                 output=os.path.join("Anemone", "tmp", "output"),
+                                 output="/output",
                                  created_at=datetime(2016, 1, 6, 8, 23, 19))
         project.save()
 

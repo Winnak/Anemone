@@ -49,6 +49,7 @@ class ABCNode(object):
         self.m_nodes = dict()
         self.m_key = key
         self.m_parent = parent
+        self.m_current = 0
         if parent is not None:
             parent[key] = self
 
@@ -70,6 +71,12 @@ class ABCNode(object):
 
     def __len__(self):
         return len(self.m_nodes)
+
+    def __iter__(self):
+        return self.m_nodes.items().__iter__()
+
+    def __next__(self):
+        return self.m_nodes.items().__next__()
 
     def get(self, key):
         """ gets a value out of the nodes internal dictionary,
