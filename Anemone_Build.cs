@@ -202,7 +202,6 @@ namespace Anemone
             }
 
             private static readonly ABCFormat s_NullNode = new ABCFormat(string.Empty);
-
             private string m_Key;
             private ABCFormat m_Parent;
             private Dictionary<string, string> m_Values = new Dictionary<string, string>();
@@ -270,10 +269,7 @@ namespace Anemone
             /// Returns a user friendly string representing this object
             /// </summary>
             /// <returns>This key, followed by the amount of settings stored in this node, followed by the amount of configurations beneath this node.</returns>
-            public override string ToString()
-            {
-                return string.Format("{0}({1})[{2}]", m_Key, m_Values.Count, m_Nodes.Count);
-            }
+            public override string ToString() { return m_Key; }
         }
     }
 }
