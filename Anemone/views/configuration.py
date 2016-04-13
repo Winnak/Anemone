@@ -9,8 +9,6 @@ import Anemone.abcfile
 @app.route("/<project>/configuration/", methods=['GET', 'POST'])
 def configuration_view(project):
     """ Displays the view for configuration """
-    # Check if project argument is correct
-    print("agdagdgds")
     project_query = Project.select().where(Project.slug == project).first()
     if project_query is None:
         flash("invalid project")
@@ -31,7 +29,6 @@ def configuration_view(project):
 def configuration_post(project, req):
     """ The post part of the configuration view """
     error = ""
-    print(error)
     if req.form.get("name", None) is None:
         flash("Project name must be something")
         error += "name "

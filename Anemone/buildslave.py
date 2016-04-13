@@ -4,8 +4,8 @@ import os.path
 import datetime
 import subprocess
 from flask import flash
-
-LOGS_TEMP_DIR = os.path.join("Anemone", "tmp", "logs")
+from Anemone import app
+from Anemone.models import Job
 
 # Anemone needs its own settings. It needs to know the following:
 # Where is the unity executable?
@@ -21,21 +21,29 @@ LOGS_TEMP_DIR = os.path.join("Anemone", "tmp", "logs")
 # is it a development build
 # unity specific settings etc.
 
-def build():
+def build(project, config):
     """ builds the project """
     # TODO: combine with project slug and job id (thereby dropping the datetime)
-    os.makedirs(LOGS_TEMP_DIR, exist_ok=True)
-    logpath = os.path.join(LOGS_TEMP_DIR,
-                           "TestProject.%Y-%m-%d_%Hh%Mm%Ss.log")
+    if config is None:
+        flash("ERROR COULD NOT BUILD, INVALID CONFIG")
+        return
 
-    # Win "C:\Program Files\Unity\Editor\Unity.exe"
-    # Mac /Applications/Unity/Unity.app/Contents/MacOS/Unity
-    cmd = [r"C:\Program Files\Unity\Editor\Unity.exe", "-quit", "-batchmode",
-           "-executeMethod", "Anemone.Build.Windows",
+    newjob = Job.create(project=project, name="quickbuild",
+                        description="was build from the dashboard",
+                        started=datetime.datetime.now(), status=0)
+
+    os.makedirs(app.config["LOG_PATH"], exist_ok=True)
+    logpath = os.path.join(app.config["LOG_PATH"], project.slug +
+                           ".%Y-%m-%d_%Hh%Mm%Ss.log")
+    newjob.log_path = logpath
+    cmd = [app.config["UNITY_PATH"], config.get("arguments"),
+           "-executeMethod", config.get("method"),
            "-logFile", str(datetime.datetime.now().strftime(logpath)),
-           "-projectPath", r"C:\Projects\Unity\BuildServerTest"]
+           "-projectPath", config.get("project-path")]
 
     process = subprocess.Popen(cmd)
+    newjob.status = 5
+    newjob.save()
 
     #pylint: disable=E1101
     # this var does in fact exists

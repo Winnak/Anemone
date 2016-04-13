@@ -34,9 +34,11 @@
 		<h3 class="panel-title">Quick actions</h3>
 	</div>
 	<div class="panel-body">
-		<form class="" action="/test-build" method="post">
-			<button type=submit value="TestBuild" class="btn btn-default">Test build project</button>
-		</form>
+		<form class="" action="/test-build/{{session.project.slug}}" method="post">
+		{% for buildtype in buildconf %}
+			<button type=submit name=config value="{{buildtype}}" class="btn btn-default">{{buildtype}}</button>
+		{% endfor %}
+	</form>
 	</div>
 </div>
 <div class="panel panel-default jobs-table">
