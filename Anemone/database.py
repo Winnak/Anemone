@@ -2,19 +2,17 @@
 
 from flask import g
 import peewee
-import Anemone
+from Anemone import app
 
-PATH = "Anemone/tmp/"
-FILEPATH = PATH + "anemone.db"
-DATABASE = peewee.SqliteDatabase(FILEPATH)
+DATABASE = peewee.SqliteDatabase(app.config["DATABASE_PATH"])
 
-@Anemone.app.before_request
+@app.before_request
 def before_request():
     """ called before a request """
     g.database = DATABASE.connect()
 
-@Anemone.app.teardown_request
-@Anemone.app.teardown_appcontext
+@app.teardown_request
+@app.teardown_appcontext
 def teardown_request(exception):
     """ called if a request returns wrong object or no object """
     database = getattr(g, 'database', None)

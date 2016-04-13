@@ -7,6 +7,7 @@ import os
 from flask import Flask
 
 app = Flask(__name__)
+app.config.from_pyfile("../application.cfg", False)
 
 # TODO: find a better place for this
 @app.context_processor
@@ -32,16 +33,11 @@ def utility_processor():
 # Import should be placed at the top of the moduleat
 # pylint: disable=C0413
 # pylint has been disabled here because of how flask recommends maintaining a project
-from Anemone.config import configuration
 import Anemone.views.projects
 import Anemone.views.dashboard
 import Anemone.views.jobs
 import Anemone.views.login
 import Anemone.views.configuration
-
-# Load default config and override config from an environment variable
-app.config.update(configuration)
-app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 from Anemone.models import ProjectJSONEncoder
 app.json_encoder = ProjectJSONEncoder

@@ -10,6 +10,7 @@ import Anemone.abcfile
 def configuration_view(project):
     """ Displays the view for configuration """
     # Check if project argument is correct
+    print("agdagdgds")
     project_query = Project.select().where(Project.slug == project).first()
     if project_query is None:
         flash("invalid project")
@@ -24,7 +25,8 @@ def configuration_view(project):
     elif request.method == "POST":
         configuration_post(project_query, request)
 
-    return render_template("configure.html", build=settings)
+    return render_template("configure.html", ssh=app.config["SSH_PUBLIC"],
+                           build=settings, unity=app.config["UNITY_PATH"])
 
 def configuration_post(project, req):
     """ The post part of the configuration view """

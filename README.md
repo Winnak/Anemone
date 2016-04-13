@@ -11,10 +11,11 @@ License: [MIT](LICENSE)
 
 ## Quick start guide
 1. copy `Anemone_Build.cs` to your unity project Asset/Editor folder (create one if you don't have one)
-2. Run `createdatabase.py` to create the database
-3. Run `runserver.py` to start the server
+2. Configure `application.cfg` to your needs
+3. Run `createdatabase.py` to create the database
+4. Run `runserver.py` to start the server
 
-[Anemone/config.py](Anemone/config.py) change default login info
+[application.cfg](application.cfg) change default login info and the file path to the unity installation etc.
 
 
 ## TODO/Roadmap
@@ -40,13 +41,13 @@ License: [MIT](LICENSE)
 6. Create better startup first-time stuff
     * automatically createdatabase.py if database is not there
     * create admin user on first run
-7. Figure out solution for cloud building
-    * Test using raspberry pis
-8. ABC format update
+7. ABC format update
     * Move the ABC format to its own repository
     * Add multiline setting
     * Internal references
     * Wildcards for datetime and other fun things?
+8. Figure out solution for cloud building
+    * Test using raspberry pis
 9. Parse unity log file and make it more informative.
 10. Perforce handling
 11. Unreal Engine support?
