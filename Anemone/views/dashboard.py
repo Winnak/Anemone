@@ -28,7 +28,16 @@ def dashboard(project):
         return redirect(url_for("projects"))
     session["project"] = project_query
 
+    # pylint: disable=R0204
+    #disabling warning about redefining settings. I do this on purpose
     settings = Anemone.abcfile.parse(project_query.filepath)
+    if settings is None:
+        flash("Could not parse settings file, prehaps the file path ({}) is wrong"
+              .format(project_query.filepath))
+        settings = dict()
+    else:
+        settings = settings.m_nodes
+    # pylint: enable=R0204
 
     query = (Job
              .select()
@@ -46,7 +55,7 @@ def dashboard(project):
         entries.append(dict(id=job.id, status=job.status, name=job.name,
                             start=job.started, end=job.ended, span=span))
 
-    return render_template('dashboard.html', entries=entries, buildconf=settings.m_nodes)
+    return render_template('dashboard.html', entries=entries, buildconf=settings)
 
 @app.route("/test-build/<project>", methods=["POST"])
 def build(project): #TODO: create better build started stuff

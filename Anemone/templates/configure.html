@@ -51,6 +51,7 @@
 						<input name=filepath type=text class="form-control" value="{{session.project.filepath}}">
 					</div>
 				</div>
+				{% if build %}
 				<div class="panel-body form-group">
 					Use the buildfile to configure any of the following settings: <br>
 					Global settings:
@@ -72,6 +73,7 @@
 					<br>
 					{% endfor %}
 				</div>
+				{% endif %}
 			</div>
 			<div class="btn-group" role="group" aria-label="...">
 				{% if not session.logged_in %}

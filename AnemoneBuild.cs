@@ -1,4 +1,4 @@
-/// <copyright file="Anemone_Build.cs">
+/// <copyright file="AnemoneBuild.cs">
 /// MIT License
 ///
 /// Copyright(c) 2016 Erik Høyrup Jørgensen
@@ -26,6 +26,7 @@
 /// <summary>Class for build methods required by Unity for the Anemone project.</summary>
 
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 using UnityEngine;
@@ -54,24 +55,32 @@ namespace Anemone
         [MenuItem("File/Anemone Build/Windows x86 (Debug)")]
         private static void WindowsDebug()
         {
-            StringBuilder path = new StringBuilder();
-            path.Append(kDefaultBuildPath);
-            path.Append(Application.productName);
-            path.Append("x86.exe");
-
             if (BuildPipeline.isBuildingPlayer)
             {
                 Debug.LogError("BUILD FAILED: Unity is already building the project");
                 return;
             }
 
-            Debug.Log("Retrieving scenes:");
-            List<string> levels = GetScenes();
+            var config = ABCFormat.ParseFile("build.abc")["windows-debug"];
+
+            Debug.Log("Getting scenes");
+            var scenes = config.Get("scenes").Split(',');
+            if (scenes.Length == 1 && scenes[0] == string.Empty)
+            {
+                scenes = GetScenes().ToArray();
+            }
+            else
+            {
+                foreach (var scene in scenes)
+                {
+                    Debug.Log(scene);
+                }
+            }
 
             Debug.Log("Unity building");
             string errorMessage = BuildPipeline.BuildPlayer(
-                levels.ToArray(),
-                path.ToString(),
+                scenes,
+                config.Get("out"),
                 BuildTarget.StandaloneWindows,
                 (BuildOptions.AllowDebugging | BuildOptions.Development));
 
@@ -89,24 +98,32 @@ namespace Anemone
         [MenuItem("File/Anemone Build/Windows x86")]
         private static void Windows()
         {
-            StringBuilder path = new StringBuilder();
-            path.Append(kDefaultBuildPath);
-            path.Append(Application.productName);
-            path.Append("x86.exe");
-
             if (BuildPipeline.isBuildingPlayer)
             {
                 Debug.LogError("BUILD FAILED: Unity is already building the project");
                 return;
             }
 
-            Debug.Log("Retrieving scenes:");
-            List<string> levels = GetScenes();
+            var config = ABCFormat.ParseFile("build.abc")["windows"];
+
+            Debug.Log("Getting scenes");
+            var scenes = config.Get("scenes").Split(',');
+            if (scenes.Length == 1 && scenes[0] == string.Empty)
+            {
+                scenes = GetScenes().ToArray();
+            }
+            else
+            {
+                foreach (var scene in scenes)
+                {
+                    Debug.Log(scene);
+                }
+            }
 
             Debug.Log("Unity building");
             string errorMessage = BuildPipeline.BuildPlayer(
-                levels.ToArray(),
-                path.ToString(),
+                scenes,
+                config.Get("out"),
                 BuildTarget.StandaloneWindows,
                 BuildOptions.None);
 
@@ -184,7 +201,7 @@ namespace Anemone
                         {
                             string key = line.Substring(0, c).Trim();
                             if (key.Length == 0) break;
-                            string value = line.Substring(c + 1, line.Length - c - 2).Trim();
+                            string value = line.Substring(c + 1, line.Length - c - 1).Trim();
                             currentNode.Set(key, value);
                             break;
                         }
@@ -251,6 +268,7 @@ namespace Anemone
                 if (!m_Values.TryGetValue(key, out value))
                     if (m_Parent != null)
                         return m_Parent.Get(key);
+                if (value == null) { value = string.Empty; }
                 return value;
             }
 

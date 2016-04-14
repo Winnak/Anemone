@@ -11,22 +11,24 @@ License: [MIT](LICENSE)
 
 ## Quick start guide
 1. copy `Anemone_Build.cs` to your unity project Asset/Editor folder (create one if you don't have one)
-2. Configure `application.cfg` to your needs
-3. Run `createdatabase.py` to create the database
-4. Run `runserver.py` to start the server
+2. copy `build.abc` to your unity project's root folder, configure as you see fit.
+3. Configure `application.cfg` to your needs
+4. Run `createdatabase.py` to create the database
+5. Run `runserver.py` to start the server
 
 [application.cfg](application.cfg) change default login info and the file path to the unity installation etc.
 
 
 ## TODO/Roadmap
-1. Build file
-    * Use build file
-2. Layout
+1. Layout
     * Fix the full height sidebar
     * use timeago.js
     * Re-colorize/stylize
     * remove temp code
     * Show project health on dashboard (and maybe on project overview as well)
+2. Jobs
+    * Fix status
+    * Pipe log
 3. Git handling
     * ssh-key handling
     * Configurable polling / build scheduling
@@ -39,7 +41,9 @@ License: [MIT](LICENSE)
     * create user
     * user roles
 6. Create better startup first-time stuff
+    * GUI for configuring application.cfg
     * automatically createdatabase.py if database is not there
+    * build file wizard
     * create admin user on first run
 7. ABC format update
     * Move the ABC format to its own repository

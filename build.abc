@@ -21,4 +21,4 @@ windows-debug:
 	out=./buildstmp/wind/CIx86d.exe
 	arguments=-quit -batchmode -force-d3d9 -silent-crashes
 	method=Anemone.Build.WindowsDebug #does -executeMethod <method> underneath.
-	scenes=testscene #builds only the "testscene"-scene
+	scenes=Assets/testscene.unity #builds only the "testscene"-scene
