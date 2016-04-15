@@ -1,4 +1,4 @@
-""" View for configuration """
+""" View for configuration. """
 
 from flask import render_template, g, redirect, session, flash, url_for, request
 from Anemone import app
@@ -8,7 +8,7 @@ import Anemone.abcfile
 @app.route("/<project>/configuration", methods=['GET', 'POST'])
 @app.route("/<project>/configuration/", methods=['GET', 'POST'])
 def configuration_view(project):
-    """ Displays the view for configuration """
+    """ Displays the view for configuration. """
     project_query = Project.select().where(Project.slug == project).first()
     if project_query is None:
         flash("invalid project")
@@ -27,7 +27,7 @@ def configuration_view(project):
                            build=settings, unity=app.config["UNITY_PATH"])
 
 def configuration_post(project, req):
-    """ The post part of the configuration view """
+    """ The post part of the configuration view. """
     error = ""
     if req.form.get("name", None) is None:
         flash("Project name must be something")

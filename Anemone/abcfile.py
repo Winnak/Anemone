@@ -1,10 +1,10 @@
-""" Contains functions relating to the Anemone Build Configuration file format """
+""" Contains functions relating to the Anemone Build Configuration file format. """
 import os.path
 
 #TODO: consider iterators
 # pylint: disable=C0200
 def parse(filepath):
-    """ Loads a file (expecting it to be of the abc format) and returns abc-object """
+    """ Loads a file (expecting it to be of the abc format) and returns abc-object. """
     if not os.path.isfile(filepath):
         return None
 
@@ -42,7 +42,7 @@ def parse(filepath):
 #pylint: enable=C0200
 
 class ABCNode(object):
-    """ABCNode containing the values and subnodes for parsed abc file"""
+    """ ABCNode containing the values and subnodes for parsed abc file. """
     def __init__(self, key, parent=None):
         super(ABCNode, self).__init__()
         self.m_values = dict()
@@ -79,8 +79,8 @@ class ABCNode(object):
         return self.m_nodes.items().__next__()
 
     def get(self, key):
-        """ gets a value out of the nodes internal dictionary,
-            returns NoneType if value was not found """
+        """ Gets a value out of the nodes internal dictionary,
+            returns NoneType if value was not found. """
         value = self.m_values.get(key, None)
         if value is None:
             if self.m_parent is not None:
@@ -88,5 +88,5 @@ class ABCNode(object):
         return value
 
     def set(self, key, value):
-        """ Sets setting in internal value dictionary """
+        """ Sets setting in internal value dictionary. """
         self.m_values[key] = value

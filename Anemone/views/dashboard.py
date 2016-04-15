@@ -1,4 +1,4 @@
-""" dashboard view """
+""" Dashboard view. """
 
 from flask import render_template, g, request, redirect, url_for, flash, session
 from Anemone import app
@@ -8,7 +8,7 @@ import Anemone.buildslave
 
 @app.route("/dashboard")
 def home():
-    """ Uses dashboard with the currently active project """
+    """ Uses dashboard with the currently active project. """
     if session.get("project", None) is None:
         return redirect(url_for("projects"))
     return dashboard(session["project"]["slug"])
@@ -18,7 +18,7 @@ def home():
 @app.route("/<project>/dashboard")
 @app.route("/<project>/dashboard/")
 def dashboard(project):
-    """ Index of the homepage """
+    """ Index of the homepage. """
     g.selected_tab = "dashboard"
 
     # Check if project argument is correct

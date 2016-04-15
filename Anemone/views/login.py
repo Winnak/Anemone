@@ -8,7 +8,7 @@ from Anemone import app
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """ login page """
+    """ Login page. """
     g.selected_tab = "login"
 
     error = None
@@ -29,7 +29,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    """ logging out redirect """
+    """ Logging out redirect. """
     session.pop("logged_in", None)
     flash("You were logged out")
     return redirect(url_for("projects"))

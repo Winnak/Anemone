@@ -1,16 +1,21 @@
 """ Data models for the database """
+
 # pylint: disable=R0903
+# disabling R0903: Too few public methods warning, because this file is meant to contain data models
 # pylint: disable=C0103
+# disabling C0103: Invalid class attribute name "id", this is a database convention.
 
 import peewee
 from flask.json import JSONEncoder
-import Anemone.database
+from Anemone import app
+
+DATABASE = peewee.SqliteDatabase(app.config["DATABASE_PATH"])
 
 class BaseModel(peewee.Model):
     """ Base model for all the models """
     class Meta:
         """ meta data """
-        database = Anemone.database.DATABASE
+        database = DATABASE
 
 class Project(BaseModel):
     """ Data model for Projects table """
@@ -35,7 +40,7 @@ class Job(BaseModel):
 class ProjectJSONEncoder(JSONEncoder):
     """ Custom json encoder for the projects class """
     #pylint: disable=E0202
-    def default(self, obj): #override
+    def default(self, obj): #override JSONEncoder's "default" method
         if isinstance(obj, Project):
             return dict(name=obj.name, slug=obj.slug, filepath=obj.filepath,
                         description=obj.description)

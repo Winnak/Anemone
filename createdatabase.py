@@ -9,28 +9,30 @@ Available commands include:
 import os
 import sys
 from datetime import datetime, timedelta
-import Anemone.database
-from Anemone.models import Project, Job
+from Anemone.models import Project, Job, DATABASE
+from Anemone import app
 
 FORCE = False
 GENERATE_DATA = False
+PATH = app.config["DATABASE_PATH"]
+TEMP_PATH = app.config["TEMP_PATH"]
 
 def main():
-    """ main entry point. """
+    """ Main entry point. """
     if FORCE:
-        os.makedirs(Anemone.database.PATH, exist_ok=True)
-        if os.path.isfile(Anemone.database.FILEPATH):
+        os.makedirs(TEMP_PATH, exist_ok=True)
+        if os.path.isfile(PATH):
             print("removing old database. RIP data.")
-            os.remove(Anemone.database.FILEPATH)
+            os.remove(PATH)
 
-    if os.path.isfile(Anemone.database.FILEPATH):
+    if os.path.isfile(PATH):
         print(("database already exists, please run this with the argument"
                " --force to remove the database and create a new.\n"
                " Warning: This will remove all Anemone's data."))
         return
 
-    Anemone.database.DATABASE.connect()
-    Anemone.database.DATABASE.create_tables([Project, Job])
+    DATABASE.connect()
+    DATABASE.create_tables([Project, Job])
 
     if GENERATE_DATA:
         print("Generating temporary data")

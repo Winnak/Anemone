@@ -1,4 +1,4 @@
-""" Simple python script to start the website """
+""" Simple python script to start the website. """
 
 import sys
 from Anemone import app

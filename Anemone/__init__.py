@@ -1,7 +1,6 @@
 """ The main import stuff script """
-# invalid constant name app
 # pylint: disable=C0103
-
+# disabling C0103: Invalid constant name "app", to be consistent with flask apps.
 
 import os
 from flask import Flask
@@ -30,8 +29,8 @@ def utility_processor():
 
     return dict(get_status_icon=get_status_icon)
 
-# Import should be placed at the top of the moduleat
 # pylint: disable=C0413
+# Import should be placed at the top of the module
 # pylint has been disabled here because of how flask recommends maintaining a project
 import Anemone.views.projects
 import Anemone.views.dashboard
@@ -41,7 +40,3 @@ import Anemone.views.configuration
 
 from Anemone.models import ProjectJSONEncoder
 app.json_encoder = ProjectJSONEncoder
-
-# important: has to be importet before app is created and configured
-import Anemone.database
-#pylint: enable=C0413
