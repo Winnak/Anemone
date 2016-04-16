@@ -58,7 +58,6 @@ def projects_add(): #TODO: Validate filepath
         name = request.form["name"]
         slug = request.form["slug"]
 
-        # TODO: output folder is missing
         # pylint: disable=W0703
         # W0703: "Catching too general exception", because so much can go wrong here
         if ((name is None) or (slug is None)) or ((name is "") or (slug is "")):
@@ -68,6 +67,7 @@ def projects_add(): #TODO: Validate filepath
                 Project.create(name=name, slug=slug,
                                description=request.form["description"],
                                filepath=request.form["filepath"],
+                               output=request.form["output"],
                                created_at=datetime.datetime.now()).save()
                 flash("Succesfully created {}".format(name))
                 return redirect(url_for("projects"))
