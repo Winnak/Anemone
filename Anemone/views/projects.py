@@ -45,6 +45,7 @@ def projects_remove(project):
         flash("This acition requires you to be logged in")
     return redirect(url_for("projects"))
 
+
 @app.route("/projects/add", methods=["GET", "POST"])
 @app.route("/projects/add/", methods=["GET", "POST"])
 def projects_add(): #TODO: Validate filepath
@@ -57,6 +58,7 @@ def projects_add(): #TODO: Validate filepath
         name = request.form["name"]
         slug = request.form["slug"]
 
+        # TODO: output folder is missing
         # pylint: disable=W0703
         # W0703: "Catching too general exception", because so much can go wrong here
         if ((name is None) or (slug is None)) or ((name is "") or (slug is "")):

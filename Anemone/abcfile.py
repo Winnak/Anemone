@@ -1,45 +1,42 @@
 """ Contains functions relating to the Anemone Build Configuration file format. """
 import os.path
 
-#TODO: consider iterators
-# pylint: disable=C0200
 def parse(filepath):
     """ Loads a file (expecting it to be of the abc format) and returns abc-object. """
     if not os.path.isfile(filepath):
         return None
 
-    file = open(filepath, "r", -1, "utf-8")
-    line = file.readline()
+    source = open(filepath, "r", -1, "utf-8")
+    line = source.readline()
     current_node = root = ABCNode("root")
 
     while line is not "": #end of file
-        if line.find("#") is not -1:
+        if line.find("#") is not -1: # remove all comments.
             line = line.split("#", 1)[0]
-        if line.strip() == "":
-            line = file.readline()
+        if line.strip() == "": # skip empty lines.
+            line = source.readline()
             continue
-        if line[0] != '\t':
+        if line[0] != '\t': # reset Configuration if not tabbed in.
             current_node = root
 
-        for char_index in range(len(line)):
-            if line[char_index] == '=':
-                key = line[:char_index].strip()
+        for index, char in enumerate(line):
+            if char == '=':
+                key = line[:index].strip()
                 if len(key) is 0:
                     break
-                value = line[char_index+1:].strip()
+                value = line[index+1:].strip()
                 if len(value) is 0:
                     value = None
                 current_node.set(key, value)
                 break
-            elif line[char_index] == ':':
-                key = line[:char_index].strip()
+            elif char == ':':
+                key = line[:index].strip()
                 if len(key) is 0:
                     break
                 current_node = ABCNode(key, current_node)
                 break
-        line = file.readline()
+        line = source.readline()
     return root
-#pylint: enable=C0200
 
 class ABCNode(object):
     """ ABCNode containing the values and subnodes for parsed abc file. """
