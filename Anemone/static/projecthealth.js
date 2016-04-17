@@ -8,7 +8,6 @@ $(document).ready(function()
     var legendRectSize = 18;
     var legendSpacing = 4;
     var radius = Math.min(width, height) / 2;
-    // var color = d3.scale.ordinal().range([]);
     var svg = d3.select('graph')
         .append('svg')
         .attr('width', width)
@@ -62,6 +61,5 @@ $(document).ready(function()
             .attr('x', legendRectSize + legendSpacing)
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) { return d.category; });
-
     });
 });

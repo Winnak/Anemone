@@ -10,7 +10,7 @@ License: [MIT](LICENSE)
 
 
 ## Quick start guide
-1. copy `Anemone_Build.cs` to your unity project Asset/Editor folder (create one if you don't have one)
+1. copy `AnemoneBuild.cs` to your unity project Asset/Editor folder (create one if you don't have one)
 2. copy `build.abc` to your unity project's root folder, configure as you see fit.
 3. Configure `application.cfg` to your needs
 4. Run `createdatabase.py` to create the database
