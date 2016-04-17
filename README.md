@@ -20,38 +20,39 @@ License: [MIT](LICENSE)
 
 
 ## TODO/Roadmap
-1. Layout
-    * Fix the full height sidebar
+0. Layout
     * use timeago.js
-    * Re-colorize/stylize
-    * remove temp code
-    * Show project health on dashboard (and maybe on project overview as well)
-2. Jobs
+1. Jobs
     * Fix status
     * Pipe log
-3. Git handling
+    * Schedule a job
+    * More actions
+2. Git handling
     * ssh-key handling
     * Configurable polling / build scheduling
-4. Documentation
+3. Documentation
     * Add copyright header
     * Add module information
     * Update project description
     * Create wiki?
-5. User management
+4. User management
     * create user
     * user roles
-6. Create better startup first-time stuff
+5. Create better startup first-time stuff
     * GUI for configuring application.cfg
     * automatically createdatabase.py if database is not there
     * build file wizard
     * create admin user on first run
-7. ABC format update
+6. ABC format update
     * Move the ABC format to its own repository
     * Add multiline setting
     * Internal references
     * Wildcards for datetime and other fun things?
-8. Figure out solution for cloud building
+7. Figure out solution for cloud building
     * Test using raspberry pis
+8. Layout
+    * Fix the full height sidebar or figure out a new, more modern layout
+    * Re-colorize/stylize
 9. Parse unity log file and make it more informative.
 10. Perforce handling
 11. Unreal Engine support?
