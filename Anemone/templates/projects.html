@@ -35,7 +35,7 @@
 							<td><i class="{{ get_status_icon(project.status.status) }} fa-2x"></i></td>
 							<td><a href="/{{project.slug}}">{{project.name}}</a></td>
 							<td><a href="/jobs/id/{{project.status.id}}">{{project.status.name}}</a></td>
-							<td><a href="/jobs/id/{{project.latest.id}}">{{project.latest.started}}</a></td>
+							<td><a href="/jobs/id/{{project.latest.id}}"><time class="timeago" datetime="{{project.latest.started}}"></time></a></td>
 							<td>
 								<form class="form-group form-inline" action="{{ url_for('projects_remove', project=project.slug) }}" method="post">
 									{% if session.logged_in %}<button type=submit class="btn btn-danger"><i class='glyphicon glyphicon-remove-circle'></i> Delete</button>{% endif %}
@@ -55,6 +55,8 @@
 			</div>
 		</div>
 		<script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bower_components/jquery-timeago/jquery.timeago.js') }}"></script>
 		<script src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='usingtimeago.js') }}"></script>
 	</body>
 </html>

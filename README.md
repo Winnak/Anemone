@@ -20,8 +20,6 @@ License: [MIT](LICENSE)
 
 
 ## TODO/Roadmap
-0. Layout
-    * use timeago.js
 1. Jobs
     * Fix status
     * Pipe log

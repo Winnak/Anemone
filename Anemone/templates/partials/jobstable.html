@@ -13,7 +13,7 @@
 		<tr>
 			<td class="smallrow"><i class="{{ get_status_icon(row.status) }} fa-2x"></i></td>
 			<td><a href="/jobs/id/{{ row.id }}">{{ row.name }}</a></td>
-			<td>{{ row.start }}</td>
+			<td><time class="timeago" datetime="{{ row.start }}"></time></td>
 			<td><a data-toggle="tooltip" title="{{ row.end }}" style="color:inherit">{{ row.span }}</a></td>
 			<td>
 				<div class="btn-group btn-group-sm" role="group" aria-label="...">
