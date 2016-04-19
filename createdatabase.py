@@ -46,25 +46,25 @@ def main():
                                  created_at=datetime(2016, 1, 6, 8, 23, 19))
         project.save()
 
-        Job.create(project=project, status=1,
+        Job.create(project=project, active=False, result=1,
                    name="ClearChimpanzee-001", description="",
                    started=datetime(2016, 1, 8, 8, 23, 19),
                    ended=datetime(2016, 1, 8, 9, 24, 34), log="success").save()
-        Job.create(project=project, status=2,
+        Job.create(project=project, active=False, result=2,
                    name="MissionHorse-002", description="",
                    started=datetime(2016, 1, 8, 9, 45, 34),
                    ended=datetime(2016, 1, 8, 10, 0, 0), log="warnings").save()
-        Job.create(project=project, status=3,
+        Job.create(project=project, active=False, result=3,
                    name="MiddlePorcupine-003", description="",
                    started=datetime(2016, 1, 8, 10, 0, 0),
                    ended=datetime(2016, 1, 8, 10, 10, 0), log="error").save()
-        Job.create(project=project, status=4,
+        Job.create(project=project, active=True, result=0,
                    name="OpeningBadger-004", description="",
                    started=datetime.now(), log="building ...").save()
-        Job.create(project=project, status=5,
+        Job.create(project=project, active=False, result=0,
                    name="ClassicVixen-005", description="",
                    started=datetime.now() + timedelta(days=2)).save()
-        Job.create(project=project, status=0,
+        Job.create(project=project, active=False, result=0,
                    name="VariousMoose-006", description="").save()
 
 if __name__ == '__main__':

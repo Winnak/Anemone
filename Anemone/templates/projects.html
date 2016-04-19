@@ -32,7 +32,7 @@
 					<tbody>
 						{% for project in entries %}
 						<tr>
-							<td><i class="{{ get_status_icon(project.status.status) }} fa-2x"></i></td>
+							<td><i class="{{ get_status_icon(project.status.get_status()) }} fa-2x"></i></td>
 							<td><a href="/{{project.slug}}">{{project.name}}</a></td>
 							<td><a href="/jobs/id/{{project.status.id}}">{{project.status.name}}</a></td>
 							<td><a href="/jobs/id/{{project.latest.id}}"><time class="timeago" datetime="{{project.latest.started}}"></time></a></td>

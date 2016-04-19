@@ -51,7 +51,7 @@ def jobs(project, page):
             if job.ended is not None:
                 span = job.ended - job.started
 
-        entries.append(dict(id=job.id, status=job.status, name=job.name,
+        entries.append(dict(id=job.id, status=job.get_status(), name=job.name,
                             start=job.started, end=job.ended, span=span))
 
     more = count > (page) * JOBSPERPAGE

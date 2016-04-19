@@ -52,22 +52,23 @@ def dashboard(project):
     count = 0
     for job in query:
         span = job.ended
+        status = job.get_status()
         if job.started is not None:
             if job.ended is not None:
                 span = job.ended - job.started
 
-        if job.status is 1:
+        if status is 1:
             health["total"] += 1
             health["success"] += 1
-        elif job.status is 2:
+        elif status is 2:
             health["total"] += 1
             health["warning"] += 1
-        elif job.status is 3:
+        elif status is 3:
             health["total"] += 1
             health["error"] += 1
 
         if count < JOBS_PER_PAGE:
-            entries.append(dict(id=job.id, status=job.status, name=job.name,
+            entries.append(dict(id=job.id, status=status, name=job.name,
                                 start=job.started, end=job.ended, span=span))
 
     return render_template('dashboard.html', entries=entries, buildconf=settings, health=health)

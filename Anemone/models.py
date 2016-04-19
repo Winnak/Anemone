@@ -30,12 +30,24 @@ class Job(BaseModel):
     """ Data model for Jobs table """
     id = peewee.PrimaryKeyField()
     project = peewee.ForeignKeyField(Project)
-    status = peewee.IntegerField()
+    result = peewee.IntegerField(default=0) # 1: success, 2: warning, 3: error
+    active = peewee.BooleanField(default=False)
     name = peewee.CharField()
     description = peewee.TextField(null=True)
     log_path = peewee.CharField(null=True)
     started = peewee.DateTimeField(null=True)
     ended = peewee.DateTimeField(null=True)
+    def get_status(self):
+        """ Returns the current status id """
+        status = 0
+        if self.started is not None:
+            if self.active:
+                status = 4
+            else:
+                status = 5
+            if self.ended is not None:
+                status = self.result
+        return status
 
 class ProjectJSONEncoder(JSONEncoder):
     """ Custom json encoder for the projects class """

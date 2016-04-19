@@ -14,7 +14,7 @@ def projects():
     entries = []
     for pro in Project.select():
         status = (Job.select()
-                  .where(Job.project == pro)
+                  .where((Job.project == pro) & (Job.result > 0))
                   .order_by(Job.started.desc())
                   .first())
 
@@ -81,24 +81,27 @@ def projects_add(): #TODO: Validate filepath
 def project_health(project, limit):
     """ Gets the project health in csv format """
     proj = Project.get(Project.slug == project)
-    print(limit)
     jobs = (Job
             .select()
-            .where((Job.project == proj) & ((Job.status < 4) & (Job.status != 0)))
+            .where(Job.project == proj)
             .order_by(-Job.started)
             .limit(limit))
 
     health = {
-                "success":{"count":0, "color":"#5CB85C"},
-                "warning":{"count":0, "color":"#F0AD4E"},
-                "error":{"count":0, "color":"#D9534F"}
-             }
+        "success":{"count":0, "color":"#5CB85C"},
+        "warning":{"count":0, "color":"#F0AD4E"},
+        "error":{"count":0, "color":"#D9534F"}
+    }
 
     for job in jobs:
-        if job.status is 1:
+        status = 0
+        if job.started is not None:
+            if job.ended is not None:
+                status = 1 #TODO: repport if errors
+        if status is 1:
             health["success"]["count"] += 1
-        elif job.status is 2:
+        elif status is 2:
             health["warning"]["count"] += 1
-        elif job.status is 3:
+        elif status is 3:
             health["error"]["count"] += 1
     return render_template("project-health-data.csv", health=health)
