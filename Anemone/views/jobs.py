@@ -71,7 +71,7 @@ def job_view(job_id):
         return jobs_index_2()
 
     session["project"] = job.project
-    data = dict(id=job.id, status=job.status, name=job.name,
+    data = dict(id=job.id, status=job.get_status(), name=job.name,
                 start=job.started, end=job.ended)
 
     return render_template('job.html', data=data)
