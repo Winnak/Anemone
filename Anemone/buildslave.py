@@ -23,13 +23,13 @@ def build(project, config):
 
     os.makedirs(app.config["LOG_PATH"], exist_ok=True)
     logpath = os.path.join(app.config["LOG_PATH"], project.slug + str(newjob.id) +
-                           ".%Y-%m-%d_%Hh%Mm%Ss.log")
+                           str(datetime.datetime.now().strftime(".%Y-%m-%d_%Hh%Mm%Ss.log")))
+
     newjob.log_path = logpath
     cmd = [app.config["UNITY_PATH"], config.get("arguments"),
            "-executeMethod", config.get("method"),
-           "-logFile", str(datetime.datetime.now().strftime(logpath)),
+           "-logFile", logpath,
            "-projectPath", config.get("project-path")]
 
     subprocess.Popen(cmd) #TODO: hook this up to something so that we know when the process is done.
-    newjob.status = 5
     newjob.save()

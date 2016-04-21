@@ -46,7 +46,7 @@ class Job(BaseModel):
             else:
                 status = 5
             if self.ended is not None:
-                status = self.result
+                status = int(self.result)
         return status
 
 class ProjectJSONEncoder(JSONEncoder):
