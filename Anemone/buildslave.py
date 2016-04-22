@@ -27,9 +27,11 @@ def build(project, config):
 
     newjob.log_path = logpath
     cmd = [app.config["UNITY_PATH"], config.get("arguments"),
-           "-executeMethod", config.get("method"),
+           #"-executeMethod", config.get("method"),
            "-logFile", logpath,
            "-projectPath", config.get("project-path")]
 
-    subprocess.Popen(cmd) #TODO: hook this up to something so that we know when the process is done.
+    #TODO: hook this up to something so that we know when the process is done
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+    print(process)
     newjob.save()

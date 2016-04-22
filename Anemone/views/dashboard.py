@@ -11,14 +11,13 @@ JOBS_PER_PAGE = 10
 @app.route("/dashboard")
 def home():
     """ Uses dashboard with the currently active project. """
-    if session.get("project", None) is None:
+    project = session.get("project", None)
+    if project is None:
         return redirect(url_for("projects"))
-    return dashboard(session["project"]["slug"])
+    return redirect(project)
 
 @app.route("/<project>")
 @app.route("/<project>/")
-@app.route("/<project>/dashboard")
-@app.route("/<project>/dashboard/")
 def dashboard(project):
     """ Index of the homepage. """
     g.selected_tab = "dashboard"
@@ -89,4 +88,4 @@ def build(project): #TODO: create better build started stuff
     # Check if project argument is correct
     if request.method == "POST":
         Anemone.buildslave.build(project_query, settings[request.form.get("config", None)])
-    return redirect(project + url_for("home"))
+    return redirect(project)
