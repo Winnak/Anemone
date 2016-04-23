@@ -60,8 +60,7 @@ confidence=
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
-disable=dict-iter-method,cmp-method,filter-builtin-not-iterating,dict-view-method,no-absolute-import,long-builtin,buffer-builtin,coerce-builtin,old-division,long-suffix,nonzero-method,useless-suppression,getslice-method,delslice-method,xrange-builtin,cmp-builtin,old-ne-operator,coerce-method,apply-builtin,backtick,hex-method,range-builtin-not-iterating,suppressed-message,indexing-exception,intern-builtin,map-builtin-not-iterating,round-builtin,zip-builtin-not-iterating,reload-builtin,old-raise-syntax,unicode-builtin,setslice-method,unichr-builtin,next-method-called,import-star-module-level,execfile-builtin,old-octal-literal,reduce-builtin,raw_input-builtin,standarderror-builtin,input-builtin,print-statement,parameter-unpacking,unpacking-in-except,metaclass-assignment,using-cmp-argument,oct-method,file-builtin,basestring-builtin,raising-string
-
+disable=dict-iter-method,cmp-method,filter-builtin-not-iterating,dict-view-method,no-absolute-import,long-builtin,buffer-builtin,coerce-builtin,old-division,long-suffix,nonzero-method,useless-suppression,getslice-method,delslice-method,xrange-builtin,cmp-builtin,old-ne-operator,coerce-method,apply-builtin,backtick,hex-method,range-builtin-not-iterating,suppressed-message,indexing-exception,intern-builtin,map-builtin-not-iterating,round-builtin,zip-builtin-not-iterating,reload-builtin,old-raise-syntax,unicode-builtin,setslice-method,unichr-builtin,next-method-called,import-star-module-level,execfile-builtin,old-octal-literal,reduce-builtin,raw_input-builtin,standarderror-builtin,input-builtin,print-statement,parameter-unpacking,unpacking-in-except,metaclass-assignment,using-cmp-argument,oct-method,file-builtin,basestring-builtin,raising-string,W0703
 
 [REPORTS]
 

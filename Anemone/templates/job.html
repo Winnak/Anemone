@@ -22,7 +22,12 @@
 		Build ended: (TODO: timeago.js)<br>
 		{{ data.end }}
 		<br><br>
-		<button type="button" name="button">Show build log</button>
+		<button type="button" class="btn {% if log %}btn-info{% else %}disabled{% endif %}" data-toggle="collapse" data-target="#log">Show build log</button>
+		{% if log %}
+		<div id="log" class="collapse">{% for line in log %}
+			{{line}}<br>
+		{% endfor %}</div>
+		{% endif %}
 	</div>
 	<div class="panel-footer">
 	</div>

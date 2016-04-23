@@ -1,5 +1,6 @@
 """ Jobs and job view. """
 
+import os
 from flask import g, render_template, flash, redirect, url_for, session
 import peewee
 from Anemone import app
@@ -70,8 +71,21 @@ def job_view(job_id):
         flash("Invalid job id", category='error')
         return jobs_index_2()
 
+    log = ""
+    try:
+        if job.log_path is None:
+            log = None
+        elif os.path.isfile(job.log_path):
+            log = open(job.log_path, 'r').readlines()
+        else:
+            flash("could not find file " + job.log_path)
+    except Exception as excep:
+        flash("failed to to open log file " + job.log_path)
+        if app.config["DEBUG"]:
+            flash(excep)
+
     session["project"] = job.project
     data = dict(id=job.id, status=job.get_status(), name=job.name,
                 start=job.started, end=job.ended)
 
-    return render_template('job.html', data=data)
+    return render_template('job.html', data=data, log=log)

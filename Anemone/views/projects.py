@@ -58,8 +58,6 @@ def projects_add(): #TODO: Validate filepath
         name = request.form["name"]
         slug = request.form["slug"]
 
-        # pylint: disable=W0703
-        # W0703: "Catching too general exception", because so much can go wrong here
         if ((name is None) or (slug is None)) or ((name is "") or (slug is "")):
             error = "Project Name and Slug required."
         else:
@@ -73,7 +71,7 @@ def projects_add(): #TODO: Validate filepath
                 return redirect(url_for("projects"))
             except Exception as excep:
                 error = str(excep)
-        # pylint: enable=W0703
+
     return render_template("projects-new.html", error=error)
 
 @app.route("/<project>/health.csv", defaults={"limit": 30})
