@@ -87,5 +87,9 @@ def build(project): #TODO: create better build started stuff
 
     # Check if project argument is correct
     if request.method == "POST":
-        Anemone.buildslave.build(project_query, settings[request.form.get("config", None)])
+        newjob = Job.create(project=project_query, name="quickbuild",
+                            description="was build from the dashboard")
+        newjob.name = newjob.name + "-" + "{0:0=3d}".format(newjob.id)
+        newjob.save()
+        Anemone.buildslave.build(newjob, settings[request.form.get("config", None)])
     return redirect(project)

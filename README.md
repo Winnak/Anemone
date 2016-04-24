@@ -21,33 +21,31 @@ License: [MIT](LICENSE)
 
 ## TODO/Roadmap
 1. Jobs
-    * Fix status
-    * Pipe log
     * Schedule a job
     * More actions
 2. Git handling
     * ssh-key handling
     * Configurable polling / build scheduling
-3. Documentation
-    * Add copyright header
-    * Add module information
-    * Update project description
-    * Create wiki?
-4. User management
-    * create user
-    * user roles
-5. Create better startup first-time stuff
-    * GUI for configuring application.cfg
-    * automatically createdatabase.py if database is not there
-    * build file wizard
-    * create admin user on first run
-6. ABC format update
+3. ABC format update
     * Move the ABC format to its own repository
     * Add multiline setting
     * Internal references
     * Wildcards for datetime and other fun things?
-7. Figure out solution for cloud building
+4. Documentation
+    * Add copyright header
+    * Add module information
+    * Update project description
+    * Create wiki?
+5. Figure out solution for cloud building
     * Test using raspberry pis
+6. User management
+    * create user
+    * user roles
+7. Create better startup first-time stuff
+    * GUI for configuring application.cfg
+    * automatically createdatabase.py if database is not there
+    * build file wizard
+    * create admin user on first run
 8. Layout
     * Fix the full height sidebar or figure out a new, more modern layout
     * Re-colorize/stylize
