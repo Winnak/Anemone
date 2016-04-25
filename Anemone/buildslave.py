@@ -3,9 +3,13 @@
 import os.path
 import subprocess
 import threading
+import re
 import datetime
 from flask import flash
 from Anemone import app
+
+PROG_ERROR = re.compile("[Ee]rror")
+PROG_WARNING = re.compile("[Ww]arning")
 
 # FILE = open("test.log")
 # while PROC.poll() is None:
@@ -40,9 +44,19 @@ def build(job, config):
         job.save()
         proc.wait()
         job.active = False
-        job.result = 1 #TODO: look for errors
         job.ended = datetime.datetime.now()
+        job.result = parse_joblog(job.log_path)
         job.save()
     thread = threading.Thread(target=run_in_thread, args=(job, cmd))
     thread.start()
     return thread
+
+def parse_joblog(filepath):
+    """ regexes through the log and looks for errors or warnings returns status code """
+    log = open(filepath).read()
+    if PROG_ERROR.search(log):
+        return 3
+    elif PROG_WARNING.search(log):
+        return 2
+    else:
+        return 1
