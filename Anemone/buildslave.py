@@ -9,6 +9,7 @@ from flask import flash
 from Anemone import app
 
 PROG_ERROR = re.compile("[Ee]rror")
+PROG_SUCCESS = re.compile("Exiting batchmode successfully now!")
 PROG_WARNING = re.compile("[Ww]arning")
 
 # FILE = open("test.log")
@@ -18,13 +19,18 @@ PROG_WARNING = re.compile("[Ww]arning")
 #         print(LINE, end="")
 
 #TODO: figure out a cloud solution
-#TODO: pre build steps
-#TODO: post build steps
+#TODO: Check if it is currently building the project an refuse to build if so.
+#TODO: Rename build to job name and copy to out directory.
 
 def build(job, config):
     """ builds a job """
     if config is None:
         flash("ERROR COULD NOT BUILD, INVALID CONFIG")
+        return
+
+    path = config.get("project-path")
+    if path is None:
+        flash("ERROR no project-path specified")
         return
 
     os.makedirs(app.config["LOG_PATH"], exist_ok=True)
@@ -34,15 +40,21 @@ def build(job, config):
     cmd = (app.config["UNITY_PATH"] + " " + config.get("arguments") +
            " -executeMethod " + config.get("method") +
            " -logFile " + logpath +
-           " -projectPath " + config.get("project-path"))
+           " -projectPath " + path)
 
     def run_in_thread(job, args):
         """ waits for the job to finish and updates the job """
+        pre = config.get("pre-build")
+        if pre is not None: #TODO: embed into unity log
+            subprocess.call(pre, shell=True, cwd=path)
         proc = subprocess.Popen(args)
         job.started = datetime.datetime.now()
         job.active = True
         job.save()
         proc.wait()
+        post = config.get("post-build")
+        if post is not None: #TODO: embed into unity log
+            subprocess.call(post, shell=True, cwd=path)
         job.active = False
         job.ended = datetime.datetime.now()
         job.result = parse_joblog(job.log_path)
@@ -54,7 +66,7 @@ def build(job, config):
 def parse_joblog(filepath):
     """ regexes through the log and looks for errors or warnings returns status code """
     log = open(filepath).read()
-    if PROG_ERROR.search(log):
+    if PROG_ERROR.search(log) or not PROG_SUCCESS.search(log):
         return 3
     elif PROG_WARNING.search(log):
         return 2
