@@ -73,7 +73,7 @@ def dashboard(project):
     return render_template('dashboard.html', entries=entries, buildconf=settings, health=health)
 
 @app.route("/test-build/<project>", methods=["POST"])
-def build(project): #TODO: create better build started stuff
+def build(project):
     """ temp: builds test project """
     project_query = Project.select().where(Project.slug == project).first()
     if project_query is None:

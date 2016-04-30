@@ -30,7 +30,7 @@ def jobs(project, page):
     if project_query is None:
         flash("Invalid project.")
         return redirect(url_for("projects"))
-    session['project'] = project_query
+    session["project"] = project_query
 
     page = int(page)
     if page <= 0:
@@ -55,20 +55,20 @@ def jobs(project, page):
         entries.append(dict(id=job.id, status=job.get_status(), name=job.name,
                             start=job.started, end=job.ended, span=span))
 
-    more = count > (page) * JOBSPERPAGE
+    more = count > (page * JOBSPERPAGE)
     less = page > 1
     pagedata = dict(id=page, more=more, less=less)
 
     return render_template("/jobs.html", entries=entries, page=pagedata)
 
-@app.route('/jobs/id/<int:job_id>')
+@app.route("/jobs/id/<int:job_id>")
 def job_view(job_id):
     """ Shows information about a specific job. """
     g.selected_tab = "jobs"
 
     job = Job.get(Job.id == job_id)
     if job is None:
-        flash("Invalid job id", category='error')
+        flash("Invalid job id", category="error")
         return jobs_index_2()
 
     log = ""
@@ -88,4 +88,9 @@ def job_view(job_id):
     data = dict(id=job.id, status=job.get_status(), name=job.name,
                 start=job.started, end=job.ended)
 
-    return render_template('job.html', data=data, log=log)
+    return render_template("job.html", data=data, log=log)
+
+@app.route("/jobs/new/")
+def job_new():
+    """ view for creating a new job """
+    return render_template("newjob.html")
