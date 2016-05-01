@@ -3,7 +3,7 @@
 import os
 from flask import g, render_template, flash, redirect, url_for, session
 import peewee
-from Anemone import app
+from Anemone import app, abcfile
 from Anemone.models import Job, Project
 
 JOBSPERPAGE = 30
@@ -90,7 +90,27 @@ def job_view(job_id):
 
     return render_template("job.html", data=data, log=log)
 
-@app.route("/jobs/new/")
-def job_new():
+@app.route("/<project>/jobs/new/")
+def job_new(project):
     """ view for creating a new job """
-    return render_template("newjob.html")
+    g.selected_tab = "jobs"
+
+    # Check if project argument is correct
+    project_query = Project.select().where(Project.slug == project).first()
+    if project_query is None:
+        flash("Invalid project.")
+        return redirect(url_for("projects"))
+    session["project"] = project_query
+
+    # pylint: disable=R0204
+    #disabling warning about redefining settings. I do this on purpose
+    settings = abcfile.parse(project_query.filepath)
+    if settings is None:
+        flash("Could not parse settings file, prehaps the file path ({}) is wrong"
+              .format(project_query.filepath), category="error")
+        settings = dict()
+    else:
+        settings = settings.m_nodes
+    # pylint: enable=R0204
+
+    return render_template("newjob.html", buildconf=settings)

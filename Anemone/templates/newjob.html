@@ -2,6 +2,8 @@
 
 {% block title %}Anemone - Create job{% endblock %}
 
+{% block late_scripts %}<script src="{{ url_for('static', filename='randomname.js') }}"></script>{% endblock %}
+
 {% block body %}
 <h2>Create a new job</h2>
 <div class="panel panel-default">
@@ -9,10 +11,32 @@
 		<h3 class="panel-title"></h3>
 	</div>
 	<div class="panel-body">
-
+		<div class="form-group">
+			<label>Name</label>
+			<div class="input-group">
+				<input type=text id="JobIDField" class="form-control">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type=button onclick="getRandomName('JobIDField')"><i class="fa fa-refresh" aria-hidden="true"></i> Generate</button>
+				</span>
+			</div>
+			</span>
+			<br>
+			<br>
+			<label>Build configuration </label>
+			<select name="buildconfigurations">
+				{% for item in buildconf %}
+					<option value="{{item}}">{{item}}</option>
+				{% endfor %}
+			</select>
+			<br>
+			<br>
+			<label>Schedule build </label>
+			<input name="starttime" type=datetime> <!-- TODO https://github.com/fullcalendar/fullcalendar --> or <button type=button data-toggle=button class="btn btn-default">Build now</button>
+			<br>
+			<br>
+			<button type=submit class="btn btn-primary">Submit</button>
+		</div>
 	</div>
-	<div class="panel-footer">
-
-	</div>
+	<div class="panel-footer"></div>
 </div>
 {% endblock %}
