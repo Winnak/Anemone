@@ -2,7 +2,8 @@
 
 {% block title %}Anemone - Create job{% endblock %}
 
-{% block late_scripts %}<script src="{{ url_for('static', filename='randomname.js') }}"></script>{% endblock %}
+{% block late_scripts %}<script src="{{ url_for('static', filename='randomname.js') }}"></script>
+<script>$(document).ready(function() {getRandomName('JobIDField');});</script>{% endblock %}
 
 {% block body %}
 <h2>Create a new job</h2>
