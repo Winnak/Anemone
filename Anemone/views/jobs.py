@@ -104,10 +104,11 @@ def job_new(project):
 
     # pylint: disable=R0204
     #disabling warning about redefining settings. I do this on purpose
-    settings = abcfile.parse(project_query.filepath)
+    buildfilepath = os.path.join(project_query.path, "build.abc")
+    settings = abcfile.parse(buildfilepath)
     if settings is None:
         flash("Could not parse settings file, prehaps the file path ({}) is wrong"
-              .format(project_query.filepath), category="error")
+              .format(buildfilepath), category="error")
         settings = dict()
     else:
         settings = settings.m_nodes
