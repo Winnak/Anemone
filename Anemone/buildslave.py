@@ -5,6 +5,7 @@ import subprocess
 import threading
 import re
 import datetime
+from distutils.dir_util import copy_tree, remove_tree
 from flask import flash
 from Anemone import app
 
@@ -22,13 +23,13 @@ PROG_WARNING = re.compile("[Ww]arning")
 #TODO: Check if it is currently building the project an refuse to build if so.
 #TODO: Rename build to job name and copy to out directory.
 
-def build(job, path, config):
+def build(job, project, config):
     """ builds a job """
     if config is None:
         flash("ERROR COULD NOT BUILD, INVALID CONFIG")
         return
 
-    if path is None:
+    if project.path is None:
         flash("ERROR no project-path specified")
         return
 
@@ -39,28 +40,49 @@ def build(job, path, config):
     cmd = (app.config["UNITY_PATH"] + " " + config.get("arguments") +
            " -executeMethod " + config.get("method") +
            " -logFile " + logpath +
-           " -projectPath " + path)
+           " -projectPath " + project.path)
 
     def run_in_thread(job, args):
         """ waits for the job to finish and updates the job """
         pre = config.get("pre-build")
         if pre is not None: #TODO: embed into unity log
-            subprocess.call(pre, shell=True, cwd=path)
+            subprocess.call(pre, shell=True, cwd=project.path)
         proc = subprocess.Popen(args)
         job.started = datetime.datetime.now()
         job.active = True
         job.save()
         proc.wait()
+
+        # build finsihed.
+        result = parse_joblog(job.log_path)
         post = config.get("post-build")
-        if post is not None: #TODO: embed into unity log
-            subprocess.call(post, shell=True, cwd=path)
+        if result is not 3: # as long as we don't have any errors.
+            if post is not None: #TODO: embed into unity log
+                subprocess.call(post, shell=True, cwd=project.path)
+            move_to_out_folder(project, job, config)
         job.active = False
         job.ended = datetime.datetime.now()
-        job.result = parse_joblog(job.log_path)
+        job.result = result
         job.save()
     thread = threading.Thread(target=run_in_thread, args=(job, cmd))
     thread.start()
     return thread
+
+def move_to_out_folder(project, job, config):
+    """ Moves the final project into the tmp folder """
+    build_file = config.get("out")
+    if os.path.isfile(build_file):
+        flash("Could not find output file", category="error")
+        return
+
+    build_folder = os.path.join(project.path, os.path.dirname(build_file))
+    output_folder = os.path.join(project.output, project.name, job.name)
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    copy_tree(build_folder, output_folder)
+    remove_tree(build_folder)
 
 def parse_joblog(filepath):
     """ regexes through the log and looks for errors or warnings returns status code """

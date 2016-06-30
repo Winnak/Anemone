@@ -22,35 +22,36 @@ License: [MIT](LICENSE)
 ## TODO/Roadmap
 1. Jobs
     * Schedule a job
-    * Random job naming
     * More actions
+    * Compress files
 2. Git handling
     * ssh-key handling
     * Configurable polling / build scheduling
-3. ABC format update
+3. User management
+    * create user
+    * user roles
+4. ABC format update
     * Move the ABC format to its own repository
     * Add multiline setting
     * Internal references
     * Wildcards for datetime and other fun things?
-4. Documentation
+5. Documentation
     * Add copyright header
     * Add module information
     * Update project description
     * Create wiki?
-5. Figure out solution for cloud building
+6. Figure out solution for cloud building
     * Test using raspberry pis
-6. User management
-    * create user
-    * user roles
 7. Create better startup first-time stuff
     * GUI for configuring application.cfg
     * automatically createdatabase.py if database is not there
     * build file wizard
     * create admin user on first run
 8. Layout
+    * Create view for retrieving the output files.
     * Fix the full height sidebar or figure out a new, more modern layout
     * Re-colorize/stylize
 9. Parse unity log file and make it more informative.
 10. Perforce handling
-11. Unreal Engine support?
-12. SVN handling?
+11. SVN handling?
+12. Unreal Engine support?

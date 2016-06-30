@@ -100,6 +100,6 @@ def build(project):
         newjob.name = newjob.name + ".{0:0=3d}".format(newjob.id)
         newjob.save()
         Anemone.buildslave.build(newjob,
-                                 project_query.path,
+                                 project_query,
                                  settings[request.form.get("config", None)])
     return redirect(project)
