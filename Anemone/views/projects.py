@@ -48,7 +48,7 @@ def projects_remove(project):
 
 @app.route("/projects/add", methods=["GET", "POST"])
 @app.route("/projects/add/", methods=["GET", "POST"])
-def projects_add(): #TODO: Validate filepath
+def projects_add():
     """ View for projects. """
     error = None
     if request.method == "POST":
@@ -64,7 +64,7 @@ def projects_add(): #TODO: Validate filepath
             try:
                 Project.create(name=name, slug=slug,
                                description=request.form["description"],
-                               filepath=request.form["filepath"],
+                               path=request.form["projectpath"],
                                output=request.form["output"],
                                created_at=datetime.datetime.now()).save()
                 flash("Succesfully created {}".format(name))

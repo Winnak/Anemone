@@ -1,5 +1,7 @@
 """ Dashboard view. """
 
+import random
+from os.path import join as path
 from flask import render_template, g, request, redirect, url_for, flash, session
 from Anemone import app
 from Anemone.models import Job, Project
@@ -33,10 +35,11 @@ def dashboard(project):
 
     # pylint: disable=R0204
     #disabling warning about redefining settings. I do this on purpose
-    settings = Anemone.abcfile.parse(project_query.filepath)
+    project_path = path(project_query.path, "build.abc")
+    settings = Anemone.abcfile.parse(project_path)
     if settings is None:
         flash("Could not parse settings file, prehaps the file path ({}) is wrong"
-              .format(project_query.filepath))
+              .format(project_path))
         settings = dict()
     else:
         settings = settings.m_nodes
@@ -81,15 +84,22 @@ def build(project):
         return redirect(url_for("projects"))
     session["project"] = project_query
 
-    settings = Anemone.abcfile.parse(project_query.filepath)
+    settings = Anemone.abcfile.parse(path(project_query.path, "build.abc"))
     if settings is None:
         flash("project was missing a build file, please configure")
 
     # Check if project argument is correct
     if request.method == "POST":
-        newjob = Job.create(project=project_query, name="quickbuild",
+        randomnames = open(path("Anemone", "templates", "namegen.html")).readlines()
+        projectname = ("Quick." +
+                       random.choice(randomnames)[:-1] + # for some reason choice gives extra space
+                       random.choice(randomnames)[:-1]) # for some reason choice gives extra space
+
+        newjob = Job.create(project=project_query, name=projectname,
                             description="was build from the dashboard")
-        newjob.name = newjob.name + "-" + "{0:0=3d}".format(newjob.id)
+        newjob.name = newjob.name + ".{0:0=3d}".format(newjob.id)
         newjob.save()
-        Anemone.buildslave.build(newjob, settings[request.form.get("config", None)])
+        Anemone.buildslave.build(newjob,
+                                 project_query.path,
+                                 settings[request.form.get("config", None)])
     return redirect(project)

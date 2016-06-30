@@ -22,13 +22,12 @@ PROG_WARNING = re.compile("[Ww]arning")
 #TODO: Check if it is currently building the project an refuse to build if so.
 #TODO: Rename build to job name and copy to out directory.
 
-def build(job, config):
+def build(job, path, config):
     """ builds a job """
     if config is None:
         flash("ERROR COULD NOT BUILD, INVALID CONFIG")
         return
 
-    path = config.get("project-path")
     if path is None:
         flash("ERROR no project-path specified")
         return

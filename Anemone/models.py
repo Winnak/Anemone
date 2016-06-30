@@ -21,7 +21,7 @@ class Project(BaseModel):
     """ Data model for Projects table """
     name = peewee.CharField()
     slug = peewee.CharField(unique=True)
-    filepath = peewee.CharField(null=True)
+    path = peewee.CharField(null=False)
     description = peewee.TextField(null=True)
     output = peewee.CharField()
     created_at = peewee.DateTimeField()
@@ -54,7 +54,7 @@ class ProjectJSONEncoder(JSONEncoder):
     #pylint: disable=E0202
     def default(self, obj): #override JSONEncoder's "default" method
         if isinstance(obj, Project):
-            return dict(name=obj.name, slug=obj.slug, filepath=obj.filepath,
+            return dict(name=obj.name, slug=obj.slug, path=obj.path,
                         description=obj.description)
         else:
             JSONEncoder.default(self, obj)

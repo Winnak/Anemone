@@ -1,5 +1,6 @@
 """ View for configuration. """
 
+from os.path import join as path
 from flask import render_template, g, redirect, session, flash, url_for, request
 from Anemone import app
 from Anemone.models import Project
@@ -19,11 +20,11 @@ def configuration_view(project):
 
     settings = None
     if request.method == "GET":
-        settings = Anemone.abcfile.parse(project_query.filepath)
+        settings = Anemone.abcfile.parse(path(project_query.path, "build.abc"))
     elif request.method == "POST":
         configuration_post(project_query, request)
 
-    return render_template("configure.html", ssh=app.config["SSH_PUBLIC"],
+    return render_template("configure.html", ssh=open(app.config["SSH_PUBLIC"]).readline(),
                            build=settings, unity=app.config["UNITY_PATH"])
 
 def configuration_post(project, req):
@@ -35,7 +36,7 @@ def configuration_post(project, req):
     if req.form.get("slug", None) is None: #TODO: Check if unique
         flash("Project slug must be something (should be automaticly generated)")
         error += "slug "
-    if req.form.get("filepath", None) is None:
+    if req.form.get("path", None) is None:
         flash("File path must be something in order to be able to build the project.")
     if req.form.get("output", None) is None:
         flash("Project Output folder must be something")
@@ -47,7 +48,7 @@ def configuration_post(project, req):
         project.name = req.form["name"]
         project.slug = req.form["slug"]
         project.description = req.form["description"]
-        project.filepath = req.form["filepath"]
+        project.path = req.form["path"]
         project.output = req.form["output"]
         project.save()
     except Exception as excep:
