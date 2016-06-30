@@ -27,11 +27,8 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
 using UnityEngine;
 using UnityEditor;
-
 
 
 // Copy this to your [project]/Assets/Editor folder
@@ -48,6 +45,7 @@ namespace Anemone
     internal static class Build
     {
         private const string kDefaultBuildPath = "./buildstmp/"; // has to be a unix file path
+        private const string kDefaultBuildFile = "build.abc";
 
         /// <summary>
         /// Builds a debug build for windows to the <see cref="kDefaultBuildPath"/>
@@ -55,41 +53,7 @@ namespace Anemone
         [MenuItem("File/Anemone Build/Windows x86 (Debug)")]
         private static void WindowsDebug()
         {
-            if (BuildPipeline.isBuildingPlayer)
-            {
-                Debug.LogError("BUILD FAILED: Unity is already building the project");
-                return;
-            }
-
-            var config = ABCFormat.ParseFile("build.abc")["windows-debug"];
-
-            Debug.Log("Getting scenes");
-            var scenes = config.Get("scenes").Split(',');
-            if (scenes.Length == 1 && scenes[0] == string.Empty)
-            {
-                scenes = GetScenes().ToArray();
-            }
-            else
-            {
-                foreach (var scene in scenes)
-                {
-                    Debug.Log(scene);
-                }
-            }
-
-            Debug.Log("Unity building");
-            string errorMessage = BuildPipeline.BuildPlayer(
-                scenes,
-                config.Get("out"),
-                BuildTarget.StandaloneWindows,
-                (BuildOptions.AllowDebugging | BuildOptions.Development));
-
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                Debug.LogError(errorMessage);
-            }
-
-            Debug.Log("Finished");
+            BuildProject("windows-debug", BuildTarget.StandaloneWindows, (BuildOptions.AllowDebugging | BuildOptions.Development));
         }
 
         /// <summary>
@@ -98,17 +62,35 @@ namespace Anemone
         [MenuItem("File/Anemone Build/Windows x86")]
         private static void Windows()
         {
+            BuildProject("windows", BuildTarget.StandaloneWindows, BuildOptions.None);
+        }
+
+        /// <summary>
+        /// Generalized build function, to be used by the different configurations.
+        /// </summary>
+        /// <param name="config">Build configuration found in the <see cref="kDefaultBuildFile"/>.</param>
+        /// <param name="platform">Platform target.</param>
+        /// <param name="options">Build options.</param>
+        private static void BuildProject(string config, BuildTarget platform, BuildOptions options)
+        {
             if (BuildPipeline.isBuildingPlayer)
             {
-                Debug.LogError("BUILD FAILED: Unity is already building the project");
+                Debug.LogError("Anemone: BUILD FAILED! Unity is already building the project.");
                 return;
             }
 
-            var config = ABCFormat.ParseFile("build.abc")["windows"];
+            var configFile = ABCFormat.ParseFile(kDefaultBuildFile)[config];
 
-            Debug.Log("Getting scenes");
-            var scenes = config.Get("scenes").Split(',');
-            if (scenes.Length == 1 && scenes[0] == string.Empty)
+            if (configFile == ABCFormat.NullNode)
+            {
+                Debug.LogError("Anemone: BUILD FAILED! Could not parse build configuration.");
+                return;
+            }
+
+
+            Debug.Log("Anemone: Getting scenes.");
+            var scenes = configFile.Get("scenes").Split(',');
+            if ((scenes.Length == 1) && (scenes[0] == string.Empty))
             {
                 scenes = GetScenes().ToArray();
             }
@@ -116,23 +98,34 @@ namespace Anemone
             {
                 foreach (var scene in scenes)
                 {
-                    Debug.Log(scene);
+                    Debug.Log("Anemone: " + scene);
                 }
             }
 
-            Debug.Log("Unity building");
+            string buildFolder = configFile.Get("out");
+            if (buildFolder == string.Empty)
+            {
+                Debug.LogWarning(string.Concat("Anemone: ",
+                    "No output folder specified using ", kDefaultBuildPath,
+                    " instead. Please set the \"out\" parameter in the project's ",
+                    kDefaultBuildFile, " file."));
+
+                buildFolder = kDefaultBuildPath;
+            }
+
+            Debug.Log("Anemone: Unity building.");
             string errorMessage = BuildPipeline.BuildPlayer(
                 scenes,
-                config.Get("out"),
-                BuildTarget.StandaloneWindows,
-                BuildOptions.None);
+                buildFolder,
+                platform,
+                options);
 
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                Debug.LogError(errorMessage);
+                Debug.LogError("Anemone: " + errorMessage);
             }
 
-            Debug.Log("Finished");
+            Debug.Log("Anemone: Finished.");
         }
 
         /// <summary>
@@ -218,7 +211,7 @@ namespace Anemone
                 return root;
             }
 
-            private static readonly ABCFormat s_NullNode = new ABCFormat(string.Empty);
+            public static readonly ABCFormat NullNode = new ABCFormat(string.Empty);
             private string m_Key;
             private ABCFormat m_Parent;
             private Dictionary<string, string> m_Values = new Dictionary<string, string>();
@@ -234,7 +227,7 @@ namespace Anemone
                 get
                 {
                     ABCFormat value;
-                    if (!m_Nodes.TryGetValue(key, out value)) value = s_NullNode;
+                    if (!m_Nodes.TryGetValue(key, out value)) value = NullNode;
                     return value;
                 }
                 set
