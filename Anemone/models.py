@@ -35,6 +35,7 @@ class Job(BaseModel):
     name = peewee.CharField()
     description = peewee.TextField(null=True)
     log_path = peewee.CharField(null=True)
+    path = peewee.CharField(null=True)
     started = peewee.DateTimeField(null=True)
     ended = peewee.DateTimeField(null=True)
     def get_status(self):

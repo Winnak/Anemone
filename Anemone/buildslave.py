@@ -59,7 +59,7 @@ def build(job, project, config):
         if result is not 3: # as long as we don't have any errors.
             if post is not None: #TODO: embed into unity log
                 subprocess.call(post, shell=True, cwd=project.path)
-            move_to_out_folder(project, job, config)
+            job.path = move_to_out_folder(project, job, config)
         job.active = False
         job.ended = datetime.datetime.now()
         job.result = result
@@ -76,13 +76,15 @@ def move_to_out_folder(project, job, config):
         return
 
     build_folder = os.path.join(project.path, os.path.dirname(build_file))
-    output_folder = os.path.join(project.output, project.name, job.name)
+    output_folder = os.path.join(project.output, job.name)
 
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
     copy_tree(build_folder, output_folder)
     remove_tree(build_folder)
+
+    return output_folder
 
 def parse_joblog(filepath):
     """ regexes through the log and looks for errors or warnings returns status code """
