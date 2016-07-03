@@ -25,9 +25,9 @@ function createHealthchart(urlPath)
 
     d3.csv(urlPath, function(error, dataset)
     {
-        dataset.forEach(function(d) {
-            d.count = +d.count;
-        });
+        // dataset.forEach(function(d) {
+        //     d.count = +d.count;
+        // });
 
         var path = svg.selectAll('path')
             .data(pie(dataset))
