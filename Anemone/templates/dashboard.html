@@ -17,7 +17,7 @@
 			<graph style="float:left"></graph>
 			<br>
 			<br>
-			The last {{health.total}} builds have had <b style="color:green">{{health.success}}</b> successful build, <b style="color:#DEDE00">{{health.warning}}</b> builds completed with warnings and <b style="color:red">{{health.error}}</b> failed builds
+			The last {{health.total}} builds have had <b style="color:#5cb85c">{{health.success}}</b> successful build, <b style="color:#f0ad4e">{{health.warning}}</b> builds completed with warnings and <b style="color:#d9534f">{{health.error}}</b> failed builds
 		</div>
 	</div>
 	<div class="panel-footer"></div>
@@ -29,9 +29,9 @@
 	<div class="panel-body">
 		<form class="" action="/test-build/{{session.project.slug}}" method="post">
 		{% for buildtype in buildconf %}
-			<button type=submit name=config value="{{buildtype}}" class="btn btn-default">{{buildtype}}</button>
+			<button type=submit name=config value="{{buildtype}}" class="btn btn-default">Build for {{buildtype}}</button>
 		{% endfor %}
-	</form>
+		</form>
 	</div>
 </div>
 <div class="panel panel-default jobs-table">

@@ -53,6 +53,7 @@ License: [MIT](LICENSE)
 9. Layout
     * Create view for retrieving the output files.
     * Fix the full height sidebar or figure out a new, more modern layout.
+    * Redo health display
     * Re-colorize/stylize.
 10. Parse unity log file and make it more informative.
 11. Look into long polling for live updating website.

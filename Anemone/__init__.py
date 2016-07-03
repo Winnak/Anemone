@@ -41,6 +41,7 @@ import Anemone.views.jobs
 import Anemone.views.login
 import Anemone.views.configuration
 import Anemone.views.namegen
+import Anemone.views.health
 
 from Anemone.models import ProjectJSONEncoder
 app.json_encoder = ProjectJSONEncoder

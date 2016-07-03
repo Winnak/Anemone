@@ -23,7 +23,7 @@ $(document).ready(function()
         .value(function(d) { return d.count; })
         .sort(null);
 
-    d3.csv("health.csv", function(error, dataset)
+    d3.csv("health", function(error, dataset)
     {
         dataset.forEach(function(d) {
             d.count = +d.count;

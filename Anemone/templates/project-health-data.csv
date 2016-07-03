@@ -1,3 +1,0 @@
-category,count,color
-{% for category, value in health.items() %}{{category}},{{value.count}},{{value.color}}
-{% endfor %}
