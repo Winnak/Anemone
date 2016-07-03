@@ -10,15 +10,14 @@
     "jquery": ">=1.4"
   },
   "homepage": "https://github.com/rmm5t/jquery-timeago",
-  "version": "1.5.2",
-  "_release": "1.5.2",
+  "version": "1.5.3",
+  "_release": "1.5.3",
   "_resolution": {
     "type": "version",
-    "tag": "v1.5.2",
-    "commit": "67c11951ae9b6020341c1056a42b5406162db40c"
+    "tag": "v1.5.3",
+    "commit": "09271b779622d67c622b34a48530cf0d87892d9e"
   },
-  "_source": "git://github.com/rmm5t/jquery-timeago.git",
+  "_source": "https://github.com/rmm5t/jquery-timeago.git",
   "_target": "^1.5.2",
-  "_originalSource": "timeago",
-  "_direct": true
+  "_originalSource": "timeago"
 }

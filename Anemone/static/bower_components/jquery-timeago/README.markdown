@@ -1,5 +1,8 @@
 # timeago: a jQuery plugin
 
+[![NPM](https://img.shields.io/npm/v/timeago.svg)](https://www.npmjs.com/package/timeago)
+[![Bower](https://img.shields.io/bower/v/jquery-timeago.svg)](http://bower.io/search/?q=jquery-timeago)
+
 Timeago is a jQuery plugin that makes it easy to support automatically updating
 fuzzy timestamps (e.g. "4 minutes ago" or "about 1 day ago") from ISO 8601
 formatted dates and times embedded in your HTML (à la microformats).
@@ -9,17 +12,18 @@ formatted dates and times embedded in your HTML (à la microformats).
 **How You Can Help**
 
 [![Square Cash](http://img.shields.io/badge/square%20cash-$rmm5t-brightgreen.svg)][square]
-[![Gratipay](http://img.shields.io/gratipay/rmm5t.svg)][gratipay]
+[![PayPal](http://img.shields.io/badge/paypal-rmm5t-blue.svg)][paypal]
 [![Book a Codementor session](http://img.shields.io/badge/codementor-book%20a%20session-orange.svg)][codementor]
 
-If you like this project, [buy me a coffee][square], [donate via Gratipay][gratipay], or [book a session with me on Codementor][codementor].
+If you like this project, [buy me a coffee][paypal], or [book a session with me][codementor], or donate bitcoin: `1rmm5tv6f997JK5bLcGbRCZyVjZUPkQ2m`
 
-Bitcoin: `1rmm5tv6f997JK5bLcGbRCZyVjZUPkQ2m`
-
-[square]: https://cash.me/$rmm5t "Donate to rmm5t for open source!"
-[gratipay]: https://gratipay.com/rmm5t/ "Donate to rmm5t for open source!"
+[square]: https://cash.me/$rmm5t/5 "Donate to rmm5t for open source!"
+[paypal]: https://www.paypal.me/rmm5t/5 "Donate to rmm5t for open source!"
 [bitcoin]: bitcoin:1rmm5tv6f997JK5bLcGbRCZyVjZUPkQ2m?amount=0.01&label=Coffee%20to%20rmm5t%20for%20Open%20Source "Buy rmm5t a coffee for open source!"
 [codementor]: https://www.codementor.io/rmm5t?utm_campaign=profile&utm_source=button-rmm5t&utm_medium=shields "Book a session with rmm5t on Codementor!"
+
+[![Twitter](https://img.shields.io/twitter/follow/rmm5t.svg?style=social)](https://twitter.com/rmm5t)
+[![Stack Overflow](https://img.shields.io/stackexchange/stackoverflow/r/8985.svg?style=social)](http://stackoverflow.com/users/8985/ryan-mcgeary)
 
 ## Usage
 
@@ -79,6 +83,15 @@ $("time#some_id").timeago("update", new Date());
 
 **For different language configurations**: visit the [`locales`](https://github.com/rmm5t/jquery-timeago/tree/master/locales) directory.
 
+## Settings
+
+**`cutoff`** : Return the original date if time distance is older than `cutoff` (miliseconds).
+
+```javascript
+// Display original dates older than 24 hours
+jQuery.timeago.settings.cutoff = 1000*60*60*24;
+```
+
 ## Changes
 
 | Version | Notes                                                                           |
@@ -96,7 +109,7 @@ $("time#some_id").timeago("update", new Date());
 |   0.7.x | ([compare][compare-0.7]) locale function overrides; unit tests                  |
 |     ... | ...                                                                             |
 
-[compare-1.5]: https://github.com/rmm5t/jquery-timeago/compare/v1.4.3...v1.5.2
+[compare-1.5]: https://github.com/rmm5t/jquery-timeago/compare/v1.4.3...v1.5.3
 [compare-1.4]: https://github.com/rmm5t/jquery-timeago/compare/v1.3.2...v1.4.3
 [compare-1.3]: https://github.com/rmm5t/jquery-timeago/compare/v1.2.0...v1.3.2
 [compare-1.2]: https://github.com/rmm5t/jquery-timeago/compare/v1.1.0...v1.2.0
