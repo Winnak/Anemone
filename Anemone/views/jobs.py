@@ -10,17 +10,15 @@ from Anemone.buildslave import build
 
 JOBSPERPAGE = 30
 
-@app.route("/jobs")
-@app.route("/jobs/")
-def jobs_index_2():
-    """ Shows the index if no jobs or project given. """
-    return jobs_index(session.get("project"))
-
 @app.route("/<project>/jobs")
-@app.route("/<project>/jobs/")
 def jobs_index(project):
     """ Shows the index if no jobs given. """
     return jobs(project, 1)
+
+@app.route("/jobs")
+def jobs_index_2():
+    """ Shows the index if no jobs or project given. """
+    return jobs_index(session.get("project"))
 
 @app.route("/<project>/jobs/<page>")
 def jobs(project, page):
@@ -92,7 +90,7 @@ def job_view(job_id):
 
     return render_template("job.html", data=data, log=log)
 
-@app.route("/<project>/jobs/create/")
+@app.route("/<project>/jobs/create")
 def job_create(project):
     """ view for creating a new job """
     g.selected_tab = "jobs"

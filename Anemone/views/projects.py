@@ -7,7 +7,6 @@ from Anemone.models import Project, Job
 
 @app.route("/")
 @app.route("/projects")
-@app.route("/projects/")
 def projects():
     """ View for projects """
     session.pop("project", None)
@@ -47,7 +46,6 @@ def projects_remove(project):
 
 
 @app.route("/projects/add", methods=["GET", "POST"])
-@app.route("/projects/add/", methods=["GET", "POST"])
 def projects_add():
     """ View for projects. """
     error = None

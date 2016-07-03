@@ -10,16 +10,7 @@ import Anemone.buildslave
 
 JOBS_PER_PAGE = 10
 
-@app.route("/dashboard")
-def home():
-    """ Uses dashboard with the currently active project. """
-    project = session.get("project", None)
-    if project is None:
-        return redirect(url_for("projects"))
-    return redirect(project)
-
 @app.route("/<project>")
-@app.route("/<project>/")
 def dashboard(project):
     """ Index of the homepage. """
     g.selected_tab = "dashboard"
