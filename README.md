@@ -7,6 +7,7 @@ License: [MIT](LICENSE)
 ## Dependencies
 * [https://github.com/pallets/flask](flask)
 * [https://github.com/coleifer/peewee](peewee)
+* [https://github.com/agronholm/apscheduler](APScheduler)
 
 
 ## Quick start guide
@@ -21,37 +22,41 @@ License: [MIT](LICENSE)
 
 ## TODO/Roadmap
 1. Jobs
-    * Schedule a job
-    * More actions
-    * Compress files
+    * Schedule a job.
+    * Compress files.
 2. Git handling
-    * ssh-key handling
-    * Configurable polling / build scheduling
+    * ssh-key handling.
+    * Configurable polling / build scheduling.
+    * Build script injection (instead of having to copy `AnemoneBuild.cs`, anemone injects it when it is time to build).
 3. User management
-    * create user
-    * user roles
-4. ABC format update
-    * Move the ABC format to its own repository
-    * Add multiline setting
-    * Internal references
-    * Wildcards for datetime and other fun things?
+    * create user.
+    * user roles.
 5. Documentation
-    * Add copyright header
-    * Add module information
-    * Update project description
+    * Add copyright header.
+    * Add module information.
+    * Update project description.
     * Create wiki?
 6. Figure out solution for cloud building
-    * Test using raspberry pis
-7. Create better startup first-time stuff
-    * GUI for configuring application.cfg
-    * automatically createdatabase.py if database is not there
-    * build file wizard
-    * create admin user on first run
-8. Layout
+    * Pairing.
+    * Ordering.
+    * Test using raspberry pi.
+7. Advanced scheduling
+    * Integrate APScheduler into current database.
+    * Configurable polling rate.
+    * Restart unrunned jobs.
+    * Make a special build every morning (with toggle "iff repo change")
+    * More actions.
+8. Create better startup first-time stuff
+    * GUI for configuring application.cfg.
+    * automatically createdatabase.py if database is not there.
+    * build file wizard.
+    * create admin user on first run.
+9. Layout
     * Create view for retrieving the output files.
-    * Fix the full height sidebar or figure out a new, more modern layout
-    * Re-colorize/stylize
-9. Parse unity log file and make it more informative.
-10. Perforce handling
-11. SVN handling?
-12. Unreal Engine support?
+    * Fix the full height sidebar or figure out a new, more modern layout.
+    * Re-colorize/stylize.
+10. Parse unity log file and make it more informative.
+11. Look into long polling for live updating website.
+12. Perforce handling.
+13. SVN handling?
+14. Unreal Engine support?
