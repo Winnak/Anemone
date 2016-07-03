@@ -1,7 +1,7 @@
 # Anemone
 License: [MIT](LICENSE)
 
-![alt text](https://raw.githubusercontent.com/Winnak/Anemone/master/screenshots/Screenshot_1.png "WIP")
+![Screenshot_1](https://raw.githubusercontent.com/Winnak/Anemone/master/screenshots/Screenshot_1.png "WIP")
 
 
 ## Dependencies
@@ -13,7 +13,7 @@ License: [MIT](LICENSE)
 ## Quick start guide
 1. copy `AnemoneBuild.cs` to your unity project Asset/Editor folder (create one if you don't have one)
 2. copy `build.abc` to your unity project's root folder, configure as you see fit.
-3. Configure `application.cfg` to your needs
+3. Configure `application.cfg` to your needs (make sure it points to your ssh key)
 4. Run `createdatabase.py` to create the database
 5. Run `runserver.py` to start the server
 
@@ -21,42 +21,40 @@ License: [MIT](LICENSE)
 
 
 ## TODO/Roadmap
-1. Jobs
-    * Compress files.
-2. Git handling
-    * ssh-key handling.
+1. Git handling
     * Configurable polling / build scheduling.
     * Build script injection (instead of having to copy `AnemoneBuild.cs`, anemone injects it when it is time to build).
-3. User management
+2. User management
     * create user.
     * user roles.
-5. Documentation
+3. Documentation
     * Add copyright header.
     * Add module information.
     * Update project description.
     * Create wiki?
-6. Figure out solution for cloud building
+4. Figure out solution for cloud building
     * Pairing.
     * Ordering.
     * Test using raspberry pi.
-7. Advanced scheduling
+5. Advanced scheduling
     * Integrate APScheduler into current database.
     * Configurable polling rate.
     * Restart unrunned jobs.
     * Make a special build every morning (with toggle "iff repo change")
     * More actions.
-8. Create better startup first-time stuff
+6. Create better startup first-time stuff
+    * Setup SSH key
     * GUI for configuring application.cfg.
     * automatically createdatabase.py if database is not there.
     * build file wizard.
     * create admin user on first run.
-9. Layout
+7. Layout
     * Create view for retrieving the output files.
     * Fix the full height sidebar or figure out a new, more modern layout.
     * Redo health display
     * Re-colorize/stylize.
-10. Parse unity log file and make it more informative.
-11. Look into long polling for live updating website.
-12. Perforce handling.
-13. SVN handling?
-14. Unreal Engine support?
+8. Parse unity log file and make it more informative.
+9. Look into long polling for live updating website.
+10. Perforce handling.
+11. SVN handling?
+12. Unreal Engine support?

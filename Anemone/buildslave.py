@@ -1,11 +1,12 @@
 """ A build slave for the program. """
 
 import os.path
+import shutil
 import subprocess
 import threading
 import re
 import datetime
-from distutils.dir_util import copy_tree, remove_tree
+from distutils.dir_util import remove_tree
 from flask import flash
 from Anemone import app
 
@@ -78,13 +79,10 @@ def move_to_out_folder(project, job, config):
     build_folder = os.path.join(project.path, os.path.dirname(build_file))
     output_folder = os.path.join(project.output, job.name)
 
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-
-    copy_tree(build_folder, output_folder)
+    shutil.make_archive(output_folder, 'zip', build_folder)
     remove_tree(build_folder)
 
-    return output_folder
+    return output_folder + ".zip"
 
 def parse_joblog(filepath):
     """ regexes through the log and looks for errors or warnings returns status code """
