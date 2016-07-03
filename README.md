@@ -22,7 +22,6 @@ License: [MIT](LICENSE)
 
 ## TODO/Roadmap
 1. Jobs
-    * Schedule a job.
     * Compress files.
 2. Git handling
     * ssh-key handling.

@@ -19,9 +19,15 @@
 				</div>
 				{% endif %}
 				<div class="col-sm-10 content">
-				{% for message in get_flashed_messages() %}
-				<div class=flash>{{ message }}</div>
-				{% endfor %}
+					{% with messages = get_flashed_messages(with_categories=true) %}
+					  {% if messages %}
+					    <div class=flashes>
+					    {% for category, message in messages %}
+					      <div class="{{ category }}">{{ message }}</div>
+					    {% endfor %}
+					</div>
+					  {% endif %}
+					{% endwith %}
 				{% block body %}{% endblock %}
 				</div>
 			</div>

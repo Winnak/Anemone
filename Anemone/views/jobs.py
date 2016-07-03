@@ -1,10 +1,12 @@
 """ Jobs and job view. """
 
 import os
-from flask import g, render_template, flash, redirect, url_for, session
+import dateutil.parser
+from flask import g, render_template, flash, redirect, url_for, session, request
 import peewee
-from Anemone import app, abcfile
+from Anemone import app, abcfile, schedule
 from Anemone.models import Job, Project
+from Anemone.buildslave import build
 
 JOBSPERPAGE = 30
 
@@ -12,7 +14,7 @@ JOBSPERPAGE = 30
 @app.route("/jobs/")
 def jobs_index_2():
     """ Shows the index if no jobs or project given. """
-    return jobs_index(session["project"])
+    return jobs_index(session.get("project"))
 
 @app.route("/<project>/jobs")
 @app.route("/<project>/jobs/")
@@ -90,17 +92,14 @@ def job_view(job_id):
 
     return render_template("job.html", data=data, log=log)
 
-@app.route("/<project>/jobs/new/")
-def job_new(project):
+@app.route("/<project>/jobs/create/")
+def job_create(project):
     """ view for creating a new job """
     g.selected_tab = "jobs"
 
-    # Check if project argument is correct
-    project_query = Project.select().where(Project.slug == project).first()
+    project_query = ensure_project(project)
     if project_query is None:
-        flash("Invalid project.")
-        return redirect(url_for("projects"))
-    session["project"] = project_query
+        redirect(url_for("projects"))
 
     # pylint: disable=R0204
     #disabling warning about redefining settings. I do this on purpose
@@ -115,3 +114,58 @@ def job_new(project):
     # pylint: enable=R0204
 
     return render_template("newjob.html", buildconf=settings)
+
+@app.route("/<project>/jobs/create/new", methods=['POST'])
+def job_new(project):
+    """ Handles the post request for the new job schedule """
+    g.selected_tab = "jobs"
+
+    project_query = ensure_project(project)
+    if project_query is None:
+        redirect(url_for("projects"))
+
+    name = request.form.get("jobname")
+    config = request.form.get("buildconfigurations")
+    starttimestr = request.form.get("starttime")
+    if len(name) < 3:
+        flash("Invalid name", category="error")
+        return redirect(url_for("job_create", project=project))
+    if config is None:
+        flash("ERROR: config", category="error")
+        return redirect(url_for("job_create", project=project))
+    else:
+        buildfilepath = os.path.join(project_query.path, "build.abc")
+        settings = abcfile.parse(buildfilepath)[config]
+        if settings is None:
+            flash("ERROR: invalid config", category="error")
+            return redirect(url_for("job_create", project=project))
+    if starttimestr is None:
+        flash("ERROR: start time not set", category="error")
+        return redirect(url_for("job_create", project=project))
+    else:
+        try:
+            jobtime = dateutil.parser.parse(starttimestr)
+        except Exception:
+            flash("Time format is wrong", category="error")
+            return redirect(url_for("job_create", project=project))
+
+    newjob = Job.create(project=project_query, name=name, started=jobtime,
+                        description="was build from the dashboard")
+    newjob.name = newjob.name + ".{0:0=3d}".format(newjob.id)
+    newjob.save()
+
+    arguments = {"job": newjob, "project": project_query, "config": settings}
+
+    schedule.add_job(build, "date", run_date=jobtime, kwargs=arguments)
+
+    flash("Sucess", category="Success")
+    return redirect(url_for("job_view", job_id=newjob.id))
+
+def ensure_project(project):
+    """ Ensures we are on a project, or else kicks back to the project page """
+    # Check if project argument is correct
+    project_query = Project.select().where(Project.slug == project).first()
+    if project_query is None:
+        flash("Invalid project.")
+    session["project"] = project_query
+    return project_query

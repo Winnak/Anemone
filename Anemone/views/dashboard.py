@@ -91,11 +91,11 @@ def build(project):
     # Check if project argument is correct
     if request.method == "POST":
         randomnames = open(path("Anemone", "templates", "namegen.html")).readlines()
-        projectname = ("Quick." +
-                       random.choice(randomnames)[:-1] + # for some reason choice gives extra space
-                       random.choice(randomnames)[:-1]) # for some reason choice gives extra space
+        jobname = ("Quick." +
+                   random.choice(randomnames)[:-1] + # for some reason choice gives extra space
+                   random.choice(randomnames)[:-1]) # for some reason choice gives extra space
 
-        newjob = Job.create(project=project_query, name=projectname,
+        newjob = Job.create(project=project_query, name=jobname,
                             description="was build from the dashboard")
         newjob.name = newjob.name + ".{0:0=3d}".format(newjob.id)
         newjob.save()

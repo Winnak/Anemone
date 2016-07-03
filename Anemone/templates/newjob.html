@@ -3,7 +3,15 @@
 {% block title %}Anemone - Create job{% endblock %}
 
 {% block late_scripts %}<script src="{{ url_for('static', filename='randomname.js') }}"></script>
-<script>$(document).ready(function() {getRandomName('JobIDField');});</script>{% endblock %}
+<script>
+	var time_selector = $("#time_selector");
+	$(document).ready(function() {getRandomName('JobIDField');time_selector.val(new Date().toISOString());});
+	function buildNowButton() {
+		time_selector.prop("disabled", time_selector.is(':enabled'));
+		time_selector.val(new Date().toISOString());
+	}
+</script>
+{% endblock %}
 
 {% block body %}
 <h2>Create a new job</h2>
@@ -12,31 +20,31 @@
 		<h3 class="panel-title"></h3>
 	</div>
 	<div class="panel-body">
-		<div class="form-group">
-			<label>Name</label>
-			<div class="input-group">
-				<input type=text id="JobIDField" class="form-control">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type=button onclick="getRandomName('JobIDField')"><i class="fa fa-refresh" aria-hidden="true"></i> Generate</button>
-				</span>
-			</div>
+		<form  class="form-group" action="{{url_for('job_new', project=session.project.slug)}}" method="post">
+		<label>Name</label>
+		<div class="input-group">
+			<input type=text id="JobIDField" class="form-control" name="jobname">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type=button onclick="getRandomName('JobIDField')"><i class="fa fa-refresh" aria-hidden="true"></i> Generate</button>
 			</span>
-			<br>
-			<br>
-			<label>Build configuration </label>
-			<select name="buildconfigurations">
-				{% for item in buildconf %}
-					<option value="{{item}}">{{item}}</option>
-				{% endfor %}
-			</select>
-			<br>
-			<br>
-			<label>Schedule build </label>
-			<input name="starttime" type=datetime> <!-- TODO https://github.com/fullcalendar/fullcalendar --> or <button type=button data-toggle=button class="btn btn-default">Build now</button>
-			<br>
-			<br>
-			<button type=submit class="btn btn-primary">Submit</button>
 		</div>
+		</span>
+		<br>
+		<br>
+		<label>Build configuration </label>
+		<select name="buildconfigurations">
+			{% for item in buildconf %}
+				<option value="{{item}}">{{item}}</option>
+			{% endfor %}
+		</select>
+		<br>
+		<br>
+		<label>Schedule build </label>
+		<input name="starttime" type=datetime id="time_selector" style="width:185px"> <!-- TODO https://github.com/fullcalendar/fullcalendar --> or <button type=button data-toggle=button class="btn btn-default" onclick="buildNowButton()">Build now</button>
+		<br>
+		<br>
+		<input type=submit class="btn btn-primary" value="Submit">
+		</form>
 	</div>
 	<div class="panel-footer"></div>
 </div>

@@ -4,9 +4,12 @@
 
 import os
 from flask import Flask
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 app.config.from_pyfile("../application.cfg", False)
+schedule = BackgroundScheduler()
+schedule.start() #TODO: restart unfinshed jobs
 
 # TODO: find a better place for this
 @app.context_processor

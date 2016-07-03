@@ -51,7 +51,7 @@ class ABCNode(object):
             parent[key] = self
 
     def __getitem__(self, key):
-        return self.m_nodes[key]
+        return self.m_nodes.get(key, None)
 
     def __setitem__(self, key, value):
         if isinstance(value, ABCNode):
