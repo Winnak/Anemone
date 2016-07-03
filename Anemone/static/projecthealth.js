@@ -1,6 +1,6 @@
 // This script will show the health of the project as circle diagram
 // depends on d3
-$(document).ready(function()
+function createHealthchart(urlPath)
 {
     var width = 200;
     var height = 200;
@@ -23,7 +23,7 @@ $(document).ready(function()
         .value(function(d) { return d.count; })
         .sort(null);
 
-    d3.csv("health", function(error, dataset)
+    d3.csv(urlPath, function(error, dataset)
     {
         dataset.forEach(function(d) {
             d.count = +d.count;
@@ -62,4 +62,4 @@ $(document).ready(function()
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) { return d.category; });
     });
-});
+}

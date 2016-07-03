@@ -4,7 +4,8 @@
 
 {% block head %}<script src="{{ url_for('static', filename='bower_components/d3/d3.min.js') }}"></script>{% endblock %}
 
-{% block late_scripts %}<script src="{{ url_for('static', filename='projecthealth.js') }}"></script>{% endblock %}
+{% block late_scripts %}<script src="{{ url_for('static', filename='projecthealth.js') }}"></script>
+<script type="text/javascript">createHealthchart("/{{session.project.slug}}/health")</script>{% endblock %}
 
 {% block body %}
 <h2>Dashboard</h2>
