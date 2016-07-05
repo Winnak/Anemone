@@ -5,10 +5,11 @@
 {% block late_scripts %}<script src="{{ url_for('static', filename='randomname.js') }}"></script>
 <script>
 	var time_selector = $("#time_selector");
-	$(document).ready(function() {getRandomName('JobIDField');time_selector.val(new Date().toISOString());});
+	var tzoffset = (new Date()).getTimezoneOffset() * 60000
+	$(document).ready(function() {getRandomName('JobIDField');time_selector.val((new Date(Date.now() - tzoffset)).toISOString());});
 	function buildNowButton() {
 		time_selector.prop("disabled", time_selector.is(':enabled'));
-		time_selector.val(new Date().toISOString());
+		time_selector.val((new Date(Date.now() - tzoffset)).toISOString());
 	}
 </script>
 {% endblock %}
@@ -40,7 +41,7 @@
 		<br>
 		<br>
 		<label>Schedule build </label>
-		<input name="starttime" type=datetime id="time_selector" style="width:185px"> <!-- TODO https://github.com/fullcalendar/fullcalendar --> or <button type=button data-toggle=button class="btn btn-default" onclick="buildNowButton()">Build now</button>
+		<input name="starttime" type=datetime id="time_selector" style="width:185px"> <!-- TODO https://github.com/fullcalendar/fullcalendar --> or <button type=button data-toggle=button class="btn btn-default" onclick="buildNowButton()">Now</button>
 		<br>
 		<br>
 		<input type=submit class="btn btn-primary" value="Submit">

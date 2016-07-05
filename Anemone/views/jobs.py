@@ -1,7 +1,7 @@
 """ Jobs and job view. """
 
 import os
-import dateutil.parser
+from datetime import datetime
 from flask import g, render_template, flash, redirect, url_for, session, request
 import peewee
 from Anemone import app, abcfile, schedule
@@ -142,8 +142,8 @@ def job_new(project):
         return redirect(url_for("job_create", project=project))
     else:
         try:
-            jobtime = dateutil.parser.parse(starttimestr)
-        except Exception:
+            jobtime = parse_time(starttimestr)
+        except ValueError:
             flash("Time format is wrong", category="error")
             return redirect(url_for("job_create", project=project))
 
@@ -154,10 +154,15 @@ def job_new(project):
 
     arguments = {"job": newjob, "project": project_query, "config": settings}
 
-    schedule.add_job(build, "date", run_date=jobtime, kwargs=arguments)
+    schedule.add_job(build, "date", run_date=jobtime, kwargs=arguments, misfire_grace_time=None)
 
     flash("Sucess", category="Success")
     return redirect(url_for("job_view", job_id=newjob.id))
+
+def parse_time(timestring):
+    """ Parses the string and returns a datetime object """
+    result = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    return result.strptime(timestring, "%Y-%m-%dT%H:%M:%S.%fZ")
 
 def ensure_project(project):
     """ Ensures we are on a project, or else kicks back to the project page """
