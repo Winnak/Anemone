@@ -12,11 +12,10 @@ License: [MIT](LICENSE)
 
 
 ## Quick start guide
-1. copy `AnemoneBuild.cs` to your unity project Asset/Editor folder (create one if you don't have one)
-2. copy `build.abc` to your unity project's root folder, configure as you see fit.
-3. Configure `application.cfg` to your needs (make sure it points to your ssh key)
-4. Run `createdatabase.py` to create the database
-5. Run `runserver.py` to start the server
+1. copy `build.abc` to your unity project's root folder, configure as you see fit.
+2. Configure `application.cfg` to your needs (make sure it points to your ssh key)
+3. Run `createdatabase.py` to create the database
+4. Run `runserver.py` to start the server
 
 [application.cfg](application.cfg) change default login info and the file path to the unity installation etc.
 
@@ -25,7 +24,6 @@ Make sure that your ssh key is not password protected, as it is not supported ye
 ## TODO/Roadmap
 1. Git handling
     * Configurable polling / build scheduling.
-    * Build script injection (instead of having to copy `AnemoneBuild.cs`, anemone injects it when it is time to build).
 2. User management
     * create user.
     * user roles.

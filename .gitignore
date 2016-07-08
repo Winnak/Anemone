@@ -86,3 +86,4 @@ ENV/
 
 # Projet settings
 Anemone/tmp/
+UnityBuildScripts/obj/
