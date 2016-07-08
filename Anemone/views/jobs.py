@@ -76,7 +76,7 @@ def job_view(job_id):
         if job.log_path is None:
             log = None
         elif os.path.isfile(job.log_path):
-            log = open(job.log_path, 'r').readlines()
+            log = open(job.log_path, "r").readlines()
         else:
             flash("could not find file " + job.log_path)
     except Exception as excep:
@@ -113,7 +113,7 @@ def job_create(project):
 
     return render_template("newjob.html", buildconf=settings)
 
-@app.route("/<project>/jobs/create/new", methods=['POST'])
+@app.route("/<project>/jobs/create/new", methods=["POST"])
 def job_new(project):
     """ Handles the post request for the new job schedule """
     g.selected_tab = "jobs"

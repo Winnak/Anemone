@@ -6,7 +6,7 @@ from Anemone import app
 from Anemone.models import Project
 import Anemone.abcfile
 
-@app.route("/<project>/configuration", methods=['GET', 'POST'])
+@app.route("/<project>/configuration", methods=["GET", "POST"])
 def configuration_view(project):
     """ Displays the view for configuration. """
     project_query = Project.select().where(Project.slug == project).first()

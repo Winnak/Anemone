@@ -6,7 +6,7 @@ from Anemone import app
 
 #TODO: make semi-seperate login screen for non-active project
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     """ Login page. """
     g.selected_tab = "login"

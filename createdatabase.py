@@ -67,7 +67,7 @@ def main():
         Job.create(project=project, active=False, result=0,
                    name="VariousMoose-006", description="").save()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     BAD_ARGS = False
     # handle args
     for arg in sys.argv[1:]:

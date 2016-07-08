@@ -79,7 +79,7 @@ def move_to_out_folder(project, job, config):
     build_folder = os.path.join(project.path, os.path.dirname(build_file))
     output_folder = os.path.join(project.output, job.name)
 
-    shutil.make_archive(output_folder, 'zip', build_folder)
+    shutil.make_archive(output_folder, "zip", build_folder)
     remove_tree(build_folder)
 
     return output_folder + ".zip"

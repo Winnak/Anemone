@@ -5,7 +5,7 @@ from Anemone import app
 
 DEBUG = False
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     BAD_ARGS = False
     # handle args
     for arg in sys.argv[1:]:
