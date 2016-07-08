@@ -45,3 +45,5 @@ import Anemone.views.health
 
 from Anemone.models import ProjectJSONEncoder
 app.json_encoder = ProjectJSONEncoder
+
+import Anemone.githandling

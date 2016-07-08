@@ -1,12 +1,12 @@
 """ Dashboard view. """
 
-import random
 from os.path import join as path
 from flask import render_template, g, request, redirect, url_for, flash, session
 from Anemone import app
 from Anemone.models import Job, Project
 import Anemone.views
-import Anemone.buildslave
+from Anemone.buildslave import build
+from Anemone.githandling import create_job
 
 JOBS_PER_PAGE = 10
 
@@ -64,10 +64,10 @@ def dashboard(project):
             entries.append(dict(id=job.id, status=status, name=job.name,
                                 start=job.started, end=job.ended, span=span))
 
-    return render_template('dashboard.html', entries=entries, buildconf=settings, health=health)
+    return render_template("dashboard.html", entries=entries, buildconf=settings, health=health)
 
 @app.route("/test-build/<project>", methods=["POST"])
-def build(project):
+def quick_build(project):
     """ temp: builds test project """
     project_query = Project.select().where(Project.slug == project).first()
     if project_query is None:
@@ -81,16 +81,6 @@ def build(project):
 
     # Check if project argument is correct
     if request.method == "POST":
-        randomnames = open(path("Anemone", "templates", "namegen.html")).readlines()
-        jobname = ("Quick." +
-                   random.choice(randomnames)[:-1] + # for some reason choice gives extra space
-                   random.choice(randomnames)[:-1]) # for some reason choice gives extra space
-
-        newjob = Job.create(project=project_query, name=jobname,
-                            description="was build from the dashboard")
-        newjob.name = newjob.name + ".{0:0=3d}".format(newjob.id)
-        newjob.save()
-        Anemone.buildslave.build(newjob,
-                                 project_query,
-                                 settings[request.form.get("config", None)])
+        newjob = create_job(project_query, "was build from the dashboard")
+        build(newjob, project_query, settings[request.form.get("config", None)])
     return redirect(project)

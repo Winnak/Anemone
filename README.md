@@ -8,6 +8,7 @@ License: [MIT](LICENSE)
 * [https://github.com/pallets/flask](flask)
 * [https://github.com/coleifer/peewee](peewee)
 * [https://github.com/agronholm/apscheduler](APScheduler)
+* [https://github.com/gitpython-developers/GitPython](GitPython)
 
 
 ## Quick start guide
@@ -19,6 +20,7 @@ License: [MIT](LICENSE)
 
 [application.cfg](application.cfg) change default login info and the file path to the unity installation etc.
 
+Make sure that your ssh key is not password protected, as it is not supported yet.
 
 ## TODO/Roadmap
 1. Git handling
@@ -43,11 +45,11 @@ License: [MIT](LICENSE)
     * Make a special build every morning (with toggle "iff repo change")
     * More actions.
 6. Create better startup first-time stuff
-    * Setup SSH key
+    * create admin user on first run.
     * GUI for configuring application.cfg.
     * automatically createdatabase.py if database is not there.
     * build file wizard.
-    * create admin user on first run.
+    * Setup SSH key
 7. Layout
     * Create view for retrieving the output files.
     * Fix the full height sidebar or figure out a new, more modern layout.
