@@ -24,6 +24,8 @@ PROG_WARNING = re.compile("[Ww]arning")
 #TODO: Check if it is currently building the project an refuse to build if so.
 #TODO: Rename build to job name and copy to out directory.
 
+ANEMONE_DLL = os.path.join("Assets", "Editor", "Anemone.dll")
+
 def build(job, project, config):
     """ builds a job """
     if config is None:
@@ -33,6 +35,10 @@ def build(job, project, config):
     if project.path is None:
         flash("ERROR no project-path specified")
         return
+
+    if not os.path.exists(os.path.join(project.path, ANEMONE_DLL)):
+        shutil.copyfile(os.path.join("UnityBuildScripts", "Output", "Anemone.dll"),
+                        os.path.join(project.path, ANEMONE_DLL))
 
     os.makedirs(app.config["LOG_PATH"], exist_ok=True)
     logpath = os.path.join(app.config["LOG_PATH"], job.project.slug + str(job.id) +
