@@ -23,7 +23,7 @@ class Project(BaseModel):
     slug = peewee.CharField(unique=True)
     path = peewee.CharField(null=False)
     description = peewee.TextField(null=True)
-    # scheduletype = peewee.BooleanField(default=True, null=True) #future version might have different options.
+    schedule_interval = peewee.FloatField(null=True, default=2)
     output = peewee.CharField()
     created_at = peewee.DateTimeField()
 

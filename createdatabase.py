@@ -41,8 +41,8 @@ def main():
                        " development.")
 
         project = Project.create(name="TestProject", slug="testproject",
-                                 filepath="", description=description,
-                                 output="/output",
+                                 path="", description=description,
+                                 output="/output", schedule_interval=2,
                                  created_at=datetime(2016, 1, 6, 8, 23, 19))
         project.save()
 
