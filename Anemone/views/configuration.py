@@ -2,7 +2,7 @@
 
 from os.path import join as path
 from flask import render_template, g, redirect, session, flash, url_for, request
-from Anemone import app
+from Anemone import app, schedule
 from Anemone.models import Project
 import Anemone.abcfile
 
@@ -26,30 +26,47 @@ def configuration_view(project):
     return render_template("configure.html", ssh=open(app.config["SSH_PUBLIC"]).readline(),
                            build=settings, unity=app.config["UNITY_PATH"])
 
+#pylint: disable=R0912
+# disabling "too many branches", which is true, but this looks nice currently.
 def configuration_post(project, req):
     """ The post part of the configuration view. """
     error = ""
     if req.form.get("name", None) is None:
-        flash("Project name must be something")
+        flash("Project name must be something", category="error")
         error += "name "
+    else:
+        project.name = req.form["name"]
+
     if req.form.get("slug", None) is None: #TODO: Check if unique
-        flash("Project slug must be something (should be automaticly generated)")
+        flash("Project slug must be something (should be automaticly generated)", category="error")
         error += "slug "
+    else:
+        project.slug = req.form["slug"]
+
     if req.form.get("path", None) is None:
-        flash("File path must be something in order to be able to build the project.")
-    if req.form.get("output", None) is None:
-        flash("Project Output folder must be something")
+        flash("Folder path must be something with a  in order to be able to build the project.")
         error += "output "
+    else:
+        project.path = req.form["path"]
+
+    if req.form.get("output", None) is None:
+        flash("Project Output folder must be something", category="error")
+        error += "path "
+    else:
+        project.output = req.form["output"]
+
+    if req.form.get("description", None) is not None:
+        if len(req.form["description"]) > 1:
+            project.description = req.form["description"]
+
+    if req.form.get("scheduleinterval", None) is None:
+        schedule.pause_job("building_" + str(project.id))
+    elif isinstance(req.form["scheduleinterval"]):
+        schedule.modify_job("building_" + str(project.id), hours=req.form["scheduleinterval"])
+        schedule.resume_job("building_" + str(project.id))
+
     if error is not "":
         print(error)
-        return
-    try:
-        project.name = req.form["name"]
-        project.slug = req.form["slug"]
-        project.description = req.form["description"]
-        project.path = req.form["path"]
-        project.output = req.form["output"]
-        project.save()
-    except Exception as excep:
-        flash(str(excep))
-        raise excep
+
+    project.save()
+#pylint: enable=R0912

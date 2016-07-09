@@ -5,23 +5,29 @@ import platform
 import random
 import git
 from Anemone import app, schedule
-from Anemone.models import Project, Job
+from Anemone.models import Job, Project
 from Anemone.abcfile import parse as abcparse
 from Anemone.buildslave import build
 
-@schedule.scheduled_job("interval", hours=2)
-def build_all_projects():
-    """ pulls all projects, and builds if there is changes """
+def setup_schedule():
+    """ Setups up the schedule for building the project periodically. """
     for project in Project.select():
-        repo_result, pull_log = pull(project.path)
-        if repo_result:
-            newjob = create_job(project, pull_log)
-            settings = abcparse(os.path.join(project.path, "build.abc"))
-            build(newjob, project, settings["windows"]) #TODO: Handle configs
+        if (project.schedule_interval is not None) and (project.schedule_interval > 0):
+            schedule.add_job(pull_build_project, "interval", id="building_" + str(project.id),
+                             hours=project.schedule_interval,
+                             args=[project, "master"])
 
-def pull(repo_path, branch="master"):
+def pull_build_project(project, branch="master"):
+    """ pulls and build a project """
+    repo_result, pull_log = pull(project.path, app.config["SSH_PRIVATE"], branch)
+    if repo_result:
+        newjob = create_job(project, pull_log)
+        settings = abcparse(os.path.join(project.path, "build.abc"))
+        build(newjob, project, settings["windows"]) #TODO: Handle configs
+
+def pull(repo_path, ssh, branch="master"):
     """ Pulls the project and returns wether or not there were changes """
-    ssh_key = os.path.abspath(app.config["SSH_PRIVATE"])
+    ssh_key = os.path.abspath(ssh)
     if platform.system() == "Windows":
         ssh_key = "/" + ssh_key.replace("\\", "/").replace(":", "")
     ssh_cmd = "ssh -i %s" % ssh_key

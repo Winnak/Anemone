@@ -44,10 +44,16 @@
 				<input name=output type=text class="form-control" value="{{session.project.output}}">
 			</div>
 			<br>
+			<div class="input-group">
+				<span class="input-group-addon">Scheduling time: </span>
+				<input name=scheduleinterval type=number class="form-control" value="{{session.project.schedule_interval}}">
+  				<span class="input-group-addon">hours</span>
+			</div>
+			<br>
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="input-group">
-						<span class="input-group-addon">Project file: </span>
+						<span class="input-group-addon">Project folder: </span>
 						<input name=path type=text class="form-control" value="{{session.project.path}}">
 					</div>
 				</div>
