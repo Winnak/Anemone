@@ -22,39 +22,38 @@ License: [MIT](LICENSE)
 Make sure that your ssh key is not password protected, as it is not supported yet.
 
 ## TODO/Roadmap
-1. Git handling
-    * Configurable polling / build scheduling.
-2. User management
+1. User management
     * create user.
     * user roles.
-3. Documentation
+2. Documentation
     * Add copyright header.
     * Add module information.
     * Update project description.
     * Create wiki?
-4. Figure out solution for cloud building
+    * setup.py script?
+3. Figure out solution for cloud building
     * Pairing.
     * Ordering.
     * Test using raspberry pi.
-5. Advanced scheduling
+4. Advanced scheduling
     * Integrate APScheduler into current database.
     * Configurable polling rate.
     * Restart unrunned jobs.
     * Make a special build every morning (with toggle "iff repo change")
     * More actions.
-6. Create better startup first-time stuff
+5. Create better startup first-time stuff
     * create admin user on first run.
     * GUI for configuring application.cfg.
     * automatically createdatabase.py if database is not there.
     * build file wizard.
     * Setup SSH key
-7. Layout
+6. Layout
     * Create view for retrieving the output files.
     * Fix the full height sidebar or figure out a new, more modern layout.
     * Redo health display
     * Re-colorize/stylize.
-8. Parse unity log file and make it more informative.
-9. Look into long polling for live updating website.
-10. Perforce handling.
-11. SVN handling?
-12. Unreal Engine support?
+7. Parse unity log file and make it more informative.
+8. Look into long polling for live updating website.
+9. Perforce handling.
+10. SVN handling?
+11. Unreal Engine support?
