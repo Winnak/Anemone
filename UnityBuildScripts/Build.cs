@@ -38,7 +38,7 @@ namespace Anemone
     internal static class Build
     {
         /// <summary>
-        /// Builds a debug build for windows to the <see cref="kDefaultBuildPath"/>
+        /// Builds a debug build for windows to the <see cref="BuildUtility.kDefaultBuildPath"/>
         /// </summary>
         [MenuItem("File/Anemone Build/Windows x86 (Debug)")]
         private static void WindowsDebug()
@@ -47,12 +47,48 @@ namespace Anemone
         }
 
         /// <summary>
-        /// Builds a windows build to the <see cref="kDefaultBuildPath"/>
+        /// Builds a windows build to the <see cref="BuildUtility.kDefaultBuildPath"/>
         /// </summary>
         [MenuItem("File/Anemone Build/Windows x86")]
         private static void Windows()
         {
             BuildUtility.BuildProject("windows", BuildTarget.StandaloneWindows, BuildOptions.None);
+        }
+
+        /// <summary>
+        /// Builds a debug build for mac to the <see cref="BuildUtility.kDefaultBuildPath"/>
+        /// </summary>
+        [MenuItem("File/Anemone Build/OSX Universal (Debug)")]
+        private static void MacDebug()
+        {
+            BuildUtility.BuildProject("mac-debug", BuildTarget.StandaloneOSXUniversal, (BuildOptions.AllowDebugging | BuildOptions.Development));
+        }
+
+        /// <summary>
+        /// Builds a mac build to the <see cref="BuildUtility.kDefaultBuildPath"/>
+        /// </summary>
+        [MenuItem("File/Anemone Build/OSX Universal")]
+        private static void Mac()
+        {
+            BuildUtility.BuildProject("mac", BuildTarget.StandaloneOSXUniversal, BuildOptions.None);
+        }
+
+        /// <summary>
+        /// Builds a debug build for mac to the <see cref="BuildUtility.kDefaultBuildPath"/>
+        /// </summary>
+        [MenuItem("File/Anemone Build/Linux Universal (Debug)")]
+        private static void LinuxDebug()
+        {
+            BuildUtility.BuildProject("linux-debug", BuildTarget.StandaloneLinuxUniversal, (BuildOptions.AllowDebugging | BuildOptions.Development));
+        }
+
+        /// <summary>
+        /// Builds a mac build to the <see cref="BuildUtility.kDefaultBuildPath"/>
+        /// </summary>
+        [MenuItem("File/Anemone Build/Linux Universal")]
+        private static void Linux()
+        {
+            BuildUtility.BuildProject("linux", BuildTarget.StandaloneLinuxUniversal, BuildOptions.None);
         }
     }
 }
