@@ -30,7 +30,9 @@
 /// </summary>
 namespace Anemone
 {
+    using System;
     using System.Collections.Generic;
+    using System.Reflection;
     using UnityEditor;
     using UnityEngine;
 
@@ -39,7 +41,7 @@ namespace Anemone
     /// </summary>
     internal static class BuildUtility
     {
-        private const string kDefaultBuildPath = "./buildstmp/"; // has to be a unix file path
+        private const string kDefaultBuildPath = "./buildstmp/"; // has to be a Unix file path
         private const string kDefaultBuildFile = "build.abc";
 
         /// <summary>
@@ -90,6 +92,13 @@ namespace Anemone
                 buildFolder = kDefaultBuildPath;
             }
 
+            Debug.Log("Anemone: Performing Unity build steps.");
+            if(!DoUnityPreBuildSteps(scenes, buildFolder, platform, options))
+            {
+                Debug.LogError("Anemone: BUILD FAILED! Failed to do pre build steps.");
+                return;
+            }
+
             Debug.Log("Anemone: Unity building.");
             string errorMessage = BuildPipeline.BuildPlayer(scenes, buildFolder, platform, options);
 
@@ -99,6 +108,89 @@ namespace Anemone
             }
 
             Debug.Log("Anemone: Finished.");
+        }
+
+        /// <summary>
+        /// Executes all static methods inside unity prefixed with "AnemonePreBuildStep_", and containing some-all of this methods parameters.
+        /// </summary>
+        /// <param name="scenes">List of the scenes included in the build.</param>
+        /// <param name="buildFolder">Path to the output folder.</param>
+        /// <param name="platform">The Target platform the build is compatible with.</param>
+        /// <param name="options">Other building options <see cref="BuildOptions"/>.</param>
+        /// <returns><c>True</c> if the process was successful; otherwise <c>false</c>.</returns>
+        private static bool DoUnityPreBuildSteps(string[] scenes, string buildFolder, BuildTarget platform, BuildOptions options)
+        {
+            const string signature = "AnemonePreBuildStep_";
+
+            try
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Type[] types = assembly.GetTypes();
+                int typeCount = types.Length;
+                for (int i = 0; i < typeCount; i++)
+                {
+                    MethodInfo[] methods = types[i].GetMethods(BindingFlags.Static);
+                    int methodLength = methods.Length;
+                    for (int m = 0; m < methodLength; m++)
+                    {
+                        MethodInfo method = methods[m];
+                        if (!method.Name.StartsWith(signature))
+                        {
+                            continue;
+                        }
+
+
+                        ParameterInfo[] parameters = method.GetParameters();
+                        int parametersCount = parameters.Length;
+
+                        object[] preBuildParams = new object[parametersCount];
+                        bool runMethod = true;
+
+                        for (int paramIndex = 0; paramIndex < parametersCount; paramIndex++)
+                        {
+                            Type parameterType = parameters[paramIndex].ParameterType;
+
+                            if (parameterType == typeof(string[]))
+                            {
+                                preBuildParams[paramIndex] = scenes;
+                            }
+                            else if (parameterType == typeof(string))
+                            {
+                                preBuildParams[paramIndex] = buildFolder;
+                            }
+                            else if (parameterType == typeof(BuildTarget))
+                            {
+                                preBuildParams[paramIndex] = platform;
+                            }
+                            else if (parameterType == typeof(BuildOptions))
+                            {
+                                preBuildParams[paramIndex] = options;
+                            }
+                            else
+                            {
+                                // invalid parameter, method must not have any unexpected parameters.
+                                Debug.LogError(string.Concat("Anemone: Could not run pre-build step ", 
+                                    method.Name, ", invalid parameter: ", parameters[paramIndex].Name,
+                                    ". Method must fit the signature: string[], string, BuildTarget, BuildOptions - Or less."));
+                                runMethod = false;
+                                break;
+                            }
+                        }
+
+                        if (runMethod)
+                        {
+                            Debug.Log(string.Concat("Anemone: Unity Executing method ", method.Name, "."));
+                            method.Invoke(null, preBuildParams);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
